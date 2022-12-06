@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{site/homelayout.html}">
+<head>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <!-- Breadcrumb Start -->
+        <div class="container-fluid">
+            <div class="row px-xl-5">
+                <div class="col-12">
+                    <nav class="breadcrumb bg-light mb-30">
+                        <a class="breadcrumb-item text-dark" th:href="@{/site}">Home</a>
+                        <a class="breadcrumb-item text-dark" th:href="@{/site/products}">Shop</a>
+                        <span class="breadcrumb-item active">Shop List</span>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- Breadcrumb End -->
+        <!-- Shop Start -->
+        <div class="container-fluid">
+            <div class="row px-xl-5">
+                <!-- Shop Sidebar Start -->
+                <div class="col-lg-3 col-md-4">
+                    <!-- Price Start -->
+                    <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by Category</span></h5>
+                    <div class="bg-light p-4 mb-30">
+                        <form th:action="@{/site/products}">
+                            <input type="hidden" name="producerId" th:value="${producerId}">
+                            <input type="hidden" name="search" th:value="${search}">
+                            <div class="mb-3"
+                                th:each="c:${categories}">
+                                <input type="radio" name="catId"
+                                       onchange="this.form.submit()"
+                                       th:checked="${#strings.equals(c.catId,catId)}"
+                                       th:value="${c.catId}">
+                                <label class="ml-3" th:text="${c.catName}"></label>
+                            </div>
+                        </form>
+                    </div>
+                    <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by Producer</span></h5>
+                    <div class="bg-light p-4 mb-30">
+                        <form th:action="@{/site/products}">
+                            <input type="hidden" name="catId" th:value="${catId}">
+                            <input type="hidden" name="search" th:value="${search}">
+                            <div class="mb-3"
+                                 th:each="p:${producers}">
+                                <input type="radio" name="producerId"
+                                       onchange="this.form.submit()"
+                                       th:checked="${#strings.equals(p.producerId,producerId)}"
+                                       th:value="${p.producerId}">
+                                <label class="ml-3" th:text="${p.producerName}"></label>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Price End -->
+                </div>
+                <!-- Shop Sidebar End -->
+
+                <!-- Shop Product Start -->
+                <div class="col-lg-9 col-md-8">
+                    <div class="row pb-3">
+                        <!-- Sort-->
+                        <!-- Products-->
+                        <div th:each="p:${pages}" class="col-lg-4 col-md-6 col-sm-6 pb-1">
+                            <div class="product-item bg-light mb-4">
+                                <div class="product-img position-relative overflow-hidden">
+                                    <img class="img-fluid w-100 p-1" th:src="@{'/img/'+${p.imgUrl}}" alt="">
+                                    <div class="product-action">
+                                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                        <a class="btn btn-outline-dark btn-square" th:href="@{'/site/detail/'+${p.proId}}"><i class="fa fa-search"></i></a>
+                                    </div>
+                                </div>
+                                <div class="text-center text-truncate py-4 pr-3 pl-3">
+                                    <a class="h6 text-decoration-none" th:href="@{'site/detail/'+${p.proId}}" th:text="${p.proName}"></a>
+                                    <div class="d-flex align-items-center justify-content-center mt-2">
+                                        <h5 th:text="${p.basePrice - p.basePrice * p.discount/100}+'$'"></h5>
+                                        <h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-center mb-1">
+                                        <small class="fa fa-star text-primary mr-1"></small>
+                                        <small class="fa fa-star text-primary mr-1"></small>
+                                        <small class="fa fa-star text-primary mr-1"></small>
+                                        <small class="fa fa-star text-primary mr-1"></small>
+                                        <small class="fa fa-star text-primary mr-1"></small>
+                                        <small>(99)</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pagination-->
+                        <div class="col-12">
+                            <nav>
+                                <ul class="pagination justify-content-center">
+                                <li th:class="${pages.number == 0?'page-item active':'page-item'}">
+                                    <a class="page-link" th:href="@{/site/products(page=${0},size=${pages.size},sort=${sort},producerId=${producerId},catId=${catId},search=${search})}">
+                                        <span aria-hidden="true">First</span>
+                                    </a>
+                                </li>
+                                <li class="page-item pl-2">
+                                    <a th:class="${(pages.number <= 0)?'page-link d-none':'page-link'}"
+                                       th:href="@{/site/products(page=${(pages.number)-1},size=${pages.size},sort=${sort},producerId=${producerId},catId=${catId},search=${search})}"
+                                       th:text="${pages.number}">
+                                    </a>
+                                </li>
+                                <li class="page-item pl-2 active">
+                                    <a class="page-link"
+                                       th:href="@{/site/products(page=${(pages.number)},size=${pages.size},sort=${sort},producerId=${producerId},catId=${catId},search=${search})}"
+                                       th:text="${(pages.number)+1}">
+                                    </a>
+                                </li>
+                                <li class="page-item pl-2 pr-2">
+                                    <a th:class="${(pages.number >= (pages.totalPages)-1)?'page-link d-none':'page-link'}"
+                                       th:href="@{/site/products(page=${(pages.number)+1},size=${pages.size},sort=${sort},producerId=${producerId},catId=${catId},search=${search})}"
+                                       th:text="${(pages.number)+2}">
+                                    </a>
+                                </li>
+                                <li  th:class="${pages.number == (pages.totalPages)-1?'page-item active':'page-item'}">
+                                    <a class="page-link" th:href="@{/site/products(page=${(pages.totalPages)-1},size=${pages.size},sort=${sort},producerId=${producerId},catId=${catId},search=${search})}">
+                                        <span aria-hidden="true">Last</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <!-- Shop Product End -->
+            </div>
+        </div>
+        <!-- Shop End -->
+    </div>
+    </body>
+
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/adminlayout.html}">
+<head>
+    <script>
+        function getProduct(){
+            $("#productId").empty();
+            const catId = $("#catId").val();
+            const urlString = "[[@{/api/v1/products/?catId=}]]" + catId;
+            $.get(urlString,function (responseJson)
+            {
+                const productOpt = $("#productId");
+                $("<option>").val("").text("--Product--").appendTo(productOpt);
+                $.each(responseJson,function (index,product){
+                    $("<option>").val(product.proId).text(product.proName).appendTo(productOpt);
+                })
+            })
+                .fail(function (){
+                    alert("Error to collect");
+                })
+                .always(function (){
+                    // something here
+                })
+            ;
+        }
+    </script>
+</head>
+<body>
+    <div layout:fragment="adminContent">
+        <!-- content -->
+        <div class="col text-center mt-2">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-center mb-2">Quản lí số lượng</h2>
+                    <div th:if="${message != null}" class="alert alert-success" role="alert">
+                        <h4 class="alert-heading"></h4>
+                        <i th:text="${message}"></i>
+                        <p class="mb-0"></p>
+                    </div>
+                    <div class="row pt-4">
+                        <div class="col">
+                            <a th:href="@{/admin/repository/add}" style="border-radius: 10px" class="btn btn-outline-success text-success float-left ml-5">Add product quantity</a>
+                            <a th:href="@{/admin/repository}" style="border-radius: 10px" class="btn btn-outline-success text-success float-left ml-5">All product</a>
+                        </div>
+                        <div class="col">
+                            <form th:action="@{admin/repository}" method="get">
+                                <div class="row">
+                                    <div class="col form-group">
+                                        <select class="rounded form-control" onchange="getProduct()" id="catId">
+                                            <option>--Category--</option>
+                                            <option th:each="item : ${categories}" th:value="${item.catId}" th:text="${item.catName}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="col form-group">
+                                        <select class="form-control rounded" name="proId" id="productId" onchange="this.form.submit()">
+                                            <option>--Product--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead class="thead-inverse">
+                        <thead class="thead-inverse">
+                        <tr>
+                            <th>Name</th>
+                            <th>Base Price</th>
+                            <th>Type</th>
+                            <th>Color</th>
+                            <th>Discount(%)</th>
+                            <th>Quantity</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="d: ${list}">
+                            <form th:action="@{'admin/repository/update/'+${d.productDetailId}}" method="post">
+                                <td th:text="${d.product.proName}"></td>
+                                <td th:text="${d.product.basePrice}+'$'"></td>
+                                <td th:text="${d.type.typeName}"></td>
+                                <td th:text="${d.color.colorName}"></td>
+                                <td><input class="rounded text-center" type="number" name="discount" th:value="${d.discount}"></td>
+                                <td><input class="rounded text-center" type="number" name="quantity" th:value="${d.quantity}"></td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-warning rounded" type="submit" data-toggle="tooltip" title="Update" ><i class="fas fa-edit"></i></button>
+                                </td>
+                            </form>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+<!--                <div class="card-footer text-muted">-->
+<!--                    <div class="card-footer text-muted form-inline justify-content-center">-->
+<!--                        <div class="form-inline">-->
+<!--                            <nav aria-label="Page navigation">-->
+<!--                                <ul class="pagination justify-content-center">-->
+<!--                                    <li th:class="${pages.number == 0?'page-item active':'page-item'}">-->
+<!--                                        <a class="page-link" th:href="@{/admin/products(page=${0},size=${pages.size},sort=${sort},search=${search})}">-->
+<!--                                            <span aria-hidden="true">First</span>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="page-item">-->
+<!--                                        <a th:class="${(pages.number <= 0)?'page-link btn disabled':'page-link'}"-->
+<!--                                           th:href="@{/admin/products(page=${(pages.number)-1},size=${pages.size},sort=${sort},search=${search})}"-->
+<!--                                           th:text="${pages.number}">-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li class="page-item active">-->
+<!--                                        <a class="page-link"-->
+<!--                                           th:href="@{/admin/products(page=${(pages.number)},size=${pages.size},sort=${sort},search=${search})}"-->
+<!--                                           th:text="${(pages.number)+1}"></a>-->
+<!--                                    </li>-->
+<!--                                    <li class="page-item">-->
+<!--                                        <a th:class="${(pages.number >= (pages.totalPages)-1)?'page-link btn disabled':'page-link'}"-->
+<!--                                           th:href="@{/admin/products(page=${(pages.number)+1},size=${pages.size},sort=${sort},search=${search})}"-->
+<!--                                           th:text="${(pages.number)+2}">-->
+
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                    <li  th:class="${pages.number == (pages.totalPages)-1?'page-item active':'page-item'}">-->
+<!--                                        <a class="page-link" th:href="@{/admin/products(page=${(pages.totalPages)-1},size=${pages.size},sort=${sort},search=${search})}">-->
+<!--                                            <span aria-hidden="true">Last</span>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
+<!--                                </ul>-->
+<!--                            </nav>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/adminlayout.html}">
+<head>
+    <script>
+        function getProduct(){
+            $("#productId").empty();
+            const catId = $("#catId").val();
+            const urlString = "[[@{api/v1/products/?catId=}]]" + catId;
+            $.get(urlString,function (responseJson)
+            {
+                const productOpt = $("#productId");
+                $("<option>").val("").text("--Product--").appendTo(productOpt);
+                $.each(responseJson,function (index,product){
+                    $("<option>").val(product.proId).text(product.proName).appendTo(productOpt);
+                })
+            })
+                .fail(function (){
+                    alert("Error to collect");
+                })
+                .always(function (){
+                    // something here
+                })
+            ;
+        }
+        function getQuantity(){
+            const productId =  $("#productId").val();
+            const urlString = "[[@{api/v1/getQuantity?proId=}]]" + productId;
+            $.get(urlString,function (responseJson)
+            {
+                $("#quantityTable > tbody").empty();
+                $.each(responseJson,function (index,pd){
+                    const color = pd.colorName;
+                    console.log(color);
+                    const type = pd.typeName;
+                    const quantity = pd.quantity;
+                    var row = '<tr>'+
+                        '<td>'+color+'</td>'+
+                        '<td>'+type+'</td>'+
+                        '<td>'+quantity+'</td>'+
+                        '</tr>';
+                    console.log(row);
+                    $("#quantityTable > tbody").append(row);
+                })
+            })
+                .fail(function (){
+                    alert("Error to collect");
+                })
+                .always(function (){
+                    // something here
+                })
+            ;
+        }
+    </script>
+</head>
+<body>
+    <div layout:fragment="adminContent">
+        <!-- content -->
+
+            <div class="col-7">
+                <!--/*@thymesVar id="category" type="com.example.springWebMvc.persistent.dto.CategoryDTO"*/-->
+                <form th:action="@{/admin/repository/save}" method="post" th:object="${pD}">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Quản lí kho sản phẩm</h2>
+                            <div th:if="${message != null}" class="alert alert-success" role="alert">
+                                <h4 class="alert-heading"></h4>
+                                <i th:text="${message}"></i>
+                                <p class="mb-0"></p>
+                            </div>
+                            <a th:href="@{/admin/repository}" class="btn btn-outline-success float-right mr-5" style="border-radius: 10px">Kho sản phẩm</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="row pt-3">
+                                <div class="col">
+                                    <input type="hidden" name="productDetailId" th:field="*{productDetailId}">
+                                    <div class="form-group">
+                                        <label class="ml-3" for="catId">Category</label>
+                                        <select class="form-control rounded" onchange="getProduct()" id="catId">
+                                            <option value="">--Category--</option>
+                                            <option th:each="item : ${categories}" th:value="${item.catId}" th:text="${item.catName}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class="pl-4" for="productId">Product</label><br>
+                                        <select class="form-control rounded" id="productId" th:field="*{proId}" onchange="getQuantity()">
+                                            <option value="">--Product--</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-inline">
+                                        <th:block th:each="c,state:${colors}">
+                                            <input class="form-control" type="radio" name="colorId"
+                                                   th:if="${state.index<=3}" th:field="*{colorId}" th:value="${c.colorId}">
+                                            <label class="pl-2 pr-2" th:style="'color:'+${c.colorCode}" th:if="${state.index<=3}"  th:text="${c.colorName}"></label>
+                                        </th:block>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-inline">
+                                        <th:block th:each="c,state:${colors}">
+                                            <input class="form-control" type="radio" name="colorId"
+                                                   th:if="${state.index>3}" th:field="*{colorId}" th:value="${c.colorId}">
+                                            <label class="pl-2 pr-2" th:style="'color:'+${c.colorCode}" th:if="${state.index>3}"  th:text="${c.colorName}"></label>
+                                        </th:block>
+                                    </div>
+                                </div>
+                                <small th:if="${#fields.hasErrors('colorId')}" class="text-danger">ColorId can't be null</small>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-inline">
+                                        <th:block th:each="t,state:${types}">
+                                            <input class="form-control" type="radio" name="typeId"
+                                                   th:if="${state.index<=3}" th:field="*{typeId}" th:value="${t.typeId}">
+                                            <label class="pl-2 pr-2" th:if="${state.index<=3}"  th:text="${t.typeName}"></label>
+                                        </th:block>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-inline">
+                                        <th:block th:each="t,state:${types}">
+                                            <input class="form-control" type="radio" name="typeId"
+                                                   th:if="${state.index>3}" th:field="*{typeId}" th:value="${t.typeId}">
+                                            <label class="pl-2 pr-2" th:if="${state.index>3}"  th:text="${t.typeName}"></label>
+                                        </th:block>
+                                    </div>
+                                </div>
+                                <small th:if="${#fields.hasErrors('typeId')}" class="text-danger">TypeId can't be null</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="discount">Discount</label>
+                                <input type="number" class="form-control" id="discount" th:field="*{discount}">
+                                <small th:if="${#fields.hasErrors('discount')}" class="text-danger">Discount must greater than 0</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="quantity">Quantity</label>
+                                <input type="number" class="form-control" id="quantity" th:field="*{quantity}">
+                                <small th:if="${#fields.hasErrors('quantity')}" class="text-danger">Quantity must greater than 0</small>
+                            </div>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <button class="btn btn-danger" type="reset">Reset</button>
+                            <button class="btn btn-primary float-right" type="submit"><i class="fas fa-save"></i>
+                                <span>Save</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="pb-5">Số lượng tồn kho</h3>
+                    </div>
+                    <div class="card-body d-flex justify-content-center">
+                        <table class="table table-bordered text-center" id="quantityTable">
+                            <thead class="bg-success">
+                                <th>Color</th>
+                                <th>Type</th>
+                                <th>Quantity</th>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td colspan="3" class="text-center">
+                                    <h5>Chọn sản phẩm để xem chi tiết</h5>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+    </div>
+</body>
+</html>

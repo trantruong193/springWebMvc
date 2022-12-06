@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/adminlayout.html}">
+<head>
+</head>
+<body>
+    <div layout:fragment="adminContent">
+        <!-- content -->
+
+            <div class="col col-7">
+                <!--/*@thymesVar id="category" type="com.example.springWebMvc.persistent.dto.CategoryDTO"*/-->
+                <form th:action="@{/admin/categories/save}" method="post" th:object="${category}">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Quản lí danh mục</h2>
+                            <div th:if="${message != null}" class="alert alert-success" role="alert">
+                                <h4 class="alert-heading"></h4>
+                                <i th:text="${message}"></i>
+                                <p class="mb-0"></p>
+                            </div>
+                            <a th:href="@{/admin/categories}" class="btn btn-outline-success float-right mr-5" style="border-radius: 10px">Tất cả danh mục</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="categoryId">Category ID:</label>
+                                <input type="text" id="categoryId" th:field="*{catId}" readonly class="form-control" aria-describedby="catIdHid">
+                                <small id="catIdHid" class="text-muted">Category id is readonly</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                <input type="text" id="name" th:field="*{catName}" class="form-control" aria-describedby="nameHid">
+                                <small th:if="${#fields.hasErrors('catName')}" id="nameHid" class="text-muted">Tên danh mục không được để trống</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Status</label>
+                                <select class="form-control" th:field="*{status}" id="status">
+                                    <option th:value="true"> Đang hoạt động</option>
+                                    <option th:value="false"> Ngừng kinh doanh</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card-footer text-muted">
+                            <button class="btn btn-danger" type="reset">Reset</button>
+                            <button class="btn btn-primary float-right" type="submit"><i class="fas fa-save"></i>
+                                <span>Save</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+    </div>
+</body>
+</html>

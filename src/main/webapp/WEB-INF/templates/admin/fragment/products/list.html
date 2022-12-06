@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/adminlayout.html}">
+<head>
+</head>
+<body>
+    <div layout:fragment="adminContent">
+        <!-- content -->
+        <div class="col text-center mt-2">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-center mb-2">Tất cả sản phẩm</h2>
+                    <div th:if="${message != null}" class="alert alert-success" role="alert">
+                        <h4 class="alert-heading"></h4>
+                        <i th:text="${message}"></i>
+                        <p class="mb-0"></p>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <a th:href="@{/admin/products/add}" style="border-radius: 10px" class="btn btn-outline-success text-success float-left ml-5">New Product</a>
+                        </div>
+                        <div class="col-lg-2" style="max-width: 200px">
+                            <div class="form-group pt-2">
+                                <form th:action="@{/admin/products}">
+                                    <input type="hidden" name="size" th:value="${pages.size}">
+                                    <input type="hidden" name="search" th:value="${search}">
+                                    <select name="sort" class="form-control btn btn-outline-warning" onchange="this.form.submit()">
+                                        <option th:selected="${sort.equals('proId,asc')}" value="proId,asc">Sort by ID, ASC</option>
+                                        <option th:selected="${sort.equals('proId,desc')}" value="proId,desc">Sort by ID, DESC</option>
+                                        <option th:selected="${sort.equals('proName,asc')}" value="proName,asc">Sort by Name, ASC</option>
+                                        <option th:selected="${sort.equals('proName,desc')}" value="proName,desc">Sort by Name, DESC</option>
+                                        <option th:selected="${sort.equals('category,asc')}" value="category,asc">Sort by Category</option>
+                                        <option th:selected="${sort.equals('producer,asc')}" value="producer,asc">Sort by Producer</option>
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 form-inline">
+                            <form th:action="@{/admin/products}" method="get">
+                                <input type="hidden" name="sort" th:value="${sort}">
+                                <input type="hidden" name="search" th:value="${search}">
+                                <div class="form-inline text-warning pb-3">
+                                    <label for="pageSize">Size:</label>
+                                    <select class="form-control btn btn-outline-warning ml-1" name="size" id="pageSize" onchange="this.form.submit()">
+                                        <option th:selected="${pages.size == 5}" th:value="${5}">5</option>
+                                        <option th:selected="${pages.size == 10}" th:value="${10}">10</option>
+                                        <option th:selected="${pages.size == 20}" th:value="${20}">20</option>
+                                        <option th:selected="${pages.size == 30}" th:value="${30}">30</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table-sm table-striped table-bordered">
+                        <thead class="thead-inverse">
+                        <thead class="thead-inverse">
+                        <tr>
+                            <th></th>
+                            <th width="15%">Name</th>
+                            <th>Status</th>
+                            <th>Discount</th>
+                            <th>Base Price</th>
+                            <th>Import Date</th>
+                            <th width="7%">Category</th>
+                            <th width="7%">Catalog</th>
+                            <th>Producer</th>
+<!--                            <th width="15%">Description</th>-->
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="p: ${pages}" th:class="${#strings.equals(p.status,'OutOfOrder')? 'text-danger' : ''}">
+                            <td><img th:src="@{'/img/'+${p.imgUrl}}" width="70px" class="img-fluid" alt=""></td>
+                            <td th:text="${p.proName}"></td>
+                            <td th:text="${p.status}"></td>
+                            <td th:text="${p.discount}+'%'"></td>
+                            <td th:text="${p.basePrice}+'$'"></td>
+                            <td th:text="${#dates.format(p.importDate,'dd-MM-YYYY')}"></td>
+                            <td th:text="${p.category.catName}"></td>
+                            <td th:text="${p.catalog.name}"></td>
+                            <td th:text="${p.producer.producerName}"></td>
+<!--                            <td th:if="${p.description.length()>50}"-->
+<!--                                th:text="${#strings.substring(p.description,0,50)+'...'}">-->
+<!--                            </td>-->
+<!--                            <td th:if="${p.description.length()<=50}"-->
+<!--                                th:text="${#strings.substring(p.description,0,p.description.length())}">-->
+<!--                            </td>-->
+                            <td>
+                                <a class="btn btn-outline-info rounded" data-toggle="tooltip" title="Detail" th:href="@{'/admin/products/detail/' + ${p.proId}}"><i class="fas fa-info-circle"></i></a>
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-warning rounded" data-toggle="tooltip" title="Update" th:href="@{'/admin/products/update/' + ${p.proId}}"><i class="ml-2 fas fa-edit"></i></a>
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-danger rounded" data-toggle="tooltip" title="Repository" th:href="@{'/admin/repository?proId=' + ${p.proId}}"><i class="ml-2 fas fa-warehouse"></i></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer text-muted">
+                    <div class="card-footer text-muted form-inline justify-content-center">
+                        <div class="form-inline">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-center">
+                                    <li th:class="${pages.number == 0?'page-item active':'page-item'}">
+                                        <a class="page-link" th:href="@{/admin/products(page=${0},size=${pages.size},sort=${sort},search=${search})}">
+                                            <span aria-hidden="true">First</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a th:class="${(pages.number <= 0)?'page-link btn disabled':'page-link'}"
+                                           th:href="@{/admin/products(page=${(pages.number)-1},size=${pages.size},sort=${sort},search=${search})}"
+                                           th:text="${pages.number}">
+                                        </a>
+                                    </li>
+                                    <li class="page-item active">
+                                        <a class="page-link"
+                                           th:href="@{/admin/products(page=${(pages.number)},size=${pages.size},sort=${sort},search=${search})}"
+                                           th:text="${(pages.number)+1}"></a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a th:class="${(pages.number >= (pages.totalPages)-1)?'page-link btn disabled':'page-link'}"
+                                           th:href="@{/admin/products(page=${(pages.number)+1},size=${pages.size},sort=${sort},search=${search})}"
+                                           th:text="${(pages.number)+2}">
+
+                                        </a>
+                                    </li>
+                                    <li  th:class="${pages.number == (pages.totalPages)-1?'page-item active':'page-item'}">
+                                        <a class="page-link" th:href="@{/admin/products(page=${(pages.totalPages)-1},size=${pages.size},sort=${sort},search=${search})}">
+                                            <span aria-hidden="true">Last</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

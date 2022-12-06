@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{site/homelayout.html}">
+<head>
+    <script>
+        function checkUsername(){
+            const rUsername = $("#rUsername").val();
+            const urlString = "api/v1/checkUsername?rUsername=" + rUsername;
+            if(rUsername.length<3 || rUsername.length>20){
+                $("#rUsernameHid").text("Tên đăng nhập phải từ 3 tới 20 kí tự");
+            }else{
+                $.get(urlString,function (responseJson)
+                {
+                    if (responseJson == true)
+                        $("#rUsernameHid").text("Tên đăng nhập đã tồn tại").removeClass("text-success").addClass("text-danger");
+                    else
+                        $("#rUsernameHid").text("Tên đăng nhập hợp lệ").removeClass("text-danger").addClass("text-success");
+                })
+                    .fail(function (){
+                        alert("Có lỗi xảy ra.");
+                    })
+                    .always(function (){
+                        // something here
+                    })
+                ;
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <!-- Breadcrumb Start -->
+        <div class="container-fluid">
+            <div class="row px-xl-5">
+                <div class="col-12">
+                    <nav class="breadcrumb bg-light mb-30">
+                        <a class="breadcrumb-item text-dark" th:href="@{site}">Home</a>
+                        <span class="breadcrumb-item active">Login</span>
+                    </nav>
+                </div>
+            </div>
+            <div class="row">
+                <div class="nav nav-tabs mb-4 col-6 offset-3">
+                    <a class="nav-item nav-link text-dark active" data-toggle="tab" href="#tab-pane-1">Đăng nhập</a>
+                    <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-2">Đăng kí</a>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div th:if="${message != null}" class="alert alert-success rounded" role="alert">
+                    <i th:text="${message}"></i>
+                </div>
+                <div th:if="${param.error}" class="text-danger mb-3">
+                    Invalid username and password.
+                </div>
+            </div>
+            <div class="row">
+                <div class="tab-content col-md-6 offset-md-3">
+                    <div class="tab-pane fade show active" id="tab-pane-1">
+                        <div class="row">
+                            <div class="col-6">
+                                <form th:action="@{/login}" method="post">
+                                    <div class="card rounded">
+                                        <div class="card-body">
+                                            <p class="text-center text-truncate">Đăng nhập bằng tài khoản</p>
+                                            <div class="form-group mb-0">
+                                                <input type="text" class="form-control rounded" name="username" id="username" placeholder="Username"><br>
+                                            </div>
+                                            <div class="form-group mb-0">
+                                                <input type="password" class="form-control rounded" name="password" id="password" placeholder="Password"><br>
+                                            </div>
+                                            <div class="form-inline">
+                                                <input type="checkbox" class="form-inline ml-1" name="remember-me" id="rememberMe">
+                                                <label class="ml-2" for="rememberMe">Remember Me</label>
+                                            </div>
+                                            <div class="text-muted d-flex justify-content-center mt-3">
+                                                <button class="btn btn-success rounded w-75" type="submit">Login</button>
+                                            </div>
+                                            <a href="" class="text-muted d-block text-center mt-3">Quên mật khẩu</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-6">
+                                <div class="card rounded">
+                                    <div class="card-body">
+                                        <p class="text-center">Đăng nhập với</p>
+                                        <div class="form-group">
+                                            <a class="form-control btn btn-outline-success rounded"><i class="fab fa-facebook float-left mt-1"></i>Facebook</a>
+                                        </div>
+                                        <div class="form-group pt-3">
+                                            <a class="form-control btn btn-outline-info rounded"><i class="fab fa-google float-left mt-1"></i>Google</a>
+                                        </div>
+                                        <div class="form-group pt-3 pb-5">
+                                            <a class="form-control btn btn-outline-dark rounded"><i class="fab fa-apple float-left mt-1"></i>Apple</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab-pane-2">
+                        <div class="row">
+                            <div class="col-6">
+                                <form th:action="@{/site/register}" method="post">
+                                    <div class="card rounded">
+                                        <div class="card-body">
+                                            <p class="text-center text-truncate">Đăng kí tài khoản</p>
+                                            <div class="form-group mb-0">
+                                                <small id="rUsernameHid"></small>
+                                                <small class="text-danger" th:if="${uMessage != null}" th:text="${uMessage}"></small>
+                                                <input type="text" class="form-control rounded" name="rUsername" id="rUsername"
+                                                       placeholder="Username" aria-describedby="rUsernameHid"
+                                                       onchange="checkUsername()"><br>
+                                            </div>
+                                            <div class="form-group mb-0">
+                                                <small id="rPasswordHid" class="text-danger" th:if="${pMessage != null}" th:text="${pMessage}"></small>
+                                                <input type="password" class="form-control rounded" name="rPassword" placeholder="Password" aria-describedby="rPasswordHid"><br>
+                                            </div>
+                                            <div class="form-inline">
+                                                <input type="checkbox" class="form-inline ml-1" required>
+                                                <a class="ml-2 text-muted text-truncate">Đồng ý với các điều khoản</a>
+                                            </div>
+                                            <div class="text-muted d-flex justify-content-center mt-4">
+                                                <button class="btn btn-success rounded w-75" type="submit">Register</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-6">
+                                <div class="card rounded">
+                                    <div class="card-body">
+                                        <p class="text-center">Đăng kí với</p>
+                                        <div class="form-group">
+                                            <a class="form-control btn btn-outline-success rounded"><i class="fab fa-facebook float-left mt-1"></i>Facebook</a>
+                                        </div>
+                                        <div class="form-group pt-3">
+                                            <a class="form-control btn btn-outline-info rounded"><i class="fab fa-google float-left mt-1"></i>Google</a>
+                                        </div>
+                                        <div class="form-group pt-3 pb-3">
+                                            <a class="form-control btn btn-outline-dark rounded"><i class="fab fa-apple float-left mt-1"></i>Apple</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Breadcrumb End -->
+        <!-- Login Start -->
+
+        <!-- Login End -->
+    </div>
+</body>
+
+</html>
