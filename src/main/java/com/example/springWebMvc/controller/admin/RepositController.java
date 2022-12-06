@@ -22,11 +22,11 @@ import java.util.List;
 // http://localhost:8080/admin/repository/add
 public class RepositController {
 
-    private ColorService colorService;
-    private ProductService productService;
-    private CategoryService categoryService;
-    private ProductDetailService productDetailService;
-    private TypeService typeService;
+    private final ColorService colorService;
+    private final ProductService productService;
+    private final CategoryService categoryService;
+    private final ProductDetailService productDetailService;
+    private final TypeService typeService;
     @Autowired
     public RepositController (ColorService colorService,
                               ProductService productService,
@@ -93,6 +93,7 @@ public class RepositController {
         return "forward:/admin/repository";
     }
     @PostMapping("update/{productDetailId}")
+    // test
     public String update(Model model,
                          @PathVariable("productDetailId") Long productDetailId,
                          @RequestParam("discount") double discount,
