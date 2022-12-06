@@ -93,7 +93,6 @@ public class RepositController {
         return "forward:/admin/repository";
     }
     @PostMapping("update/{productDetailId}")
-    // test
     public String update(Model model,
                          @PathVariable("productDetailId") Long productDetailId,
                          @RequestParam("discount") double discount,
