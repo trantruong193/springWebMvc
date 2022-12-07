@@ -31,6 +31,7 @@ public class WebController {
     UserService userService;
     RoleService roleService;
     PasswordEncoder passwordEncoder;
+    BannerService bannerService;
     @Autowired
     public WebController (ProductService productService,
                           CategoryService categoryService,
@@ -38,6 +39,7 @@ public class WebController {
                           CatalogService catalogService,
                           ProductDetailService productDetailService,
                           CartService cartService,
+                          BannerService bannerService,
                           UserService userService,
                           RoleService roleService,
                           PasswordEncoder passwordEncoder){
@@ -45,6 +47,7 @@ public class WebController {
         this.catalogService = catalogService;
         this.productService = productService;
         this.producerService = producerService;
+        this.bannerService = bannerService;
         this.productDetailService = productDetailService;
         this.cartService = cartService;
         this.userService = userService;
@@ -62,6 +65,10 @@ public class WebController {
     @ModelAttribute("producers")
     public List<Producer> getAllProducers(){
         return producerService.getAll();
+    }
+    @ModelAttribute("banners")
+    public List<Banner> getAllBanners(){
+        return bannerService.getAllBanner();
     }
     @ModelAttribute("catalogs")
     public List<Catalog> getAllCatalogs(){

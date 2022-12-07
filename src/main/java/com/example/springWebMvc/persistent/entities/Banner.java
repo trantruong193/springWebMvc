@@ -16,9 +16,7 @@ public class Banner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bannerId;
-    @NotEmpty
     private String title;
-    @NotEmpty
     private String description;
     private String imgUrl;
 }

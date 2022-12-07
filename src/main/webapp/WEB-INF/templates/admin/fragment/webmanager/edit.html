@@ -25,18 +25,18 @@
 </head>
 <body>
     <div layout:fragment="adminContent">
-        <form th:action="@{admin/banner/update}" enctype="multipart/form-data" th:object="${banner}">
             <div class="container-fluid mb-3">
                 <div class="row px-xl-5">
                     <div class="col">
                         <div id="header-carousel" class="carousel slide carousel-fade mb-30 mb-lg-0" data-ride="carousel">
                             <div class="carousel-inner">
-                                <div class="carousel-item position-relative active" style="height: 540px;">
-                                    <img class="position-absolute w-100 h-100" id="imgDisplay" th:src="@{/img/carousel-1.jpg}" style="object-fit: cover;">
+                                <div class="carousel-item position-relative active" style="height: 600px;">
+                                    <img class="position-absolute w-100 h-100" id="imgDisplay" style="object-fit: cover;"
+                                         th:src="@{'/img/'+${banner.imgUrl}}">
                                     <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                         <div class="p-3" style="max-width: 700px;">
-                                            <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown" id="titleDisplay">Men Fashion</h1>
-                                            <p class="mx-md-5 px-5 animate__animated animate__bounceIn" id="descriptionDisplay">Lorem rebum magna amet lorem magna erat diam stet. Sadips duo stet amet amet ndiam elitr ipsum diam</p>
+                                            <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown" id="titleDisplay" th:text="${banner.title}"></h1>
+                                            <p class="mx-md-5 px-5 animate__animated animate__bounceIn" id="descriptionDisplay" th:text="${banner.description}"></p>
                                         </div>
                                     </div>
                                 </div>
@@ -45,21 +45,25 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-5 card-header w-75 rounded">
+        <form th:action="@{admin/banner/update}" method="post" enctype="multipart/form-data" th:object="${banner}">
+            <div class="row mt-5 card-header rounded">
                 <div class="col-4 form-group ">
-                    <label for="img">Picture</label>
-                    <input type="file" class="form-control rounded" id="img" onchange="chooseFile(this)">
+                    <label for="image">Picture</label>
+                    <input type="file" class="form-control rounded"
+                           accept=".png, .jpg, .jpeg"
+                           name="image" id="image" required onchange="chooseFile(this)">
                 </div>
+                <input type="hidden" readonly th:field="*{bannerId}" th:value="${bannerId}">
                 <div class="col-4 form-group ">
                     <label for="title">Title</label>
-                    <input type="text" class="form-control" id="title" oninput="changeTitle()">
+                    <input type="text" class="form-control" th:field="*{title}" id="title" oninput="changeTitle()">
                 </div>
                 <div class="col-4 form-group ">
                     <label for="description">Description</label><br>
-                    <textarea class="form-control rounded" id="description" rows="3" oninput="changeDes()"> </textarea>
+                    <textarea class="form-control rounded" th:field="*{description}" id="description" rows="3" oninput="changeDes()"> </textarea>
                 </div>
             </div>
-            <div class="card-footer row rounded w-75 d-flex justify-content-center">
+            <div class="card-footer row rounded d-flex justify-content-center">
                 <button type="submit" class="btn btn-outline-success w-75 rounded">
                     Update
                 </button>

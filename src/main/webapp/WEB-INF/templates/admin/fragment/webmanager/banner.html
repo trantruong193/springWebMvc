@@ -17,7 +17,9 @@
                             <li data-target="#header-carousel" data-slide-to="2"></li>
                         </ol>
                         <div class="carousel-inner">
-                            <div class="carousel-item position-relative active" style="height: 540px;">
+                            <div  th:each="b,index:${banners}"
+                                  th:class="${(index.index == 0)?'carousel-item position-relative active':'carousel-item position-relative'}"
+                                  style="height: 600px;">
                                 <img class="position-absolute w-100 h-100" th:src="@{'/img/'+${b.imgUrl}}" style="object-fit: cover;">
                                 <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                     <div class="p-3" style="max-width: 700px;">
