@@ -4,10 +4,8 @@
       layout:decorate="~{site/homelayout.html}">
 <head>
     <script>
-        function getProductDetail(id){
-            $("#cId").val(id);
-            $("#pDQuantity").empty();
-            const urlString = "[[@{api/v1/productDetail?productDetailId=}]]" + id;
+        function getQuantity(currentDetailId){
+            const urlString = "[[@{api/v1/productDetail?productDetailId=}]]" + currentDetailId;
             $.get(urlString,function (responseJson)
             {
                     $("#pDQuantity").text(responseJson.quantity);
@@ -20,18 +18,17 @@
                 })
             ;
         }
-
         function addToCart(){
-            const cId = $("#cId").val();
+            const currentDetailId = $("input[name='productDetailId']").val();
             const cQuantity = Math.floor($("#cQuantity").val());
-            const urlString = "api/v1/addToCart?productDetailId=" + cId + "&quantity=" + cQuantity;
+            const urlString = "api/v1/addToCart?productDetailId=" + currentDetailId + "&quantity=" + cQuantity;
 
-            if (cId === ''){
-                alert("Vui lòng chọn màu");
+            if (currentDetailId == null){
+                alert("Sản phẩm tạm hết hàng");
                 return;
             }
             if (cQuantity<1){
-                alert("Vui lòng nhập số lượng");
+                alert("Vui lòng chọn số lượng");
                 return;
             }
             $.get(urlString,function (responseJson)
@@ -128,17 +125,23 @@
                             <strong class="text-dark mr-3">Colors:</strong>
                                 <div class="mr-3 border" style="height: 50px;width: 85px;border-radius: 10px"
                                      th:each="pd:${productDetails}">
-                                    <input type="radio" class="ml-2 mt-2" name="productDetailId" th:value="${pd.productDetailId}" onchange="getProductDetail(this.value)">
+                                    <input type="radio" class="ml-2 mt-2" name="productDetailId"
+                                           th:value="${pd.productDetailId}"
+                                           th:checked="${#strings.equals(pd.color.colorId,colorId)}"
+                                           onchange="getQuantity(this.value)">
                                     <p class="d-inline ml-2 mt-2" th:style="'color:'+${pd.color.colorCode}" th:text="${pd.color.colorName}"></p>
                                     <p class="text-danger text-center" th:text="${#numbers.formatDecimal((product.basePrice - product.basePrice * pd.discount/100),0,1)}+'$'"></p>
                                 </div>
-                            <input type="hidden" id="cId">
                         </div>
                         <!-- Insert quantity here-->
-                        <span style="padding-left: 65px">Số lượng chỉ còn </span>
-                        <p id="pDQuantity" class="d-inline text-danger">0</p>
-                        <span> sản phẩm</span>
-
+                        <div th:if="${quantity == null}">
+                            <p class="text-danger pl-5">Sản phẩm tạm thời hết hàng</p>
+                        </div>
+                        <div th:if="${quantity != null}">
+                            <span style="padding-left: 65px">Số lượng chỉ còn </span>
+                            <p id="pDQuantity" class="d-inline text-danger" th:text="${quantity}"></p>
+                            <span> sản phẩm</span>
+                        </div>
                         <div class="d-flex align-items-center mb-4 pt-3">
                             <div class="input-group quantity mr-3" style="width: 130px;">
                                 <div class="input-group-btn">

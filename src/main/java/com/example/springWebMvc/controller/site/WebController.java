@@ -17,6 +17,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/site")
@@ -153,21 +154,31 @@ public class WebController {
     private String detail( Model model,
                            @PathVariable("proId") Long proId,
                            @RequestParam(name = "typeId", required = false)Long typeId){
-        if (typeId != null){
-            model.addAttribute("productDetails",productDetailService.getByProIdAndTypeId(proId,typeId));
-        }
+
         model.addAttribute("product",productService.findById(proId));
         List<ProductDetail> productDetails = productDetailService.getByProId(proId);
-        List<TypeDTO> types = new ArrayList<>();
-        productDetails.forEach(productDetail -> {
-            TypeDTO type = new TypeDTO();
-            type.setTypeId(productDetail.getType().getTypeId());
-            type.setTypeName(productDetail.getType().getTypeName());
-            types.add(type);
-        });
-        HashSet<TypeDTO> typeDTOHashSet = new HashSet<>(types);
-        model.addAttribute("types",typeDTOHashSet);
-        model.addAttribute("typeId",typeId);
+        if (!productDetails.isEmpty()){
+            List<TypeDTO> types = new ArrayList<>();
+            productDetails.forEach(productDetail -> {
+                TypeDTO type = new TypeDTO();
+                type.setTypeId(productDetail.getType().getTypeId());
+                type.setTypeName(productDetail.getType().getTypeName());
+                types.add(type);
+            });
+            HashSet<TypeDTO> typeDTOHashSet = new HashSet<>(types);
+
+            if (typeId != null){
+                model.addAttribute("productDetails",productDetailService.getByProIdAndTypeId(proId,typeId));
+            }else {
+                List<TypeDTO> list = new ArrayList<>(typeDTOHashSet);
+                typeId = list.get(0).getTypeId();
+                model.addAttribute("productDetails",productDetailService.getByProIdAndTypeId(proId,typeId));
+            }
+            model.addAttribute("types",typeDTOHashSet);
+            model.addAttribute("typeId",typeId);
+            model.addAttribute("colorId",productDetailService.getByProIdAndTypeId(proId,typeId).get(0).getColor().getColorId());
+            model.addAttribute("quantity",productDetailService.getByProIdAndTypeId(proId,typeId).get(0).getQuantity());
+        }
         return "site/fragment/productDetail";
     }
     @GetMapping("products")
