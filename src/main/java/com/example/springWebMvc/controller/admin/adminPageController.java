@@ -12,4 +12,8 @@ public class adminPageController {
     public String adminPage(){
         return "admin/fragment/adminHome";
     }
+    @GetMapping("/banner")
+    public String banner(){
+        return "admin/fragment/webmanager/banner";
+    }
 }
