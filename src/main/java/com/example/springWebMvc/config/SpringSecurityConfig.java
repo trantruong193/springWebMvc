@@ -34,7 +34,6 @@ public class SpringSecurityConfig {
     }
     @Bean
     public PasswordEncoder passwordEncoder(){
-
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
     @Bean
@@ -61,6 +60,7 @@ public class SpringSecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests()
                     .antMatchers("/admin/**").authenticated()
+                    .antMatchers("/customer/**").authenticated()
                     .anyRequest().permitAll()
                 .and()
                 .formLogin()

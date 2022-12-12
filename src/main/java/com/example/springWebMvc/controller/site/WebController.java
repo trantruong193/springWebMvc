@@ -2,22 +2,31 @@ package com.example.springWebMvc.controller.site;
 
 import com.example.springWebMvc.persistent.ProductStatus;
 import com.example.springWebMvc.persistent.dto.CartItem;
+import com.example.springWebMvc.persistent.dto.CustomerDTO;
+import com.example.springWebMvc.persistent.dto.CustomizeUserDetails;
 import com.example.springWebMvc.persistent.dto.TypeDTO;
 import com.example.springWebMvc.persistent.entities.*;
+import com.example.springWebMvc.repository.CustomerRepository;
+import com.example.springWebMvc.repository.RoleRepository;
 import com.example.springWebMvc.service.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
+import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/site")
@@ -31,8 +40,13 @@ public class WebController {
     CartService cartService;
     UserService userService;
     RoleService roleService;
+    CustomerService customerService;
+    FileUploadService fileUploadService;
     PasswordEncoder passwordEncoder;
     BannerService bannerService;
+    private final RoleRepository roleRepository;
+    private final CustomerRepository customerRepository;
+
     @Autowired
     public WebController (ProductService productService,
                           CategoryService categoryService,
@@ -43,7 +57,11 @@ public class WebController {
                           BannerService bannerService,
                           UserService userService,
                           RoleService roleService,
-                          PasswordEncoder passwordEncoder){
+                          CustomerService customerService,
+                          FileUploadService fileUploadService,
+                          PasswordEncoder passwordEncoder,
+                          RoleRepository roleRepository,
+                          CustomerRepository customerRepository){
         this.categoryService = categoryService;
         this.catalogService = catalogService;
         this.productService = productService;
@@ -53,7 +71,11 @@ public class WebController {
         this.cartService = cartService;
         this.userService = userService;
         this.roleService = roleService;
+        this.customerService = customerService;
+        this.fileUploadService = fileUploadService;
         this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
+        this.customerRepository = customerRepository;
     }
     @ModelAttribute("feature")
     public List<Product> getFeatureProduct(){
@@ -87,8 +109,14 @@ public class WebController {
     public double getAmount(){
         return cartService.getAmount();
     }
+
     @GetMapping("")
     private String home(Model model){
+        List<ProductDetail> productDetails = productDetailService.getAll();
+        productDetails.sort(Comparator.comparing(ProductDetail::getDiscount));
+        ProductDetail maxOffer;
+        maxOffer = productDetails.get(productDetails.size()-1);
+        model.addAttribute("offer",maxOffer);
         model.addAttribute("phones",productService.getProductByCatIdAndStatus(1L, ProductStatus.Feature));
         model.addAttribute("laptops",productService.getProductByCatIdAndStatus(2L, ProductStatus.Feature));
         model.addAttribute("tablets",productService.getProductByCatIdAndStatus(3L, ProductStatus.Feature));
@@ -116,6 +144,39 @@ public class WebController {
     @GetMapping("checkout")
     private String checkout(){
         return "site/fragment/checkout";
+    }
+    @GetMapping("customer")
+    private String customer(@AuthenticationPrincipal CustomizeUserDetails userDetails,Model model){
+        Customer customer = customerService.findByUSerId(userDetails.getUserId());
+        if (customer != null)
+            model.addAttribute("customer",new CustomerDTO(customer));
+        else
+            model.addAttribute("customer",new CustomerDTO());
+        model.addAttribute("username",userDetails.getUsername());
+        return "site/fragment/customer/customer-infor";
+    }
+    @PostMapping("customer/update")
+    private String updateCus(Model model,@AuthenticationPrincipal CustomizeUserDetails userDetails,
+                             @Valid @ModelAttribute("customer") CustomerDTO dto,
+                             BindingResult  bindingResult,
+                             @RequestParam("avatarImg")MultipartFile img) throws IOException {
+        if (bindingResult.hasErrors()){
+            model.addAttribute("username",userDetails.getUsername());
+            return "site/fragment/customer/customer-infor";
+        }
+        Customer customer = new Customer();
+        if (dto.getCusId() != null){
+            customer = customerRepository.getCustomerByUser_UserId(userDetails.getUserId());
+        }
+        BeanUtils.copyProperties(dto,customer);
+        customer.setUser(userService.getUserById(userDetails.getUserId()));
+        if (!img.isEmpty()){
+            if (!Objects.equals(dto.getAvatarUrl(), ""))
+                fileUploadService.delete(dto.getAvatarUrl());
+            customer.setAvatarUrl(fileUploadService.save(img));
+        }
+        customerService.save(customer);
+        return "redirect:/site/customer";
     }
     @GetMapping("contact")
     private String contact(){
@@ -148,7 +209,7 @@ public class WebController {
             role.setUser(userService.getUserByUsername(username));
             role.setAuthority(Authority.builder().authorityId(3L).authorityName("ROLE_CUSTOMER").build());
             roleService.saveRole(role);
-        return "site/fragment/home";
+        return "redirect:/site";
     }
     @GetMapping("detail/{proId}")
     private String detail( Model model,

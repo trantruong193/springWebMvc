@@ -25,13 +25,9 @@ public class adminPageController {
         this.fileUploadService = fileUploadService;
     }
     @RequestMapping("")
-    public String adminPage(){
-        return "admin/fragment/adminHome";
-    }
-    @GetMapping("/banner")
-    public String banner(Model model){
+    public String adminPage(Model model){
         model.addAttribute("banners",bannerService.getAllBanner());
-        return "admin/fragment/webmanager/banner";
+        return "admin/fragment/adminHome";
     }
     @GetMapping("/banner/edit/{bannerId}")
     public String edit(Model model,
@@ -56,7 +52,7 @@ public class adminPageController {
         }
         bannerService.save(banner);
         model.addAttribute("message","Update successfully");
-        return "redirect:/admin/banner";
+        return "redirect:/admin";
     }
 }
 

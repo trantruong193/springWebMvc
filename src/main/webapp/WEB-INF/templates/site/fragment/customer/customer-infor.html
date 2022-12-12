@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://wwww.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{site/homelayout.html}">
+<head>
+    <script>
+        function chooseFile(fileInput){
+            if (fileInput.files && fileInput.files[0]){
+                const reader = new FileReader();
+                reader.onload = function (e){
+                    $('#avatar').attr('src',e.target.result);
+                }
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <!-- Breadcrumb Start -->
+        <div class="container-fluid">
+            <div class="row px-xl-5">
+                <div class="col-12">
+                    <nav class="breadcrumb bg-light mb-30">
+                        <a class="breadcrumb-item text-dark" th:href="@{/site}">Home</a>
+                        <span class="breadcrumb-item active">Customer Information</span>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- Breadcrumb End -->
+        <!-- Checkout Start -->
+        <div class="container-fluid">
+            <div class="row px-xl-5">
+                <div class="col-lg-8">
+                    <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Customer Information</span></h5>
+                    <div class="bg-light p-30 mb-5">
+                        <form th:action="@{site/customer/update}" method="post" th:object="${customer}" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label>Account</label>
+                                    <input class="form-control rounded border-success" th:value="${username}" type="text" readonly>
+                                    <input type="number" hidden th:field="*{cusId}" th:value="${customer.cusId}">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <div class="row d-flex justify-content-center">
+                                        <img th:src="@{'/img/'+${customer.avatarUrl}}" class="border border-success"
+                                             style="border-radius: 50%" width="100px" height="100px"
+                                             id="avatar">
+                                        <label for="avatarImg" ><i class="fas fa-pen-nib text-success"></i></label>
+                                    </div>
+                                    <input type="text" hidden th:field="*{avatarUrl}" th:value="${customer.avatarUrl}">
+                                    <input type="file" hidden name="avatarImg" id="avatarImg"
+                                           accept=".png, .jpg, .jpeg"
+                                           onchange="chooseFile(this)">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Full Name</label>
+                                    <input class="form-control rounded border-success" type="text"
+                                           th:field="*{cusName}" th:value="${customer.cusName}">
+                                    <small th:if="${#fields.hasErrors('cusName')}" class="text-danger">Please enter you full name</small>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Phone</label>
+                                    <input class="form-control rounded border-success" type="text"
+                                           th:field="*{phone}" th:value="${customer.phone}">
+                                    <small th:if="${#fields.hasErrors('phone')}" class="text-danger">Please enter you phone number</small>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Birthday</label>
+                                    <input class="form-control rounded border-success" type="date"
+                                           th:field="*{birthday}" th:value="${#dates.format(customer.birthday,'dd-MM-yyyy')}">
+                                    <small th:if="${#fields.hasErrors('birthday')}" class="text-danger">Please enter your birthday</small>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Address</label>
+                                    <input class="form-control rounded border-success" type="text"
+                                           th:field="*{address}" th:value="${customer.address}">
+                                    <small th:if="${#fields.hasErrors('address')}" class="text-danger">Please enter your address</small>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Email</label>
+                                    <input class="form-control rounded border-success" type="email"
+                                           th:field="*{email}" th:value="${customer.email}">
+                                    <small th:if="${#fields.hasErrors('email')}" class="text-danger">Please enter your email</small>
+                                </div>
+                                <div class="col-md-6 form-group d-flex justify-content-center">
+                                    <button type="submit" class="btn w-100 mt-3 rounded btn-success">Update</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Order Total</span></h5>
+                    <div class="bg-light p-30 mb-5">
+                        <div class="border-bottom">
+                            <h6 class="mb-3">Products</h6>
+                            <div class="d-flex justify-content-between" th:each="item:${cartItems}">
+                                <p th:text="${item.productDetailName}"></p>
+                                <p th:text="${item.quantity}+' sản phẩm'"></p>
+                                <p th:text="${#numbers.formatDecimal(item.price*item.quantity,1,1)}+'$'"></p>
+                            </div>
+                        </div>
+                        <div class="border-bottom pt-3 pb-2">
+                            <div class="d-flex justify-content-between mb-3">
+                                <h6>Subtotal</h6>
+                                <h6 th:text="${#numbers.formatDecimal(amount,1,1)}+'$'"></h6>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <h6 class="font-weight-medium">Tax</h6>
+                                <h6 class="font-weight-medium">10%</h6>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <h6 class="font-weight-medium">Shipping <span class="text-success">(free if subtotal above 50$)</span></h6>
+                                <h6 class="font-weight-medium" th:if="${amount<50}">10$</h6>
+                                <h6 class="font-weight-medium" th:if="${amount>=50}">0$</h6>
+                            </div>
+                        </div>
+                        <div class="pt-2">
+                            <div class="d-flex justify-content-between mt-2">
+                                <h5>Total</h5>
+                                <h5 class="font-weight-medium" th:if="${amount>=50}" th:text="${#numbers.formatDecimal(amount*1.1,1,1)}+'$'"></h5>
+                                <h5 class="font-weight-medium" th:if="${amount<50}" th:text="${#numbers.formatDecimal((amount*1.1+10),1,1)}+'$'"></h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-5">
+                        <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Payment</span></h5>
+                        <div class="bg-light p-30">
+                            <div class="form-group">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" name="payment" id="paypal">
+                                    <label class="custom-control-label" for="paypal">Paypal</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" name="payment" id="directcheck">
+                                    <label class="custom-control-label" for="directcheck">Direct Check</label>
+                                </div>
+                            </div>
+                            <div class="form-group mb-4">
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" class="custom-control-input" name="payment" id="banktransfer">
+                                    <label class="custom-control-label" for="banktransfer">Bank Transfer</label>
+                                </div>
+                            </div>
+                            <button class="btn btn-block btn-primary font-weight-bold py-3">Place Order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Checkout End -->
+    </div>
+
+</body>
+</html>

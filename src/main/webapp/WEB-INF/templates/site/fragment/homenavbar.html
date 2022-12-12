@@ -138,6 +138,9 @@
                                     <a th:href="@{/admin}" class="btn px-0 mr-3" sec:authorize="hasRole('ROLE_ADMIN')">
                                         <i class="fas fa-store-alt text-primary"></i>
                                     </a>
+                                    <a th:href="@{/site/customer}" class="btn px-0 mr-3" sec:authorize="hasRole('ROLE_CUSTOMER')">
+                                        <i class="fas fa-user-cog text-primary"></i>
+                                    </a>
                                     <a th:href="@{/logout}" class="btn px-0" sec:authorize="isAuthenticated()">
                                         <i class="fas fa-sign-out-alt text-primary"></i>
                                     </a>

@@ -21,6 +21,8 @@ public class User implements Serializable {
     private String password;
     @Column(nullable = false)
     private int status;
+    @OneToOne(mappedBy = "user")
+    private Customer customer;
     @OneToMany(mappedBy = "user",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

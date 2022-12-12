@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+
+<body>
+    <p>Product</p>
+    <table>
+        <form th:action="@{test/save}">
+
+            <tr>
+                <td>ID</td>
+                <td><input type="number" name="proId"></td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td><input type="text" name="proName"></td>
+            </tr>
+            <tr>
+                <td>Phan loai 1</td>
+                <td><input type="text" name="type1"></td>
+            </tr>
+            <tr>
+                <td>Kieu</td>
+                <td><input type="text" name="type1Name"></td>
+            </tr>
+            <tr>
+                <td>Phan loai 2</td>
+                <td><input type="text" name="type2"></td>
+            </tr>
+            <tr>
+                <td>Kieu</td>
+                <td><input type="text" name="type2Name"></td>
+            </tr>
+            <button type="submit">save</button>
+        </form>
+    </table>
+</body>
+
+</html>
