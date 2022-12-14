@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://wwww.thymeleaf.org/thymeleaf-extras-springsecurity5"
       layout:decorate="~{site/homelayout.html}">
 <head>
     <script>
@@ -41,21 +41,24 @@
                     </nav>
                 </div>
             </div>
-            <div class="row">
+            <div class="row justify-content-center" sec:authorize="isAuthenticated()">
+                <div class="text-center">
+                    <h3 class="text-success">Bạn đã đăng nhập thành công !!</h3>
+                    <a th:href="@{/site}">Bấm vào đây để quay lại</a>
+                </div>
+            </div>
+            <div class="row"  sec:authorize="isAnonymous()">
                 <div class="nav nav-tabs mb-4 col-6 offset-3">
                     <a class="nav-item nav-link text-dark active" data-toggle="tab" href="#tab-pane-1">Đăng nhập</a>
                     <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-2">Đăng kí</a>
                 </div>
             </div>
-            <div class="row justify-content-center">
-                <div th:if="${message != null}" class="alert alert-success rounded" role="alert">
-                    <i th:text="${message}"></i>
-                </div>
+            <div class="row justify-content-center" sec:authorize="isAnonymous()">
                 <div th:if="${param.error}" class="text-danger mb-3">
                     Invalid username and password.
                 </div>
             </div>
-            <div class="row">
+            <div class="row" sec:authorize="isAnonymous()">
                 <div class="tab-content col-md-6 offset-md-3">
                     <div class="tab-pane fade show active" id="tab-pane-1">
                         <div class="row">

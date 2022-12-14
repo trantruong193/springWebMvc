@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.util.*;
 
 @Controller
-@RequestMapping("/site")
+@RequestMapping(value = {"/site"})
 // http://localhost:8080/site
 public class WebController {
     ProductService productService;
@@ -142,7 +142,14 @@ public class WebController {
         return "redirect:/site/cart";
     }
     @GetMapping("checkout")
-    private String checkout(){
+    private String checkout(@AuthenticationPrincipal CustomizeUserDetails userDetails,Model model){
+        if (userDetails != null){
+            Customer customer = customerService.findByUSerId(userDetails.getUserId());
+            if (customer != null)
+                model.addAttribute("customer",new CustomerDTO(customer));
+        }else {
+            model.addAttribute("customer",new CustomerDTO());
+        }
         return "site/fragment/checkout";
     }
     @GetMapping("customer")
