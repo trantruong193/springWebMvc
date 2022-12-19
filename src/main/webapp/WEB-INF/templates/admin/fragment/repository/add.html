@@ -32,15 +32,15 @@
                 $("#quantityTable > tbody").empty();
                 $.each(responseJson,function (index,pd){
                     const color = pd.colorName;
-                    console.log(color);
                     const type = pd.typeName;
                     const quantity = pd.quantity;
+                    const discount = pd.discount;
                     var row = '<tr>'+
-                        '<td>'+color+'</td>'+
                         '<td>'+type+'</td>'+
+                        '<td>'+color+'</td>'+
+                        '<td>'+discount+'</td>'+
                         '<td>'+quantity+'</td>'+
                         '</tr>';
-                    console.log(row);
                     $("#quantityTable > tbody").append(row);
                 })
             })
@@ -67,6 +67,11 @@
                             <div th:if="${message != null}" class="alert alert-success" role="alert">
                                 <h4 class="alert-heading"></h4>
                                 <i th:text="${message}"></i>
+                                <p class="mb-0"></p>
+                            </div>
+                            <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+                                <h4 class="alert-heading"></h4>
+                                <i th:text="${errorMessage}"></i>
                                 <p class="mb-0"></p>
                             </div>
                             <a th:href="@{/admin/repository}" class="btn btn-outline-success float-right mr-5" style="border-radius: 10px">Kho sản phẩm</a>
@@ -111,7 +116,7 @@
                                         </th:block>
                                     </div>
                                 </div>
-                                <small th:if="${#fields.hasErrors('colorId')}" class="text-danger">ColorId can't be null</small>
+                                <small th:if="${#fields.hasErrors('colorId')}" class="text-danger ml-5">ColorId can't be null</small>
                             </div>
                             <div class="row">
                                 <div class="col-6">
@@ -132,7 +137,7 @@
                                         </th:block>
                                     </div>
                                 </div>
-                                <small th:if="${#fields.hasErrors('typeId')}" class="text-danger">TypeId can't be null</small>
+                                <small th:if="${#fields.hasErrors('typeId')}" class="text-danger ml-5">TypeId can't be null</small>
                             </div>
 
                             <div class="form-group">
@@ -163,13 +168,14 @@
                     <div class="card-body d-flex justify-content-center">
                         <table class="table table-bordered text-center" id="quantityTable">
                             <thead class="bg-success">
-                                <th>Color</th>
                                 <th>Type</th>
+                                <th>Color</th>
+                                <th>Discount</th>
                                 <th>Quantity</th>
                             </thead>
                             <tbody>
                             <tr>
-                                <td colspan="3" class="text-center">
+                                <td colspan="4" class="text-center">
                                     <h5>Chọn sản phẩm để xem chi tiết</h5>
                                 </td>
                             </tr>

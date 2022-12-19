@@ -35,7 +35,7 @@
             <div class="row px-xl-5">
                 <div class="col-lg-8">
                     <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Customer Information</span></h5>
-                    <div class="bg-light p-30 mb-5">
+                    <div class="bg-light p-30 mb-3">
                         <form th:action="@{site/customer/update}" method="post" th:object="${customer}" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col-md-6 form-group">
@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <div class="row d-flex justify-content-center">
-                                        <img th:src="@{'/img/'+${customer.avatarUrl}}" class="border border-success"
+                                        <img th:src="@{'/img/avatar/'+${customer.avatarUrl}}" class="border border-success"
                                              style="border-radius: 50%" width="100px" height="100px"
                                              id="avatar">
                                         <label for="avatarImg" ><i class="fas fa-pen-nib text-success"></i></label>
@@ -66,6 +66,7 @@
                                     <input class="form-control rounded border-success" type="text"
                                            th:field="*{phone}" th:value="${customer.phone}">
                                     <small th:if="${#fields.hasErrors('phone')}" class="text-danger">Please enter you phone number</small>
+                                    <small th:text="${pMessage}" class="text-danger"></small>
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label>Birthday</label>
@@ -81,9 +82,8 @@
                                 </div>
                                 <div class="col-md-6 form-group">
                                     <label>Email</label>
-                                    <input class="form-control rounded border-success" type="email"
-                                           th:field="*{email}" th:value="${customer.email}">
-                                    <small th:if="${#fields.hasErrors('email')}" class="text-danger">Please enter your email</small>
+                                    <input class="form-control rounded border-success" type="email" readonly
+                                           th:value="${email}">
                                 </div>
                                 <div class="col-md-6 form-group d-flex justify-content-center">
                                     <button type="submit" class="btn w-100 mt-3 rounded btn-success">Update</button>
@@ -94,7 +94,7 @@
                 </div>
                 <div class="col-lg-4">
                     <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Order Total</span></h5>
-                    <div class="bg-light p-30 mb-5">
+                    <div class="bg-light p-30 mb-3">
                         <div class="border-bottom">
                             <h6 class="mb-3">Products</h6>
                             <div class="d-flex justify-content-between" th:each="item:${cartItems}">
@@ -126,13 +126,86 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-5">
+                    <div class="mb-3" th:if="${amount>0}">
                         <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Payment</span></h5>
                         <div class="bg-light p-30">
                             <a th:href="@{site/checkout}" class="btn btn-block btn-primary font-weight-bold py-3">Place Order</a>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row px-xl-5">
+                <div class="col">
+                    <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Order Status</span></h5>
+                    <h4  th:if="${list.isEmpty()}" class="text-center">Bạn chưa mua sắm gì <span><i class="fas fa-sad-tear"></i></span></h4>
+                    <div class="bg-light p-30 mb-3"  th:if="${!list.isEmpty()}">
+                        <table class=" table-responsive table">
+                            <thead class="table-success text-center">
+                            <tr>
+                                <td>Order Code</td>
+                                <td>Name</td>
+                                <td>Phone</td>
+                                <td>Address</td>
+                                <td>Method</td>
+                                <td>Time</td>
+                                <td>Total Price</td>
+                                <td>Status</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            </thead>
+                            <tbody th:each="item:${list}">
+                            <form method="post" th:action="@{'/site/customer/updateOrder/'+${item.orderId}}">
+                                <tr class="table-info">
+                                    <td th:text="${item.orderCode}"></td>
+                                    <td>
+                                        <input type="text" class="rounded text-center border-0" name="cusName" th:value="${item.cusName}" required>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="rounded text-center border-0" name="phone" th:value="${item.phone}" required>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="rounded text-center border-0" name="address" th:value="${item.address}" required>
+                                    </td>
+                                    <td th:text="${item.paymentMethod}"></td>
+                                    <td th:text="${#dates.format(item.createTime,'dd/MM/yyyy HH:mm')}"></td>
+                                    <td th:text="${#numbers.formatDecimal(item.totalPrice,1,1)}+'$'"></td>
+                                    <td th:text="${item.status}"></td>
+                                    <td th:if="${#strings.equals(item.status,'Ordering')}">
+                                        <button type="submit" class="rounded btn btn-sm btn-outline-warning"  data-toggle="tooltip" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </td>
+                                    <td th:if="${#strings.equals(item.status,'Ordering')}">
+                                        <a class="rounded btn btn-sm btn-outline-danger"
+                                           data-toggle="tooltip" title="Cancel"
+                                           onclick="confirm('Are you sure ??')"
+                                            th:href="@{'/site/customer/cancelOrder/'+${item.orderId}}">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <th:block th:each="p:${item.orderDetailDTOList}">
+                                    <tr class="text-center">
+                                        <td></td>
+                                        <td th:text="${p.productDetailDTO.productName}"></td>
+                                        <td th:unless="${#strings.equals(p.productDetailDTO.typeName,'----')}" th:text="${p.productDetailDTO.typeName}"></td>
+                                        <td th:if="${#strings.equals(p.productDetailDTO.typeName,'----')}"></td>
+                                        <td th:text="${p.productDetailDTO.colorName}"></td>
+                                        <td th:text="'Quantity : '+${p.quantity}"></td>
+                                        <td></td>
+                                        <td th:text="${#numbers.formatDecimal(p.price,1,1)}+'$'"></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </th:block>
+                            </form>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
         </div>
         <!-- Checkout End -->

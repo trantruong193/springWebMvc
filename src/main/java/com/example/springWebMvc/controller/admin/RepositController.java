@@ -1,10 +1,8 @@
 package com.example.springWebMvc.controller.admin;
 
+import com.example.springWebMvc.persistent.dto.ProductDTO;
 import com.example.springWebMvc.persistent.dto.ProductDetailDTO;
-import com.example.springWebMvc.persistent.entities.Category;
-import com.example.springWebMvc.persistent.entities.Color;
-import com.example.springWebMvc.persistent.entities.ProductDetail;
-import com.example.springWebMvc.persistent.entities.Type;
+import com.example.springWebMvc.persistent.entities.*;
 import com.example.springWebMvc.service.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -54,16 +53,26 @@ public class RepositController {
     @RequestMapping("")
     public String repository(Model model,
                              @RequestParam(name = "proId",required = false) Long proId){
-        List<ProductDetail> list;
+        List<Product> productList = new ArrayList<>();
+        List<ProductDTO> list = new ArrayList<>();
         if(proId != null){
-            list = productDetailService.getByProId(proId);
-            list.sort(Comparator.comparing(o -> (o.getType().getTypeId())));
+            if (productService.findById(proId) != null){
+                productList.add(productService.findById(proId));
+                productList.forEach(product -> {
+                    list.add(new ProductDTO(product));
+                });
+            }
         }else {
-            list = productDetailService.getAll();
-            list.sort(Comparator.comparing(o -> (o.getProduct().getProId())));
+            productList = productService.getAll();
+            if (!productList.isEmpty()){
+                productList.forEach(product -> {
+                    list.add(new ProductDTO(product));
+                });
+            }
         }
-        list.sort(Comparator.comparing(o -> (o.getProduct().getProId())));
+        list.sort(Comparator.comparing(p->(p.getProName().toLowerCase())));
         model.addAttribute("list",list);
+        model.addAttribute("pD",new ProductDetailDTO());
         return "/admin/fragment/repository/list";
     }
     @GetMapping("add")
@@ -72,21 +81,52 @@ public class RepositController {
         return "/admin/fragment/repository/add";
     }
     @PostMapping("save")
-    public String save(Model model,
+    public String save(Model model,@RequestParam(name = "mode",required = false) String mode,
+                       @RequestParam(name = "proId",required = false) Long proId,
                        @Valid @ModelAttribute("pD") ProductDetailDTO detailDTO,
                        BindingResult bindingResult){
-        if (bindingResult.hasErrors())
+
+        if (bindingResult.hasErrors()){
+            if (mode!=null){
+                if (mode.equals("listMode")){
+                    model.addAttribute("errorMessage","Insert fail. Invalid data");
+                    return "forward:/admin/repository";
+                }
+            }
+            model.addAttribute("errorMessage","Insert fail. Invalid data");
             return "/admin/fragment/repository/add";
+        }
+        if (detailDTO.getProId() == null && mode == null){
+            model.addAttribute("errorMessage","Insert fail. Invalid data");
+            return "/admin/fragment/repository/add";
+        }
         ProductDetail productDetail = new ProductDetail();
-        if (productDetailService.findByProIdAndColorIdAndTypeId(detailDTO.getProId(), detailDTO.getColorId(), detailDTO.getTypeId()) == null){
-            BeanUtils.copyProperties(detailDTO,productDetail);
-            productDetail.setProduct(productService.findById(detailDTO.getProId()));
-            productDetail.setColor(colorService.getColorById(detailDTO.getColorId()));
-            productDetail.setType(typeService.getById(detailDTO.getTypeId()));
+        // case field proId has exits (update product detail)
+        if (detailDTO.getProId() != null){
+            if (productDetailService.findByProIdAndColorIdAndTypeId(detailDTO.getProId(), detailDTO.getColorId(), detailDTO.getTypeId()) == null){
+                // if found set new data
+                BeanUtils.copyProperties(detailDTO,productDetail);
+                productDetail.setProduct(productService.findById(detailDTO.getProId()));
+                productDetail.setColor(colorService.getColorById(detailDTO.getColorId()));
+                productDetail.setType(typeService.getById(detailDTO.getTypeId()));
+            }else {
+                // if not found creat new product detail
+                productDetail = productDetailService.findByProIdAndColorIdAndTypeId(detailDTO.getProId(), detailDTO.getColorId(), detailDTO.getTypeId());
+                productDetail.setDiscount(detailDTO.getDiscount());
+                productDetail.setQuantity(detailDTO.getQuantity());
+            }
         }else {
-            productDetail = productDetailService.findByProIdAndColorIdAndTypeId(detailDTO.getProId(), detailDTO.getColorId(), detailDTO.getTypeId());
-            productDetail.setDiscount(detailDTO.getDiscount());
-            productDetail.setQuantity(detailDTO.getQuantity());
+            // case field proId doesn't exist (create new)
+            if (productDetailService.findByProIdAndColorIdAndTypeId(proId, detailDTO.getColorId(), detailDTO.getTypeId()) == null){
+                BeanUtils.copyProperties(detailDTO,productDetail);
+                productDetail.setProduct(productService.findById(detailDTO.getProId()));
+                productDetail.setColor(colorService.getColorById(detailDTO.getColorId()));
+                productDetail.setType(typeService.getById(detailDTO.getTypeId()));
+            }else {
+                productDetail = productDetailService.findByProIdAndColorIdAndTypeId(proId, detailDTO.getColorId(), detailDTO.getTypeId());
+                productDetail.setDiscount(detailDTO.getDiscount());
+                productDetail.setQuantity(detailDTO.getQuantity());
+            }
         }
         productDetailService.save(productDetail);
         model.addAttribute("message","Add successfully");
@@ -98,8 +138,8 @@ public class RepositController {
                          @RequestParam("discount") double discount,
                          @RequestParam("quantity") int quantity){
         if (discount < 0 || discount > 100 || quantity < 0){
-            model.addAttribute("message","Invalid data");
-            return "admin/fragment/repository/list";
+            model.addAttribute("errorMessage","Invalid data");
+            return "forward:/admin/repository";
         }
         ProductDetail productDetail = productDetailService.findById(productDetailId);
         if (productDetail != null){

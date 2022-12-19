@@ -7,5 +7,6 @@ import java.util.List;
 public interface OrderService {
     List<Order> getAllByPhone(String phone);
     List<Order> getAllByUserId(Long userId);
-    boolean save(Order order);
+    Order getByOrderCode (String orderCode);
+    Order save(Order order);
 }

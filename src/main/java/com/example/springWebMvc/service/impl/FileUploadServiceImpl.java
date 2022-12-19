@@ -17,13 +17,21 @@ import java.util.Objects;
 @Service
 public class FileUploadServiceImpl implements FileUploadService {
     private final Path storageFolder;
+    private final Path customerAvatarFolder;
     @Autowired
     public FileUploadServiceImpl(ServletContext servletContext){
         try {
+            // folder for product
             String path = servletContext.getRealPath("/WEB-INF/static/img");
             storageFolder = Paths.get(path);
             if(!Files.exists(storageFolder))
                 Files.createDirectories(storageFolder);
+            // folder for avatar
+            String avatarPath = servletContext.getRealPath("/WEB-INF/static/img/avatar");
+            customerAvatarFolder = Paths.get(avatarPath);
+            if(!Files.exists(customerAvatarFolder))
+                Files.createDirectories(customerAvatarFolder);
+
         }catch (IOException ioException){
             throw new RuntimeException("Cannot initialize storage" + ioException);
         }
@@ -32,7 +40,7 @@ public class FileUploadServiceImpl implements FileUploadService {
     public String save(MultipartFile multipartFile) {
         try {
             InputStream inputStream = multipartFile.getInputStream();
-            Path filePath = storageFolder.resolve(multipartFile.getOriginalFilename());
+            Path filePath = storageFolder.resolve(Objects.requireNonNull(multipartFile.getOriginalFilename()));
             Files.copy(inputStream,filePath, StandardCopyOption.REPLACE_EXISTING);
             return multipartFile.getOriginalFilename();
         } catch (IOException e) {
@@ -40,11 +48,32 @@ public class FileUploadServiceImpl implements FileUploadService {
         }
     }
     @Override
-    public boolean delete(String filename) {
+    public void delete(String filename) {
         Path filePath = storageFolder.resolve(filename);
         try {
             Files.deleteIfExists(filePath);
-            return true;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public String saveAvatar(MultipartFile multipartFile) {
+        try {
+            InputStream inputStream = multipartFile.getInputStream();
+            Path filePath = customerAvatarFolder.resolve(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+            Files.copy(inputStream,filePath, StandardCopyOption.REPLACE_EXISTING);
+            return multipartFile.getOriginalFilename();
+        } catch (IOException e) {
+            throw new RuntimeException("Error saving file" + e);
+        }
+    }
+
+    @Override
+    public void deleteAvatar(String filename) throws IOException{
+        Path filePath = customerAvatarFolder.resolve(filename);
+        try {
+            Files.deleteIfExists(filePath);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

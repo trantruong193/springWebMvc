@@ -7,4 +7,5 @@ import java.util.Optional;
 public interface CustomerService {
     boolean save(Customer customer);
     Customer findByUSerId(Long userId);
+    boolean checkPhone(String phone);
 }

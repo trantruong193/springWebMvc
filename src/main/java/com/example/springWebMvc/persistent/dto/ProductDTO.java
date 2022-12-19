@@ -3,6 +3,7 @@ package com.example.springWebMvc.persistent.dto;
 import com.example.springWebMvc.persistent.ProductStatus;
 import com.example.springWebMvc.persistent.entities.Category;
 import com.example.springWebMvc.persistent.entities.Producer;
+import com.example.springWebMvc.persistent.entities.Product;
 import com.example.springWebMvc.persistent.entities.ProductDetail;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,6 +18,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -56,4 +59,17 @@ public class ProductDTO implements Serializable {
     @NotEmpty
     @Length(max = 1000,min = 10)
     private String description2;
+    private List<ProductDetailDTO> productDetailDTOS;
+    public ProductDTO(Product product){
+        this.proId = product.getProId();
+        this.proName = product.getProName();
+        this.basePrice = product.getBasePrice();
+        List<ProductDetail> details = product.getProductDetails();
+        List<ProductDetailDTO> detailDTOS = new ArrayList<>();
+        details.forEach(detail->{
+            detailDTOS.add(new ProductDetailDTO(detail));
+        });
+        detailDTOS.sort(Comparator.comparing(ProductDetailDTO::getTypeName));
+        this.productDetailDTOS = detailDTOS;
+    }
 }

@@ -10,24 +10,15 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
-import org.springframework.web.util.UrlPathHelper;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.sound.midi.MidiFileFormat;
 import javax.sql.DataSource;
-import java.io.IOException;
 
 @EnableWebSecurity
 @Configuration
@@ -77,21 +68,23 @@ public class SpringSecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests()
-                    .antMatchers("/admin/**").authenticated()
-                    .antMatchers("/customer/**").authenticated()
+                    .antMatchers("/admin/**").hasRole("ADMIN")
+                    .antMatchers("/site/customer/**").authenticated()
                     .anyRequest().permitAll()
                 .and()
                 .formLogin()
                     .permitAll()
                     .loginPage("/login")
+                    .defaultSuccessUrl("/site")
                     .successHandler((request, response, authentication) -> {
                         GrantedAuthority adm = new SimpleGrantedAuthority("ROLE_ADMIN");
                         GrantedAuthority cus = new SimpleGrantedAuthority("ROLE_CUSTOMER");
                         if(authentication.getAuthorities().contains(adm))
                             response.sendRedirect("/admin");
-                        if(authentication.getAuthorities().contains(cus))
-                            response.sendRedirect("/site/checkout");
-                        response.sendRedirect("/site");
+                        else if(authentication.getAuthorities().contains(cus))
+                            response.sendRedirect("/site/customer");
+                        else
+                            response.sendRedirect("/site");
                     })
                 .and()
                 .logout()

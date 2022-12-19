@@ -126,6 +126,7 @@
                                 <div class="navbar-nav mr-auto py-0">
                                     <a th:href="@{/site/products}" class="nav-item nav-link">Shop</a>
                                     <a th:href="@{/site/contact}" class="nav-item nav-link">Contact</a>
+                                    <a th:href="@{/site/findOrder}" class="nav-item nav-link">Order Status</a>
                                 </div>
                                 <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
                                     <a th:href="@{/site/cart}" class="btn px-0 mr-3">
@@ -139,7 +140,10 @@
                                         <i class="fas fa-store-alt text-primary"></i>
                                     </a>
                                     <a th:href="@{/site/customer}" class="btn px-0 mr-3" sec:authorize="hasRole('ROLE_CUSTOMER')">
-                                        <i class="fas fa-user-cog text-primary"></i>
+                                        <img height="40px" width="40px" style="border-radius: 50%"
+                                             th:unless="${#strings.equals(#authentication.getPrincipal().getImg(),'')}"
+                                             th:src="@{'/img/avatar/'+${#authentication.getPrincipal().getImg()}}">
+                                        <i class="fas fa-user-cog text-primary" th:if="${#strings.equals(#authentication.getPrincipal().getImg(),'')}"></i>
                                     </a>
                                     <a th:href="@{/logout}" class="btn px-0" sec:authorize="isAuthenticated()">
                                         <i class="fas fa-sign-out-alt text-primary"></i>

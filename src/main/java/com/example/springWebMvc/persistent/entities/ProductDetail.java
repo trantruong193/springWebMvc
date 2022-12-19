@@ -1,11 +1,10 @@
 package com.example.springWebMvc.persistent.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -29,4 +28,8 @@ public class ProductDetail implements Serializable {
     @ManyToOne
     @JoinColumn(name = "typeId",referencedColumnName = "typeId")
     private Type type;
+    @OneToMany(mappedBy = "productDetail")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private List<OrderDetail> orderDetails;
 }

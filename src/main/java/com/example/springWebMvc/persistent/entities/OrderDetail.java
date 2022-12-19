@@ -1,8 +1,6 @@
 package com.example.springWebMvc.persistent.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,15 +9,18 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "orderDetails")
+@Builder
 public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderDetailId;
-    private Long productDetailId;
-    private int quantity;
     private double price;
-    private double discount;
+    private int quantity;
+    @ManyToOne
+    @JoinColumn(name = "productDetailId")
+    private ProductDetail productDetail;
     @ManyToOne
     @JoinColumn(name = "orderId")
+    @ToString.Exclude
     private Order order;
 }

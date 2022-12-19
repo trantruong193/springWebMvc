@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomizeUserDetails implements UserDetails {
+public class CustomizeUserDetails implements UserDetails{
 
     private User user;
     @Override
@@ -45,9 +45,8 @@ public class CustomizeUserDetails implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return user.getStatus() == 1;
     }
-
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
@@ -60,4 +59,13 @@ public class CustomizeUserDetails implements UserDetails {
     public Long getUserId(){
         return user.getUserId();
     }
+    public String getEmail(){
+        return user.getEmail();
+    }
+    public String getImg(){
+        if (user.getCustomer()!=null)
+            return user.getCustomer().getAvatarUrl();
+        else
+            return "";
+    };
 }

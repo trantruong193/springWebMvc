@@ -20,7 +20,11 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
+    private String email;
+    @Column(nullable = false)
     private int status;
+    @Column(updatable = false)
+    private String verifyCode;
     @OneToOne(mappedBy = "user")
     private Customer customer;
     @OneToMany(mappedBy = "user",fetch = FetchType.EAGER,cascade = CascadeType.ALL)

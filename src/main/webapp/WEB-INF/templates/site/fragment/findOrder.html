@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{site/homelayout.html}">
+<head>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <!-- Breadcrumb Start -->
+        <div class="container-fluid">
+            <div class="row px-xl-5">
+                <div class="col-12">
+                    <nav class="breadcrumb bg-light mb-30">
+                        <a class="breadcrumb-item text-dark" th:href="@{/site}">Home</a>
+                        <span class="breadcrumb-item active">Order Status</span>
+                    </nav>
+                </div>
+            </div>
+            <div class="row px-xl-5 d-flex justify-content-center">
+                <div class="col-lg-4 col-6 text-left">
+                    <form th:action="@{/site/findOrder}">
+                        <div class="input-group">
+                            <input type="text" name="orderCode" onchange="this.form.submit()" class="form-control" placeholder="Enter Your Order Code">
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-transparent text-primary">
+                                    <i class="fa fa-search"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row px-xl-5 d-flex justify-content-center" th:if="${order == null}">
+                <div class="col col-10 bg-light p30 text-center mt-5">
+                    <h5 class="p-3">Không tìm thấy đơn hàng.</h5>
+                </div>
+            </div>
+            <div class="row px-xl-5 d-flex justify-content-center" th:if="${order != null}">
+                <div class="col col-10 bg-light p30 text-center mt-5">
+                    <div class="row mt-2">
+                        <div class="col col-6">
+                            <h4>Thông tin đơn hàng</h4>
+                            <p>Mã đơn : <span th:text="${order.orderCode}"></span></p>
+                            <p>Ngày tạo : <span th:text="${order.createTime}"></span></p>
+                            <p>Tổng giá trị : <span th:text="${#numbers.formatDecimal(order.totalPrice,1,1)}+'$'"></span></p>
+                            <p><b>Sản phẩm :</b></p>
+                            <th:block th:each="p:${order.orderDetailDTOList}">
+                                <span th:if="${p.productDetailDTO.productName.length()>25}" th:text="${#strings.substring((p.productDetailDTO.productName),0,25)}"></span><span> </span>
+                                <span th:if="${p.productDetailDTO.productName.length()<=25}" th:text="${p.productDetailDTO.productName}"></span><span> </span>
+                                <span th:text="${p.productDetailDTO.colorName}"></span><span> </span>
+                                <span th:unless="${#strings.equals(p.productDetailDTO.typeName,'----')}" th:text="${p.productDetailDTO.typeName}"></span><span>. Số lượng : </span>
+                                <span th:text="${p.quantity}"></span><br>
+                            </th:block>
+                        </div>
+                        <div class="col col-6">
+                            <h4>Thông tin nhận hàng</h4>
+                            <p th:text="${order.cusName}"></p>
+                            <p th:text="${order.phone}"></p>
+                            <p th:text="${order.address}"></p>
+                            <p th:text="${order.email}"></p>
+                            <p><b>Tình Trạng</b></p>
+                            <p class="text-success" th:text="${order.status}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Breadcrumb End -->
+        <!-- Contact Start -->
+        <!-- Contact End -->
+    </div>
+</body>
+
+</html>

@@ -1,21 +1,25 @@
 package com.example.springWebMvc.controller.site;
 
+import com.example.springWebMvc.persistent.OrderStatus;
+import com.example.springWebMvc.persistent.PaymentMethod;
 import com.example.springWebMvc.persistent.ProductStatus;
-import com.example.springWebMvc.persistent.dto.CartItem;
-import com.example.springWebMvc.persistent.dto.CustomerDTO;
-import com.example.springWebMvc.persistent.dto.CustomizeUserDetails;
-import com.example.springWebMvc.persistent.dto.TypeDTO;
+import com.example.springWebMvc.persistent.dto.*;
 import com.example.springWebMvc.persistent.entities.*;
 import com.example.springWebMvc.repository.CustomerRepository;
+import com.example.springWebMvc.repository.OrderRepository;
 import com.example.springWebMvc.repository.RoleRepository;
 import com.example.springWebMvc.service.*;
+import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +28,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.*;
@@ -44,8 +50,14 @@ public class WebController {
     FileUploadService fileUploadService;
     PasswordEncoder passwordEncoder;
     BannerService bannerService;
-    private final RoleRepository roleRepository;
-    private final CustomerRepository customerRepository;
+    OrderDetailService orderDetailService;
+    OrderService orderService;
+    RoleRepository roleRepository;
+    CustomerRepository customerRepository;
+    OrderRepository orderRepository;
+    MailSenderService mailSenderService;
+
+
 
     @Autowired
     public WebController (ProductService productService,
@@ -61,7 +73,11 @@ public class WebController {
                           FileUploadService fileUploadService,
                           PasswordEncoder passwordEncoder,
                           RoleRepository roleRepository,
-                          CustomerRepository customerRepository){
+                          CustomerRepository customerRepository,
+                          OrderDetailService orderDetailService,
+                          OrderService orderService,
+                          OrderRepository orderRepository,
+                          MailSenderService mailSenderService){
         this.categoryService = categoryService;
         this.catalogService = catalogService;
         this.productService = productService;
@@ -76,6 +92,10 @@ public class WebController {
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
         this.customerRepository = customerRepository;
+        this.orderDetailService = orderDetailService;
+        this.orderService = orderService;
+        this.orderRepository = orderRepository;
+        this.mailSenderService = mailSenderService;
     }
     @ModelAttribute("feature")
     public List<Product> getFeatureProduct(){
@@ -109,13 +129,24 @@ public class WebController {
     public double getAmount(){
         return cartService.getAmount();
     }
-
+//    @ModelAttribute("avatar")
+//    public String avatar(){
+//        if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)){
+//            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//            CustomizeUserDetails customizeUserDetails = (CustomizeUserDetails) authentication.getPrincipal();
+//            return customizeUserDetails.getImg();
+//        }else
+//            return "";
+//    }
     @GetMapping("")
+    // to home page
     private String home(Model model){
+        // get product with max discount
         List<ProductDetail> productDetails = productDetailService.getAll();
         productDetails.sort(Comparator.comparing(ProductDetail::getDiscount));
         ProductDetail maxOffer;
         maxOffer = productDetails.get(productDetails.size()-1);
+        // get product with status Feature
         model.addAttribute("offer",maxOffer);
         model.addAttribute("phones",productService.getProductByCatIdAndStatus(1L, ProductStatus.Feature));
         model.addAttribute("laptops",productService.getProductByCatIdAndStatus(2L, ProductStatus.Feature));
@@ -126,40 +157,131 @@ public class WebController {
         return "site/fragment/home";
     }
     @GetMapping("cart")
+    // to cart item
     private String cart(Model model){
-
         return "site/fragment/cart";
     }
     @GetMapping("updateCart")
+    // update cart item
     private String updateCart(@RequestParam(name = "productDetailId",required = false)Long productDetailId,
                               @RequestParam(name = "quantity") int quantity){
+
         cartService.update(productDetailId,quantity);
         return "redirect:/site/cart";
     }
     @GetMapping("removeCart/{productDetailId}")
+    // remove cart item
     private String removeCart(@PathVariable("productDetailId")Long productDetailId){
         cartService.remove(productDetailId);
         return "redirect:/site/cart";
     }
     @GetMapping("checkout")
+    // to check out page
     private String checkout(@AuthenticationPrincipal CustomizeUserDetails userDetails,Model model){
+        // check if user is login
         if (userDetails != null){
             Customer customer = customerService.findByUSerId(userDetails.getUserId());
-            if (customer != null)
-                model.addAttribute("customer",new CustomerDTO(customer));
+            // check if user has customer information
+            if (customer != null){
+                OrderDTO orderDTO = new OrderDTO();
+                BeanUtils.copyProperties(new CustomerDTO(customer),orderDTO);
+                model.addAttribute("order",orderDTO);
+            }else{
+                model.addAttribute("update","update");
+                model.addAttribute("order",new OrderDTO());
+            }
         }else {
-            model.addAttribute("customer",new CustomerDTO());
+            model.addAttribute("order",new OrderDTO());
         }
         return "site/fragment/checkout";
     }
+    @GetMapping("findOrder")
+    private String findOrder(Model model,@RequestParam(name = "orderCode",required = false)String orderCode){
+        if (StringUtils.hasText(orderCode)){
+            Order order = orderService.getByOrderCode(orderCode);
+            if (order!= null)
+                model.addAttribute("order",new OrderDTO(order));
+        }else {
+            model.addAttribute("order",null);
+        }
+        return "site/fragment/findOrder";
+    }
+    @PostMapping("order")
+    // process order
+    private String order(@AuthenticationPrincipal CustomizeUserDetails userDetails, Model model,
+                        @Valid @ModelAttribute("order") OrderDTO dto,
+                        BindingResult bindingResult, @RequestParam(name = "paymentMethod",required = false) String method) throws MessagingException {
+        // check if cart is empty
+        if (cartService.getCartItems().isEmpty())
+            return "site/fragment/errorPage";
+        //  check form's error
+        if (bindingResult.hasErrors())
+            return "site/fragment/checkout";
+        // create order and save
+        Order order = new Order();
+        BeanUtils.copyProperties(dto,order);
+        // generate order code
+        String random = UUID.randomUUID().toString().trim().replace("-","").substring(0,4);
+        String orderCode  = dto.getPhone()+random;
+        order.setOrderCode(orderCode);
+        if (method != null)
+            order.setPaymentMethod(PaymentMethod.valueOf(method));
+        order.setStatus(OrderStatus.Ordering);
+        if (userDetails!= null)
+            order.setUserId(userDetails.getUserId());
+        double price = 0;
+        if (cartService.getAmount()<50)
+            price = cartService.getAmount()*1.1+10;
+        else
+            price = cartService.getAmount()*1.1;
+        order.setTotalPrice(price);
+        Order order1 = orderRepository.save(order);
+        // create order detail and save
+        Collection<CartItem> items = new HashSet<>(cartService.getCartItems());
+        items.forEach(item -> {
+            // save new order detail
+            orderDetailService.save(OrderDetail.builder()
+                    .productDetail(productDetailService.findById(item.getProductDetailId()))
+                    .quantity(item.getQuantity())
+                    .price(item.getPrice())
+                    .order(order1)
+                    .build());
+        });
+        model.addAttribute("order",new OrderDTO(orderService.getByOrderCode(orderCode)));
+        model.addAttribute("items",items);
+        model.addAttribute("price",price);
+        model.addAttribute("orderCode",orderCode);
+        // send mail
+        String mailMessage = "<p>Your order <b>" + orderCode + "</b> has been created !!</p>";
+        mailMessage += "<p>Save your order code to check order status.</p>";
+        mailMessage += "<b>Sincere !!</b>";
+        mailMessage += "<hr><img src='cid:logoImg' />";
+
+        mailSenderService.sendEmail(order1.getEmail(),"[MultiShop] Your order has been created",mailMessage);
+        // clear cart item
+        cartService.clear();
+        return "site/fragment/orderSuccess";
+    }
     @GetMapping("customer")
+    // to customer page
     private String customer(@AuthenticationPrincipal CustomizeUserDetails userDetails,Model model){
+        // get customer information
         Customer customer = customerService.findByUSerId(userDetails.getUserId());
         if (customer != null)
             model.addAttribute("customer",new CustomerDTO(customer));
         else
             model.addAttribute("customer",new CustomerDTO());
+        // get orders of customer
+        List<Order> list = orderService.getAllByUserId(userDetails.getUserId());
+        List<OrderDTO> dtoList = new ArrayList<>();
+        list.forEach(order -> {
+            dtoList.add(new OrderDTO(order));
+        });
+        // sort returned list
+        dtoList.sort((o1, o2) -> o2.getCreateTime().compareTo(o1.getCreateTime()));
+        model.addAttribute("list",dtoList);
         model.addAttribute("username",userDetails.getUsername());
+        model.addAttribute("email",userDetails.getEmail());
         return "site/fragment/customer/customer-infor";
     }
     @PostMapping("customer/update")
@@ -167,22 +289,73 @@ public class WebController {
                              @Valid @ModelAttribute("customer") CustomerDTO dto,
                              BindingResult  bindingResult,
                              @RequestParam("avatarImg")MultipartFile img) throws IOException {
+        // check form error
         if (bindingResult.hasErrors()){
             model.addAttribute("username",userDetails.getUsername());
             return "site/fragment/customer/customer-infor";
         }
+        // case user doesn't have customer information -> new
+        if (dto.getCusId() == null){
+            // check duplicate phone
+            if (dto.getPhone()!=null)
+                if (customerService.checkPhone(dto.getPhone())){
+                    model.addAttribute("pMessage","Số điện thoại đã được sử dụng");
+                    model.addAttribute("username",userDetails.getUsername());
+                    return "site/fragment/customer/customer-infor";
+                }
+        }
         Customer customer = new Customer();
+        // case user has customer information -> update
         if (dto.getCusId() != null){
             customer = customerRepository.getCustomerByUser_UserId(userDetails.getUserId());
         }
+        // check duplicate phone
+        if (!dto.getPhone().equals(customer.getPhone()))
+            if (customerService.checkPhone(dto.getPhone())){
+                model.addAttribute("eMessage","Phone đã được sử dụng");
+                model.addAttribute("username",userDetails.getUsername());
+                return "site/fragment/customer/customer-infor";
+            }
         BeanUtils.copyProperties(dto,customer);
+        // set user for customer
         customer.setUser(userService.getUserById(userDetails.getUserId()));
+        // update avatar
         if (!img.isEmpty()){
             if (!Objects.equals(dto.getAvatarUrl(), ""))
-                fileUploadService.delete(dto.getAvatarUrl());
-            customer.setAvatarUrl(fileUploadService.save(img));
+                fileUploadService.deleteAvatar(dto.getAvatarUrl());
+            customer.setAvatarUrl(fileUploadService.saveAvatar(img));
         }
+        // save customer
         customerService.save(customer);
+        return "redirect:/site/customer";
+    }
+    @PostMapping("customer/updateOrder/{orderId}")
+    private String updateOrder(@PathVariable("orderId") Long orderId,
+                               @RequestParam("cusName")String cusName,
+                               @RequestParam("phone")String phone,
+                               @RequestParam("address")String address,Model model){
+        if (orderId != null){
+            Order order = orderRepository.getReferenceById(orderId);
+            if (order != null){
+                order.setCusName(cusName);
+                order.setPhone(phone);
+                order.setAddress(address);
+                orderService.save(order);
+                model.addAttribute("message","Update success!!");
+            }
+        }
+
+        return "redirect:/site/customer";
+    }
+    @GetMapping("customer/cancelOrder/{orderId}")
+    private String cancelOrder(@PathVariable("orderId") Long orderId){
+        if (orderId!=null){
+            Order order = orderRepository.getReferenceById(orderId);
+            if (order != null){
+                order.setStatus(OrderStatus.Cancel);
+                orderService.save(order);
+            }
+        }
         return "redirect:/site/customer";
     }
     @GetMapping("contact")
@@ -190,41 +363,83 @@ public class WebController {
         return "site/fragment/contact";
     }
     @PostMapping("register")
-    private String register(Model model,
+    // register user
+    private String register(Model model, HttpServletRequest request,
                             @RequestParam("rUsername") String username,
-                            @RequestParam("rPassword") String password){
-            if (username.length() < 3 || username.length() > 20)
-            {
-                model.addAttribute("uMessage","Tên đăng nhập phải từ 3 tới 20 kí tự");
-                return "/site/fragment/login";
+                            @RequestParam("rPassword") String password,
+                            @RequestParam("rEmail") String email) throws MessagingException {
+        // check information
+        if (username.length() < 3 || username.length() > 20)
+        {
+            model.addAttribute("uMessage","Tên đăng nhập phải từ 3 tới 20 kí tự");
+            return "/site/fragment/login";
+        }
+        if (password.length() < 6 || password.length() > 20)
+        {
+            model.addAttribute("pMessage","Mật khẩu phải từ 6 tới 20 kí tự");
+            return "/site/fragment/login";
+        }
+        if (userService.getUserByUsername(username) != null){
+            model.addAttribute("error","Tên đăng nhập đã tồn tại");
+            return "/site/fragment/login";
+        }
+        if (userService.checkEmail(email)){
+            model.addAttribute("error","Email đã được sử dụng");
+            return "/site/fragment/login";
+        }
+        // create new user
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(passwordEncoder.encode(password));
+        user.setEmail(email);
+        // none active
+        user.setStatus(0);
+        // generate verify code
+        String verifyCode = RandomString.make(24);
+        user.setVerifyCode(verifyCode);
+        userService.save(user);
+        // set role for new user, default role is ROLE_CUSTOMER
+        Role role = new Role();
+        role.setUser(userService.getUserByUsername(username));
+        role.setAuthority(Authority.builder().authorityId(3L).authorityName("ROLE_CUSTOMER").build());
+        roleService.saveRole(role);
+        // generate active link
+        String activeLink = Utility.getSiteUrl(request);
+        activeLink += "/site/verify?code="+verifyCode;
+        // generate mail content
+        String mailMessage = "<p>Thank for your registration !!</p>";
+        mailMessage += "<p>Click verify to active your account.</p>";
+        mailMessage += "<a href=\"" + activeLink + "\">VERIFY</a><br>";
+        mailMessage += "<b>Sincere !!</b>";
+        mailMessage += "<hr><img src='cid:logoImg' />";
+        // send mail
+        mailSenderService.sendVerifyMail(email,"[MultiShop] Verification Email !!!",mailMessage);
+        model.addAttribute("message","Your account has been create. Check your mail to active !!");
+        return "/site/fragment/login";
+    }
+    @GetMapping("/verify")
+    private String verify(@RequestParam(name = "code",required = false)String code,Model model){
+        if (!code.isEmpty())
+            if (userService.verify(code)){
+                model.addAttribute("message","Xác thực thành công. Vui lòng đăng nhập.");
             }
-            if (password.length() < 6 || password.length() > 20)
-            {
-                model.addAttribute("pMessage","Mật khẩu phải từ 6 tới 20 kí tự");
-                return "/site/fragment/login";
-            }
-            if (userService.getUserByUsername(username) != null){
-                model.addAttribute("message","Tên đăng nhập đã tồn tại");
-                return "/site/fragment/login";
-            }
-            User user = new User();
-            user.setUsername(username);
-            user.setPassword(passwordEncoder.encode(password));
-            user.setStatus(1);
-            userService.save(user);
-            Role role = new Role();
-            role.setUser(userService.getUserByUsername(username));
-            role.setAuthority(Authority.builder().authorityId(3L).authorityName("ROLE_CUSTOMER").build());
-            roleService.saveRole(role);
-        return "redirect:/site";
+        return "/site/fragment/login";
+    }
+    @GetMapping("/forget-password")
+    private String forgetPassword(Model model){
+
+        return "/site/fragment/login";
     }
     @GetMapping("detail/{proId}")
+    // to detail page
     private String detail( Model model,
                            @PathVariable("proId") Long proId,
                            @RequestParam(name = "typeId", required = false)Long typeId){
-
+        // get product by id
         model.addAttribute("product",productService.findById(proId));
+        // get list detail of product
         List<ProductDetail> productDetails = productDetailService.getByProId(proId);
+        // get list type of product
         if (!productDetails.isEmpty()){
             List<TypeDTO> types = new ArrayList<>();
             productDetails.forEach(productDetail -> {
@@ -233,15 +448,18 @@ public class WebController {
                 type.setTypeName(productDetail.getType().getTypeName());
                 types.add(type);
             });
+            // remove duplicate type
             HashSet<TypeDTO> typeDTOHashSet = new HashSet<>(types);
-
+            // get list detail by typeId (list color)
             if (typeId != null){
                 model.addAttribute("productDetails",productDetailService.getByProIdAndTypeId(proId,typeId));
             }else {
+                // case typeId hasn't been chosen
                 List<TypeDTO> list = new ArrayList<>(typeDTOHashSet);
                 typeId = list.get(0).getTypeId();
                 model.addAttribute("productDetails",productDetailService.getByProIdAndTypeId(proId,typeId));
             }
+            model.addAttribute("currentId",productDetailService.getByProIdAndTypeId(proId,typeId).get(0).getProductDetailId());
             model.addAttribute("types",typeDTOHashSet);
             model.addAttribute("typeId",typeId);
             model.addAttribute("colorId",productDetailService.getByProIdAndTypeId(proId,typeId).get(0).getColor().getColorId());

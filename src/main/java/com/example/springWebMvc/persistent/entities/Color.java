@@ -1,8 +1,6 @@
 package com.example.springWebMvc.persistent.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -23,5 +21,7 @@ public class Color implements Serializable {
     @Column(name = "colorCode")
     private String colorCode;
     @OneToMany(mappedBy = "color")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<ProductDetail> productDetailList;
 }

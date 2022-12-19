@@ -44,6 +44,7 @@ public class SpringWebConfig implements WebMvcConfigurer,ApplicationContextAware
         registry.addResourceHandler("/lib/**").addResourceLocations("/WEB-INF/static/lib/");
         registry.addResourceHandler("/scss/**").addResourceLocations("/WEB-INF/static/scss/");
         registry.addResourceHandler("/mail/**").addResourceLocations("/WEB-INF/static/mail/");
+        registry.addResourceHandler("/mail/**").addResourceLocations("/WEB-INF/static/mail/");
     }
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/errorPage").setViewName("/site/fragment/errorPage");

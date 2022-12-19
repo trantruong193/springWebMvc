@@ -10,23 +10,24 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import java.io.Serializable;
 import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CustomerDTO {
+public class CustomerDTO implements Serializable {
 
     private Long cusId;
     @NotEmpty
     private String cusName;
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Past
     private Date birthday;
     @NotEmpty
     private String phone;
-    @Email
-    @NotEmpty
     private String email;
     @NotEmpty
     private String address;
@@ -38,7 +39,7 @@ public class CustomerDTO {
         this.cusName = customer.getCusName();
         this.birthday = customer.getBirthday();
         this.phone = customer.getPhone();
-        this.email = customer.getEmail();
+        this.email = customer.getUser().getEmail();
         this.address = customer.getAddress();
         this.avatarUrl = customer.getAvatarUrl();
         this.userId = customer.getUser().getUserId();

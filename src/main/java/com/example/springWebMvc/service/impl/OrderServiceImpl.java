@@ -35,12 +35,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public boolean save(Order order) {
-        try {
-            orderRepository.save(order);
-            return true;
-        }catch (Exception e){
-            return false;
-        }
+    public Order save(Order order) {
+        return orderRepository.save(order);
+    }
+
+    @Override
+    public Order getByOrderCode(String orderCode) {
+        return orderRepository.getOrderByOrderCode(orderCode);
     }
 }

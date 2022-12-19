@@ -6,5 +6,7 @@ import java.io.IOException;
 
 public interface FileUploadService {
     String save(MultipartFile multipartFile);
-    boolean delete(String filename) throws IOException;
+    void delete(String filename) throws IOException;
+    String saveAvatar(MultipartFile multipartFile);
+    void deleteAvatar(String filename) throws IOException;
 }

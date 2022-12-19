@@ -2,9 +2,7 @@ package com.example.springWebMvc.persistent.entities;
 
 import com.example.springWebMvc.persistent.OrderStatus;
 import com.example.springWebMvc.persistent.PaymentMethod;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -22,6 +20,8 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "orderId")
     private Long orderId;
+    @Column(name = "orderCode")
+    private String orderCode;
     @Column(name = "customerName")
     private String cusName;
     @Column(name = "phone")
@@ -34,14 +34,17 @@ public class Order implements Serializable {
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
     @CreationTimestamp
-    @Column(name = "orderDate")
+    @Column(name = "orderDate",updatable = false)
     private Date createTime;
     @Column(name = "orderStatus")
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
     @Column(name = "userId")
     private Long userId;
+    private double totalPrice;
 
     @OneToMany(mappedBy = "order")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<OrderDetail> orderDetails;
 }

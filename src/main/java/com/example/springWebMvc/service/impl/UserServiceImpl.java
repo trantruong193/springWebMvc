@@ -6,6 +6,8 @@ import com.example.springWebMvc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserServiceImpl implements UserService {
     UserRepository userRepository;
@@ -30,5 +32,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Long id) {
         return userRepository.getReferenceById(id);
+    }
+
+    @Override
+    public boolean checkEmail(String email) {
+        return userRepository.getUsersByEmail(email).isPresent();
+    }
+
+    @Override
+    public boolean verify(String code) {
+        User user = userRepository.getUserByVerifyCode(code);
+        if (user!=null){
+            user.setStatus(1);
+            userRepository.save(user);
+            return true;
+        }else
+            return false;
     }
 }

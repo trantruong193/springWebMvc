@@ -1,8 +1,6 @@
 package com.example.springWebMvc.persistent.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -26,5 +24,7 @@ public class Catalog implements Serializable {
     private Category category;
 
     @OneToMany(mappedBy = "catalog")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private List<Product> products;
 }

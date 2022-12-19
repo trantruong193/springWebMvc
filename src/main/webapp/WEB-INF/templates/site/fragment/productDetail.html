@@ -9,6 +9,7 @@
             $.get(urlString,function (responseJson)
             {
                     $("#pDQuantity").text(responseJson.quantity);
+                    $("#currentId").val(currentDetailId);
             })
                 .fail(function (){
                     alert("Error to collect");
@@ -19,7 +20,7 @@
             ;
         }
         function addToCart(){
-            const currentDetailId = $("input[name='productDetailId']").val();
+            const currentDetailId = $("#currentId").val();
             const cQuantity = Math.floor($("#cQuantity").val());
             const urlString = "api/v1/addToCart?productDetailId=" + currentDetailId + "&quantity=" + cQuantity;
 
@@ -110,6 +111,7 @@
                         <!-- Color selected-->
                         <form th:action="@{'site/detail/'+${product.proId}}" method="get">
                             <input type="number" hidden name="proId" th:value="${product.proId}">
+                            <input type="number" hidden name="currentId" id="currentId" th:value="${currentId}">
                             <div class="d-flex mb-3">
                                 <strong class="text-dark mr-3">Type:</strong>
                                 <div class="mr-3 border" style="height: 30px;width: 85px;border-radius: 10px"
@@ -123,15 +125,17 @@
                         </form>
                         <div class="d-flex mb-3">
                             <strong class="text-dark mr-3">Colors:</strong>
-                                <div class="mr-3 border" style="height: 50px;width: 100px;border-radius: 10px"
-                                     th:each="pd,index:${productDetails}">
-                                    <input type="radio" class="ml-2 mt-2" name="productDetailId" th:id="'prId'+${index.index}"
-                                           th:value="${pd.productDetailId}"
-                                           th:checked="${#strings.equals(pd.color.colorId,colorId)}"
-                                           onchange="getQuantity(this.value)">
-                                    <label th:for="'prId'+${index.index}" class="d-inline ml-2 mt-2" th:style="'color:'+${pd.color.colorCode}" th:text="${pd.color.colorName}"></label><br>
-                                    <span class="ml-1 text-danger" th:text="'-'+${#numbers.formatDecimal(pd.discount,1,0)}+'%'"></span><p class="d-inline ml-1 text-success" th:text="${#numbers.formatDecimal((product.basePrice - product.basePrice * pd.discount/100),0,1)}+'$'"></p>
-                                </div>
+                                <th:block th:each="pd,index:${productDetails}">
+                                    <div th:if="${pd.quantity>0}" class="mr-3 border" style="height: 50px;width: 100px;border-radius: 10px">
+                                        <input type="radio" class="ml-2 mt-2" name="productDetailId" th:id="'prId'+${index.index}"
+                                               th:value="${pd.productDetailId}"
+                                               th:checked="${#strings.equals(pd.color.colorId,colorId)}"
+                                               onchange="getQuantity(this.value)">
+                                        <label th:for="'prId'+${index.index}" class="d-inline ml-2 mt-2" th:style="'color:'+${pd.color.colorCode}" th:text="${pd.color.colorName}"></label><br>
+                                        <span class="ml-1 text-danger" th:text="'-'+${#numbers.formatDecimal(pd.discount,1,0)}+'%'"></span>
+                                        <p class="d-inline ml-1 text-success" th:text="${#numbers.formatDecimal((product.basePrice - product.basePrice * pd.discount/100),1,0)}+'$'"></p>
+                                    </div>
+                                </th:block>
                         </div>
                         <!-- Insert quantity here-->
                         <div th:if="${quantity == null}">

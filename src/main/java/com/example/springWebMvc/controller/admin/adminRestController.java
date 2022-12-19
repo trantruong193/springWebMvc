@@ -1,6 +1,7 @@
 package com.example.springWebMvc.controller.admin;
 
 import com.example.springWebMvc.persistent.dto.CatalogDTO;
+import com.example.springWebMvc.persistent.dto.MailMessage;
 import com.example.springWebMvc.persistent.dto.ProductDTO;
 import com.example.springWebMvc.persistent.dto.ProductDetailDTO;
 import com.example.springWebMvc.persistent.entities.Catalog;
@@ -9,11 +10,10 @@ import com.example.springWebMvc.persistent.entities.ProductDetail;
 import com.example.springWebMvc.service.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -21,16 +21,26 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1")
 public class adminRestController {
-    @Autowired
     CatalogService catalogService;
-    @Autowired
     ProductService productService;
-    @Autowired
     ProductDetailService productDetailService;
-    @Autowired
     CartService cartService;
-    @Autowired
     UserService userService;
+    MailSenderService mailSenderService;
+    @Autowired
+    public adminRestController(CatalogService catalogService,
+                               ProductService productService,
+                               ProductDetailService productDetailService,
+                               CartService cartService,
+                               UserService userService,
+                               MailSenderService mailSenderService) {
+        this.catalogService = catalogService;
+        this.productService = productService;
+        this.productDetailService = productDetailService;
+        this.cartService = cartService;
+        this.userService = userService;
+        this.mailSenderService = mailSenderService;
+    }
     @GetMapping("/catalog")
     public List<CatalogDTO> getCatalog(@RequestParam("catId") Long catId){
         List<Catalog> catalogs = catalogService.getCatalogByCatId(catId);
@@ -72,6 +82,7 @@ public class adminRestController {
             productDetailDTO =  ProductDetailDTO.builder()
                     .colorName(productDetail.getColor().getColorName())
                     .typeName(productDetail.getType().getTypeName())
+                    .discount(productDetail.getDiscount())
                     .quantity(productDetail.getQuantity()).build();
             productDetailDTOs.add(productDetailDTO);
         });
@@ -86,9 +97,11 @@ public class adminRestController {
     }
     @GetMapping("/checkUsername")
     public boolean checkUsername(@RequestParam(name = "rUsername") String username){
-        if (userService.getUserByUsername(username) != null){
-            return true;
-        }
-        return false;
+        return userService.getUserByUsername(username) != null;
+    }
+    @PostMapping("/send-mail")
+    public ResponseEntity sendMail(@RequestBody MailMessage mailMessage) throws MessagingException {
+        mailSenderService.sendEmail(mailMessage.getTo(), mailMessage.getSubject(), mailMessage.getMessage());
+        return ResponseEntity.ok("Success");
     }
 }

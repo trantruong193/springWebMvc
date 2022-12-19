@@ -16,16 +16,17 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     public CustomerServiceImpl(CustomerRepository customerRepository,
-                               RoleRepository roleRepository){
+                               RoleRepository roleRepository) {
         this.customerRepository = customerRepository;
         this.roleRepository = roleRepository;
     }
+
     @Override
     public boolean save(Customer customer) {
         try {
             customerRepository.save(customer);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
@@ -37,4 +38,10 @@ public class CustomerServiceImpl implements CustomerService {
         else
             return null;
     }
+
+    @Override
+    public boolean checkPhone(String phone) {
+        return customerRepository.getCustomerByPhone(phone) != null;
+    }
+
 }

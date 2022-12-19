@@ -24,6 +24,25 @@
                 })
             ;
         }
+        function hideTable(index){
+            $(".form"+index).toggle();
+            $("#btnHide"+index).toggle();
+            $("#btnShow"+index).toggle();
+        }
+        function hideALl(){
+            $("#hideAll").toggle();
+            $("#showAll").toggle();
+            $("tr[class^='form']").hide();
+            $("button[id^='btnHide']").hide();
+            $("button[id^='btnShow']").show();
+        }
+        function showALl(){
+            $("#hideAll").toggle();
+            $("#showAll").toggle();
+            $("tr[class^='form']").show();
+            $("button[id^='btnShow']").hide();
+            $("button[id^='btnHide']").show();
+        }
     </script>
 </head>
 <body>
@@ -36,6 +55,11 @@
                     <div th:if="${message != null}" class="alert alert-success" role="alert">
                         <h4 class="alert-heading"></h4>
                         <i th:text="${message}"></i>
+                        <p class="mb-0"></p>
+                    </div>
+                    <div th:if="${errorMessage != null}" class="alert alert-danger" role="alert">
+                        <h4 class="alert-heading"></h4>
+                        <i th:text="${errorMessage}"></i>
                         <p class="mb-0"></p>
                     </div>
                     <div class="row pt-4">
@@ -62,75 +86,94 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <table class="table table-bordered">
-                        <thead class="thead-inverse">
-                        <thead class="thead-inverse">
-                        <tr>
-                            <th>Name</th>
-                            <th>Base Price</th>
-                            <th>Type</th>
-                            <th>Color</th>
-                            <th>Discount(%)</th>
-                            <th>Quantity</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="d: ${list}">
-                            <form th:action="@{'admin/repository/update/'+${d.productDetailId}}" method="post">
-                                <td th:text="${d.product.proName}"></td>
-                                <td th:text="${d.product.basePrice}+'$'"></td>
-                                <td th:text="${d.type.typeName}"></td>
-                                <td th:text="${d.color.colorName}"></td>
-                                <td><input class="rounded text-center" type="number" name="discount" th:value="${d.discount}"></td>
-                                <td><input class="rounded text-center" type="number" name="quantity" th:value="${d.quantity}"></td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-warning rounded" type="submit" data-toggle="tooltip" title="Update" ><i class="fas fa-edit"></i></button>
-                                </td>
-                            </form>
-                        </tr>
-                        </tbody>
-                    </table>
+                <div class="row d-flex justify-content-center">
+                    <div class="card-body col-9">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr class="table-success h5">
+                                    <th>
+                                        <button id="showAll"  style="display: none" class="btn btn-outline-success border-0 rounded"
+                                                 onclick="showALl()">
+                                            <i class="far fa-info-circle"></i>
+                                        </button>
+                                        <button id="hideAll" class="btn btn-outline-danger border-0 rounded"
+                                                onclick="hideALl()">
+                                            <i class="fas fa-eye-slash"></i>
+                                        </button>
+                                    </th>
+                                    <th colspan="2">Name</th>
+                                    <th colspan="2">Base Price</th>
+                                </tr>
+                            </thead>
+                            <th:block th:each="p,index: ${list}" >
+                                <tr class="table-info h5">
+                                    <td>
+                                        <button  th:id="'btnShow'+${index.index}"  style="display: none" class="btn btn-outline-success border-0 rounded"
+                                                th:value="${index.index}" onclick="hideTable(this.value)">
+                                            <i class="far fa-info-circle"></i>
+                                        </button>
+                                        <button  th:id="'btnHide'+${index.index}" class="btn btn-outline-danger border-0 rounded"
+                                                th:value="${index.index}" onclick="hideTable(this.value)">
+                                            <i class="fas fa-eye-slash"></i>
+                                        </button>
+                                    </td>
+                                    <td colspan="2" th:text="${p.proName}"></td>
+                                    <td colspan="2" th:text="${p.basePrice}+'$'"></td>
+                                </tr>
+                                <tr th:class="'form'+${index.index}">
+                                    <td  class="text-success">Type</td>
+                                    <td  class="text-success">Color</td>
+                                    <td  class="text-success">Discount(%)</td>
+                                    <td  class="text-success">Quantity</td>
+                                    <td></td>
+                                </tr>
+                                <th:block th:each="d: ${p.productDetailDTOS}">
+                                    <form th:action="@{'admin/repository/update/'+${d.productDetailId}}" method="post">
+                                        <tr th:class="'form'+${index.index}">
+                                            <td th:text="${d.typeName}"></td>
+                                            <td th:text="${d.colorName}"></td>
+                                            <td><input class="rounded text-center border-0" type="number" name="discount" th:value="${d.discount}"></td>
+                                            <td><input class="rounded text-center border-0" type="number" name="quantity" th:value="${d.quantity}"></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-warning rounded" type="submit" data-toggle="tooltip" title="Update" ><i class="fas fa-edit"></i></button>
+                                            </td>
+                                        </tr>
+                                    </form>
+                                </th:block>
+                                <form th:action="@{/admin/repository/save}" method="post" th:object="${pD}">
+                                    <input type="hidden" name="mode" value="listMode">
+                                    <input type="hidden" name="proId" th:value="${p.proId}">
+                                    <tr th:class="'form'+${index.index}">
+                                        <td>
+                                            <select th:field="*{typeId}">
+                                                <option th:each="t:${types}" th:value="${t.typeId}" th:text="${t.typeName}"></option>
+                                            </select>
+                                            <small th:if="${#fields.hasErrors('typeId')}" class="text-danger">TypeId can't be null</small>
+                                        </td>
+                                        <td>
+                                            <select th:field="*{colorId}" >
+                                                <option th:each="t:${colors}" th:value="${t.colorId}" th:text="${t.colorName}"></option>
+                                            </select>
+                                            <small th:if="${#fields.hasErrors('colorId')}" class="text-danger">ColorId can't be null</small>
+                                        </td>
+                                        <td>
+                                            <input class="rounded text-center border-0" type="number"
+                                                   th:field="*{discount}">
+                                            <small th:if="${#fields.hasErrors('discount')}" class="text-danger">Discount is invalid</small>
+                                        </td>
+                                        <td>
+                                            <input class="rounded text-center border-0" type="number"
+                                                   th:field="*{quantity}"></td>
+                                        <small th:if="${#fields.hasErrors('quantity')}" class="text-danger">Quantity is invalid</small>
+                                        <td>
+                                            <button class="btn btn-sm btn-outline-success rounded" type="submit" data-toggle="tooltip" title="Add new" ><i class="fas fa-plus-circle"></i></button>
+                                        </td>
+                                    </tr>
+                                </form>
+                            </th:block>
+                        </table>
+                    </div>
                 </div>
-<!--                <div class="card-footer text-muted">-->
-<!--                    <div class="card-footer text-muted form-inline justify-content-center">-->
-<!--                        <div class="form-inline">-->
-<!--                            <nav aria-label="Page navigation">-->
-<!--                                <ul class="pagination justify-content-center">-->
-<!--                                    <li th:class="${pages.number == 0?'page-item active':'page-item'}">-->
-<!--                                        <a class="page-link" th:href="@{/admin/products(page=${0},size=${pages.size},sort=${sort},search=${search})}">-->
-<!--                                            <span aria-hidden="true">First</span>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li class="page-item">-->
-<!--                                        <a th:class="${(pages.number <= 0)?'page-link btn disabled':'page-link'}"-->
-<!--                                           th:href="@{/admin/products(page=${(pages.number)-1},size=${pages.size},sort=${sort},search=${search})}"-->
-<!--                                           th:text="${pages.number}">-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li class="page-item active">-->
-<!--                                        <a class="page-link"-->
-<!--                                           th:href="@{/admin/products(page=${(pages.number)},size=${pages.size},sort=${sort},search=${search})}"-->
-<!--                                           th:text="${(pages.number)+1}"></a>-->
-<!--                                    </li>-->
-<!--                                    <li class="page-item">-->
-<!--                                        <a th:class="${(pages.number >= (pages.totalPages)-1)?'page-link btn disabled':'page-link'}"-->
-<!--                                           th:href="@{/admin/products(page=${(pages.number)+1},size=${pages.size},sort=${sort},search=${search})}"-->
-<!--                                           th:text="${(pages.number)+2}">-->
-
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                    <li  th:class="${pages.number == (pages.totalPages)-1?'page-item active':'page-item'}">-->
-<!--                                        <a class="page-link" th:href="@{/admin/products(page=${(pages.totalPages)-1},size=${pages.size},sort=${sort},search=${search})}">-->
-<!--                                            <span aria-hidden="true">Last</span>-->
-<!--                                        </a>-->
-<!--                                    </li>-->
-<!--                                </ul>-->
-<!--                            </nav>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
             </div>
         </div>
     </div>
