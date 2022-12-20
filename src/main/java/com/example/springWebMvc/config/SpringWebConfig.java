@@ -13,15 +13,11 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.thymeleaf.dialect.IDialect;
 import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Configuration
 @EnableWebMvc
@@ -43,8 +39,6 @@ public class SpringWebConfig implements WebMvcConfigurer,ApplicationContextAware
         registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/static/js/");
         registry.addResourceHandler("/lib/**").addResourceLocations("/WEB-INF/static/lib/");
         registry.addResourceHandler("/scss/**").addResourceLocations("/WEB-INF/static/scss/");
-        registry.addResourceHandler("/mail/**").addResourceLocations("/WEB-INF/static/mail/");
-        registry.addResourceHandler("/mail/**").addResourceLocations("/WEB-INF/static/mail/");
     }
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/errorPage").setViewName("/site/fragment/errorPage");

@@ -16,7 +16,6 @@ spring:
         globally_quoted_identifiers: true
         dialect: org.hibernate.dialect.MySQL5Dialect
     show-sql: true
-
 #MailSender
   mail:
     host: smtp.gmail.com
@@ -29,14 +28,6 @@ spring:
           auth: true
           starttls:
             enable: true
-#Logger
-#logging:
-#  file:
-#    name: logs/MultiShop.log
-#    path: logs
-#  pattern:
-#    file: '%d [%thread] %-5level %-50logger{40} : %msg%n'
-#  logback:
-#    rollingpolicy:
-#      file-name-pattern: 'logs/achieved/MultiShop-%d{yyyy-MM-dd}-%i.log'
-#      max-file-size: 5MB
+recaptcha:
+  key: 6LfE15IjAAAAALrnfgMObtDj-7AlXqeLEoWCDqOV
+  secret: 6LfE15IjAAAAAIZ3mcBMqUeCwx8NSzgULWFQYJm1

@@ -3,6 +3,17 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{site/homelayout.html}">
 <head>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script >
+        function validateForm(){
+            if (grecaptcha.getResponse()){
+                return true;
+            }else {
+                alert("Verify that you aren't a robot !!!")
+                return false;
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -13,7 +24,7 @@
                 <div class="col-12">
                     <nav class="breadcrumb bg-light mb-30">
                         <a class="breadcrumb-item text-dark" th:href="@{/site}">Home</a>
-                        <span class="breadcrumb-item active">Login</span>
+                        <span class="breadcrumb-item active">Contact</span>
                     </nav>
                 </div>
             </div>
@@ -26,27 +37,25 @@
                 <div class="col-lg-6 mb-5">
                     <div class="contact-form bg-light p-30">
                         <div id="success"></div>
-                        <form name="sentMessage" id="contactForm" novalidate="novalidate">
+                        <form th:action="@{/site/do-contact}" method="post" onsubmit="return validateForm()"
+                              name="sentMessage" id="contactForm" novalidate="novalidate">
                             <div class="control-group">
-                                <input type="text" class="form-control" id="name" placeholder="Your Name"
-                                       required="required" data-validation-required-message="Please enter your name" />
+                                <input type="text" class="form-control" id="name" placeholder="Your Name" required/>
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div class="control-group">
-                                <input type="email" class="form-control" id="email" placeholder="Your Email"
-                                       required="required" data-validation-required-message="Please enter your email" />
+                                <input type="email" class="form-control" id="email" placeholder="Your Email" required/>
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div class="control-group">
-                                <input type="text" class="form-control" id="subject" placeholder="Subject"
-                                       required="required" data-validation-required-message="Please enter a subject" />
+                                <input type="text" class="form-control" id="subject" placeholder="Subject" required/>
                                 <p class="help-block text-danger"></p>
                             </div>
                             <div class="control-group">
-                            <textarea class="form-control" rows="8" id="message" placeholder="Message"
-                                      required="required"
-                                      data-validation-required-message="Please enter your message"></textarea>
+                            <textarea class="form-control" rows="8" id="message" placeholder="Message" required></textarea>
                                 <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="g-recaptcha mb-3" th:data-sitekey="${@environment.getProperty('recaptcha.key')}">
                             </div>
                             <div>
                                 <button class="btn btn-primary py-2 px-4" type="submit" id="sendMessageButton">Send
@@ -62,9 +71,9 @@
                         </iframe>
                     </div>
                     <div class="bg-light p-30 mb-3">
-                        <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
-                        <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
-                        <p class="mb-2"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
+                        <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, Ha Noi, Viet Nam</p>
+                        <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>trantruong193@gmail.com</p>
+                        <p class="mb-2"><i class="fa fa-phone-alt text-primary mr-3"></i>0382.575.181</p>
                     </div>
                 </div>
             </div>

@@ -59,6 +59,8 @@
                             </p>
                             <p>(Lưu mã đơn để có thể kiểm tra tiến độ)</p>
                             <h5>Nhân viên sẽ gọi lại xác nhận đơn hàng !!</h5>
+                            <a class="btn btn-outline-info rounded mt-3" th:href="@{'site/export-csv/'+${orderCode}}">Export to CSV</a>
+                            <a class="btn btn-outline-success rounded mt-3" th:href="@{'site/export-excel/'+${orderCode}}">Export to Excel</a>
                         </div>
                     </div>
                 </div>

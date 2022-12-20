@@ -5,10 +5,7 @@ import com.example.springWebMvc.persistent.PaymentMethod;
 import com.example.springWebMvc.persistent.ProductStatus;
 import com.example.springWebMvc.persistent.dto.*;
 import com.example.springWebMvc.persistent.entities.*;
-import com.example.springWebMvc.repository.CustomerRepository;
-import com.example.springWebMvc.repository.OrderRepository;
-import com.example.springWebMvc.repository.RoleRepository;
-import com.example.springWebMvc.repository.UserRepository;
+import com.example.springWebMvc.repository.*;
 import com.example.springWebMvc.service.*;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.BeanUtils;
@@ -25,11 +22,17 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -55,6 +58,7 @@ public class WebController {
     OrderRepository orderRepository;
     MailSenderService mailSenderService;
     private final UserRepository userRepository;
+    private final OrderDetailRepository orderDetailRepository;
 
 
     @Autowired
@@ -76,7 +80,8 @@ public class WebController {
                           OrderService orderService,
                           OrderRepository orderRepository,
                           MailSenderService mailSenderService,
-                          UserRepository userRepository){
+                          UserRepository userRepository,
+                          OrderDetailRepository orderDetailRepository){
         this.categoryService = categoryService;
         this.catalogService = catalogService;
         this.productService = productService;
@@ -96,6 +101,7 @@ public class WebController {
         this.orderRepository = orderRepository;
         this.mailSenderService = mailSenderService;
         this.userRepository = userRepository;
+        this.orderDetailRepository = orderDetailRepository;
     }
     @ModelAttribute("feature")
     public List<Product> getFeatureProduct(){
@@ -205,6 +211,61 @@ public class WebController {
             model.addAttribute("order",null);
         }
         return "site/fragment/findOrder";
+    }
+    @GetMapping("export-csv/{orderCode}")
+    private void exportCSVOrder(Model model,
+                               @PathVariable("orderCode") String code,
+                               HttpServletResponse response) throws IOException {
+        Order order = orderService.getByOrderCode(code);
+        if (order != null){
+            response.setContentType("text/csv");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+            String currentDate = dateFormat.format(new Date());
+            String fileName = dateFormat + "_Order" + code;
+            String headerKey = "Content-Disposition";
+            String headerValue = "attachment; filename=" + fileName;
+            response.setHeader(headerKey,headerValue);
+            OrderDTO orderDTO = new OrderDTO(order);
+            // create write
+            ICsvBeanWriter csvBeanWriter = new CsvBeanWriter(response.getWriter(), CsvPreference.STANDARD_PREFERENCE);
+            String[] orderInfor = {"Order Code","Name","Phone","Address","Email","Order time","Price"};
+            String[] orderInforMapping = {"orderCode","cusName","phone","address","email","createTime","totalPrice"};
+            String[] orderDetail = {"Product Name","Type","Color","Quantity"};
+            String[] orderDetailMapping = {"productName","typeName","colorName","quantity"};
+            csvBeanWriter.writeHeader(orderInfor);
+            csvBeanWriter.write(orderDTO,orderInforMapping);
+            csvBeanWriter.writeHeader(orderDetail);
+            orderDTO.getOrderDetailDTOList().forEach(orderDetailDTO -> {
+                try {
+                    csvBeanWriter.write(orderDetailDTO.getProductDetailDTO(),orderDetailMapping);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            csvBeanWriter.close();
+        }else {
+            response.sendRedirect("../../errorPage");
+        }
+    }
+    @GetMapping("export-excel/{orderCode}")
+    private void exportExcelOrder(Model model,
+                             @PathVariable("orderCode") String code,
+                             HttpServletResponse response) throws IOException {
+        Order order = orderService.getByOrderCode(code);
+        if (order != null){
+            response.setContentType("application/octet-stream");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+            String currentDate = dateFormat.format(new Date());
+            String fileName = currentDate + "_Order" + code;
+            String headerKey = "Content-Disposition";
+            String headerValue = "attachment; filename=" + fileName + ".xlsx";
+            response.setHeader(headerKey,headerValue);
+            // create write
+            OrderExcelExporter exporter = new OrderExcelExporter(new OrderDTO(order));
+            exporter.export(response);
+        }else {
+            response.sendRedirect("../../errorPage");
+        }
     }
     @PostMapping("order")
     // process order
@@ -393,6 +454,11 @@ public class WebController {
     @GetMapping("contact")
     private String contact(){
         return "site/fragment/contact";
+    }
+    @PostMapping("do-contact")
+    private String doContact(){
+
+        return "site/fragment/home";
     }
     @PostMapping("register")
     // register user
