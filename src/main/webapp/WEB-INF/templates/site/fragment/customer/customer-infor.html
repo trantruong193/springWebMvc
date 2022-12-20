@@ -15,7 +15,6 @@
         }
     </script>
 </head>
-
 <body>
     <div layout:fragment="content">
         <!-- Breadcrumb Start -->
@@ -85,8 +84,15 @@
                                     <input class="form-control rounded border-success" type="email" readonly
                                            th:value="${email}">
                                 </div>
-                                <div class="col-md-6 form-group d-flex justify-content-center">
-                                    <button type="submit" class="btn w-100 mt-3 rounded btn-success">Update</button>
+                                <div class="col-md-6 d-flex justify-content-center">
+                                    <div class="row">
+                                        <div class="col-md-6 form-group d-flex justify-content-center">
+                                            <button type="submit" class="btn btn-sm w-75 mt-3 rounded btn-success">Update Information</button>
+                                        </div>
+                                        <div class="col-md-6 form-group d-flex justify-content-center">
+                                            <a th:href="@{'/site/customer/update-password?username='+${username}}" class="btn btn-sm w-75 mt-3 rounded btn-danger">Change Password</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </form>

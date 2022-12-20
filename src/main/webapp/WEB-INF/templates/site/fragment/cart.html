@@ -74,9 +74,9 @@
                         </tbody>
                     </table>
                     <tr>
-                        <div th:if="${amount <= 0}" class="text-center">
-                            <h5>Giỏ hàng trống</h5>
-                            <a class="text-success" th:href="@{/site/products}">Tiếp tục mua sắm</a>
+                        <div th:if="${amount <= 0}" class="text-center mt-3">
+                            <h5>Giỏ hàng trống <i class="far fa-surprise"></i></h5>
+                            <a class="text-success" th:href="@{/site/products}"><i class="far fa-cart-plus"></i> Tiếp tục mua sắm</a>
                         </div>
                     </tr>
                 </div>

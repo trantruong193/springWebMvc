@@ -3,7 +3,10 @@ package com.example.springWebMvc.service.impl;
 import com.example.springWebMvc.persistent.entities.User;
 import com.example.springWebMvc.repository.UserRepository;
 import com.example.springWebMvc.service.UserService;
+import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -11,9 +14,12 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
     UserRepository userRepository;
+    PasswordEncoder passwordEncoder;
     @Autowired
-    public UserServiceImpl(UserRepository userRepository){
+    public UserServiceImpl(UserRepository userRepository,
+                           PasswordEncoder passwordEncoder){
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
     @Override
     public User getUserByUsername(String username) {
@@ -48,5 +54,22 @@ public class UserServiceImpl implements UserService {
             return true;
         }else
             return false;
+    }
+
+    @Override
+    public String resetPassword(String email) {
+        String newPassword = RandomString.make(9);
+        if (userRepository.getUsersByEmail(email).isPresent()){
+            User user = userRepository.getUsersByEmail(email).get();
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
+            return newPassword;
+        }else
+            return "";
+    }
+
+    @Override
+    public User getUserByResetPasswordCode(String code) {
+        return userRepository.getUserByResetPasswordCode(code);
     }
 }

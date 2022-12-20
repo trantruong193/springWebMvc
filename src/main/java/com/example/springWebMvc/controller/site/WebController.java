@@ -8,6 +8,7 @@ import com.example.springWebMvc.persistent.entities.*;
 import com.example.springWebMvc.repository.CustomerRepository;
 import com.example.springWebMvc.repository.OrderRepository;
 import com.example.springWebMvc.repository.RoleRepository;
+import com.example.springWebMvc.repository.UserRepository;
 import com.example.springWebMvc.service.*;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.BeanUtils;
@@ -16,10 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,7 +54,7 @@ public class WebController {
     CustomerRepository customerRepository;
     OrderRepository orderRepository;
     MailSenderService mailSenderService;
-
+    private final UserRepository userRepository;
 
 
     @Autowired
@@ -77,7 +75,8 @@ public class WebController {
                           OrderDetailService orderDetailService,
                           OrderService orderService,
                           OrderRepository orderRepository,
-                          MailSenderService mailSenderService){
+                          MailSenderService mailSenderService,
+                          UserRepository userRepository){
         this.categoryService = categoryService;
         this.catalogService = catalogService;
         this.productService = productService;
@@ -96,6 +95,7 @@ public class WebController {
         this.orderService = orderService;
         this.orderRepository = orderRepository;
         this.mailSenderService = mailSenderService;
+        this.userRepository = userRepository;
     }
     @ModelAttribute("feature")
     public List<Product> getFeatureProduct(){
@@ -257,7 +257,7 @@ public class WebController {
         mailMessage += "<b>Sincere !!</b>";
         mailMessage += "<hr><img src='cid:logoImg' />";
 
-        mailSenderService.sendEmail(order1.getEmail(),"[MultiShop] Your order has been created",mailMessage);
+        mailSenderService.sendOrderEmail(order1.getEmail(),"[MultiShop] Your order has been created",mailMessage);
         // clear cart item
         cartService.clear();
         return "site/fragment/orderSuccess";
@@ -284,8 +284,40 @@ public class WebController {
         model.addAttribute("email",userDetails.getEmail());
         return "site/fragment/customer/customer-infor";
     }
+    @GetMapping("customer/update-password")
+    public String updatePassword(@RequestParam("username") String username,Model model){
+        model.addAttribute("username",username);
+        return "site/fragment/customer/update-password";
+    }
+    @PostMapping("customer/update-password")
+    public String doUpdatePassword(Model model, @RequestParam(name = "username",required = false) String username,
+                                   @RequestParam(name = "oldPassword",required = false) String oldPassword,
+                                   @RequestParam(name = "newPassword",required = false) String newPassword,
+                                   @RequestParam(name = "confirmPassword",required = false) String confirmPassword){
+
+        if (!StringUtils.hasText(oldPassword) || !StringUtils.hasText(newPassword)
+                || newPassword.length()<6 || newPassword.length()>20 || !confirmPassword.equals(oldPassword)){
+            model.addAttribute("message","error");
+            return "site/fragment/customer/update-password";
+        }
+        if (StringUtils.hasText(username)){
+            User user = userService.getUserByUsername(username);
+            if (user != null){
+                if (passwordEncoder.matches(oldPassword,user.getPassword())){
+                    user.setPassword(passwordEncoder.encode(newPassword));
+                    userService.save(user);
+                    model.addAttribute("message","success");
+                }else {
+                    model.addAttribute("message","invalidOldPassword");
+                }
+            }else {
+                return "site/fragment/errorPage";
+            }
+        }
+        return "site/fragment/customer/update-password";
+    }
     @PostMapping("customer/update")
-    private String updateCus(Model model,@AuthenticationPrincipal CustomizeUserDetails userDetails,
+    private String updateCustomer(Model model,@AuthenticationPrincipal CustomizeUserDetails userDetails,
                              @Valid @ModelAttribute("customer") CustomerDTO dto,
                              BindingResult  bindingResult,
                              @RequestParam("avatarImg")MultipartFile img) throws IOException {
@@ -426,9 +458,52 @@ public class WebController {
         return "/site/fragment/login";
     }
     @GetMapping("/forget-password")
-    private String forgetPassword(Model model){
-
-        return "/site/fragment/login";
+    private String forgetPassword(){
+        return "/site/fragment/customer/reset-password";
+    }
+    @PostMapping("/verifyMail")
+    private String resetPassword(Model model,@RequestParam("email") String email,HttpServletRequest request) throws MessagingException {
+        if (userService.checkEmail(email)){
+            User user = userRepository.getUsersByEmail(email).get();
+            // generate verify link
+            String verifyCode = RandomString.make(24);
+            user.setResetPasswordCode(verifyCode);
+            userRepository.save(user);
+            String activeLink = Utility.getSiteUrl(request);
+            activeLink += "/site/reset-password?code="+verifyCode;
+            // generate mail content
+            String mailMessage = "<p>Dear !!</p>";
+            mailMessage += "<p>Click VERIFY below to reset password.</p>";
+            mailMessage += "<a href=\"" + activeLink + "\">VERIFY</a><br>";
+            mailMessage += "<b>Sincere !!</b>";
+            mailMessage += "<hr><img src='cid:logoImg' />";
+            mailSenderService.sendResetPasswordMail(email,mailMessage);
+            model.addAttribute("message","verify");
+        }else {
+            model.addAttribute("message","false");
+        }
+        return "/site/fragment/customer/reset-password";
+    }
+    @GetMapping("/reset-password")
+    private String doReset(Model model,@RequestParam("code")String code) throws MessagingException {
+        User user = userService.getUserByResetPasswordCode(code);
+        if (user != null){
+            String newPassword = userService.resetPassword(user.getEmail());
+            if (Objects.equals(newPassword, ""))
+                return "/site/fragment/errorPage";
+            else {
+                // send mail
+                String mailMessage = "<p>Your new password</p>";
+                mailMessage += "<p><b>"+newPassword+"</b></p>";
+                mailMessage += "<b>Sincere !!</b>";
+                mailMessage += "<hr><img src='cid:logoImg' />";
+                mailSenderService.sendEmail(user.getEmail(),"[MultiShopReset] Password Success",mailMessage);
+                model.addAttribute("message","verifySuccess");
+                return "/site/fragment/customer/reset-password";
+            }
+        }else {
+            return "/site/fragment/errorPage";
+        }
     }
     @GetMapping("detail/{proId}")
     // to detail page

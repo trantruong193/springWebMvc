@@ -99,9 +99,4 @@ public class adminRestController {
     public boolean checkUsername(@RequestParam(name = "rUsername") String username){
         return userService.getUserByUsername(username) != null;
     }
-    @PostMapping("/send-mail")
-    public ResponseEntity sendMail(@RequestBody MailMessage mailMessage) throws MessagingException {
-        mailSenderService.sendEmail(mailMessage.getTo(), mailMessage.getSubject(), mailMessage.getMessage());
-        return ResponseEntity.ok("Success");
-    }
 }

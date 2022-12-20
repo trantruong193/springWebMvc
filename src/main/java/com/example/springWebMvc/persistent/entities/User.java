@@ -23,8 +23,8 @@ public class User implements Serializable {
     private String email;
     @Column(nullable = false)
     private int status;
-    @Column(updatable = false)
     private String verifyCode;
+    private String resetPasswordCode;
     @OneToOne(mappedBy = "user")
     private Customer customer;
     @OneToMany(mappedBy = "user",fetch = FetchType.EAGER,cascade = CascadeType.ALL)

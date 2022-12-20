@@ -8,4 +8,6 @@ public interface UserService {
     boolean checkEmail(String email);
     boolean save(User user);
     boolean verify(String code);
+    String resetPassword(String email);
+    User getUserByResetPasswordCode(String code);
 }

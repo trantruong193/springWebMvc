@@ -29,3 +29,14 @@ spring:
           auth: true
           starttls:
             enable: true
+#Logger
+#logging:
+#  file:
+#    name: logs/MultiShop.log
+#    path: logs
+#  pattern:
+#    file: '%d [%thread] %-5level %-50logger{40} : %msg%n'
+#  logback:
+#    rollingpolicy:
+#      file-name-pattern: 'logs/achieved/MultiShop-%d{yyyy-MM-dd}-%i.log'
+#      max-file-size: 5MB
