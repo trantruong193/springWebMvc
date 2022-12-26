@@ -12,4 +12,5 @@ public interface ProductDetailService {
     ProductDetail findByProIdAndColorIdAndTypeId(Long proId,Long colorId,Long typeId);
     boolean save(ProductDetail productDetail);
     ProductDetail findById(Long productDetailId);
+
 }

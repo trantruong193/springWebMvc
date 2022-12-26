@@ -78,17 +78,23 @@
                                 <div class="text-center text-truncate py-4 pr-3 pl-3">
                                     <a class="h6 text-decoration-none" th:href="@{'site/detail/'+${p.proId}}" th:text="${p.proName}"></a>
                                     <div class="d-flex align-items-center justify-content-center mt-2">
-                                        <h5 th:text="${p.basePrice - p.basePrice * p.discount/100}+'$'"></h5>
+                                        <h5 th:text="${p.basePrice - p.basePrice * p.highestDiscount()/100}+'$'"></h5>
                                         <h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-center mb-1">
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small>(99)</small>
+                                        <small th:if="${p.getRate()>0}" class="fas fa-star text-primary mr-1"></small>
+                                        <small th:unless="${p.getRate()>0}" class="far fa-star text-primary mr-1"></small>
+                                        <small th:if="${p.getRate()>1}" class="fas fa-star text-primary mr-1"></small>
+                                        <small th:unless="${p.getRate()>1}" class="far fa-star text-primary mr-1"></small>
+                                        <small th:if="${p.getRate()>2}" class="fas fa-star text-primary mr-1"></small>
+                                        <small th:unless="${p.getRate()>2}" class="far fa-star text-primary mr-1"></small>
+                                        <small th:if="${p.getRate()>3}" class="fas fa-star text-primary mr-1"></small>
+                                        <small th:unless="${p.getRate()>3}" class="far fa-star text-primary mr-1"></small>
+                                        <small th:if="${p.getRate()>4}" class="fas fa-star text-primary mr-1"></small>
+                                        <small th:unless="${p.getRate()>4}" class="far fa-star text-primary mr-1"></small>
+                                        <small>(<span th:text="${p.reviews.size()}"></span>)</small>
                                     </div>
+
                                 </div>
                             </div>
                         </div>

@@ -18,7 +18,8 @@ public class Producer implements Serializable {
     private Long producerId;
     @Column(name = "producerName",nullable = false,unique = true)
     private String producerName;
-
+    @Column(name = "logoUrl")
+    private String imgUrl;
     @OneToMany(mappedBy = "producer")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

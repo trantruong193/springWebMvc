@@ -39,5 +39,19 @@ public class OrderDetailServiceImpl implements OrderDetailService {
             return false;
         }
     }
+
+    @Override
+    public OrderDetail getById(Long orderDetailId) {
+        return repository.getReferenceById(orderDetailId);
+    }
+
+    @Override
+    public void delete(Long detailId) {
+        try {
+            repository.deleteById(detailId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }
 

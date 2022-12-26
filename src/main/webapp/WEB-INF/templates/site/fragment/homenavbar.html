@@ -129,7 +129,7 @@
                                     <a th:href="@{/site/findOrder}" class="nav-item nav-link">Order Status</a>
                                 </div>
                                 <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
-                                    <a th:href="@{/site/cart}" class="btn px-0 mr-3">
+                                    <a th:href="@{/site/cart}" class="btn px-0 mr-3" th:unless="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
                                         <i class="fas fa-shopping-cart text-primary"></i>
                                         <span id="cart-quantity" th:text="${cartQuantity}" class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;"></span>
                                     </a>

@@ -37,10 +37,9 @@ public class ProductDTO implements Serializable {
     @Min(0)
     @NotNull
     private double basePrice;
-    @Min(0)
     @NotNull
     @Max(100)
-    private Float discount;
+    private double discount;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull
     private Date importDate;

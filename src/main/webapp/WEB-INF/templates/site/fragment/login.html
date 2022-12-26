@@ -43,14 +43,14 @@
             </div>
             <div class="row justify-content-center" sec:authorize="isAuthenticated()">
                 <div class="text-center">
-                    <h3 class="text-success">Bạn đã đăng nhập thành công !!</h3>
-                    <a th:href="@{/site}">Bấm vào đây để quay lại</a>
+                    <h3 class="text-success">You have login !!!</h3>
+                    <a th:href="@{/site}">Click here to go back</a>
                 </div>
             </div>
             <div class="row"  sec:authorize="isAnonymous()">
                 <div class="nav nav-tabs mb-4 col-6 offset-3">
-                    <a class="nav-item nav-link text-dark active" data-toggle="tab" href="#tab-pane-1">Đăng nhập</a>
-                    <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-2">Đăng kí</a>
+                    <a class="nav-item nav-link text-dark active" data-toggle="tab" href="#tab-pane-1">Login</a>
+                    <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-2">Register</a>
                 </div>
             </div>
             <div class="row justify-content-center" sec:authorize="isAnonymous()">
@@ -74,7 +74,7 @@
                                 <form th:action="@{/login}" method="post">
                                     <div class="card rounded">
                                         <div class="card-body">
-                                            <p class="text-center text-truncate">Đăng nhập bằng tài khoản</p>
+                                            <p class="text-center text-truncate">Login with your account</p>
                                             <div class="form-group mb-0">
                                                 <input type="text" class="form-control rounded" name="username" id="username" autofocus placeholder="Username"><br>
                                             </div>
@@ -88,7 +88,7 @@
                                             <div class="text-muted d-flex justify-content-center mt-3">
                                                 <button class="btn btn-success rounded w-75" type="submit">Login</button>
                                             </div>
-                                            <a th:href="@{site/forget-password}" class="text-muted d-block text-center mt-3">Quên mật khẩu</a>
+                                            <a th:href="@{site/forget-password}" class="text-muted d-block text-center mt-3">Forget password</a>
                                         </div>
                                     </div>
                                 </form>
@@ -96,7 +96,7 @@
                             <div class="col-6">
                                 <div class="card rounded">
                                     <div class="card-body">
-                                        <p class="text-center">Đăng nhập với</p>
+                                        <p class="text-center">Login with</p>
                                         <div class="form-group">
                                             <a class="form-control btn btn-outline-success rounded"><i class="fab fa-facebook float-left mt-1"></i>Facebook</a>
                                         </div>
@@ -117,7 +117,7 @@
                                 <form th:action="@{/site/register}" method="post">
                                     <div class="card rounded">
                                         <div class="card-body">
-                                            <p class="text-center text-truncate">Đăng kí tài khoản</p>
+                                            <p class="text-center text-truncate">Register new account</p>
                                             <div class="form-group mb-0">
                                                 <small id="rUsernameHid"></small>
                                                 <small class="text-danger" th:if="${uMessage != null}" th:text="${uMessage}"></small>
@@ -137,7 +137,7 @@
                                             </div>
                                             <div class="form-inline">
                                                 <input type="checkbox" class="form-inline ml-1" required>
-                                                <a class="ml-2 text-muted text-truncate">Đồng ý với các điều khoản</a>
+                                                <a class="ml-2 text-muted text-truncate">Confirm policies</a>
                                             </div>
                                             <div class="text-muted d-flex justify-content-center mt-4">
                                                 <button class="btn btn-success rounded w-75" type="submit">Register</button>
@@ -149,7 +149,7 @@
                             <div class="col-6">
                                 <div class="card rounded">
                                     <div class="card-body">
-                                        <p class="text-center">Đăng kí với</p>
+                                        <p class="text-center">Register with</p>
                                         <div class="form-group pt-4">
                                             <a class="form-control btn btn-outline-success rounded"><i class="fab fa-facebook float-left mt-1"></i>Facebook</a>
                                         </div>

@@ -27,6 +27,14 @@ public class User implements Serializable {
     private String resetPasswordCode;
     @OneToOne(mappedBy = "user")
     private Customer customer;
+    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Message> messages;
+    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Review> reviews;
     @OneToMany(mappedBy = "user",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

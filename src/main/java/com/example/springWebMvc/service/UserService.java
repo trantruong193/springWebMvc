@@ -2,6 +2,8 @@ package com.example.springWebMvc.service;
 
 import com.example.springWebMvc.persistent.entities.User;
 
+import java.util.List;
+
 public interface UserService {
     User getUserByUsername(String username);
     User getUserById(Long id);
@@ -10,4 +12,6 @@ public interface UserService {
     boolean verify(String code);
     String resetPassword(String email);
     User getUserByResetPasswordCode(String code);
+
+    User getUserByEmail(String email);
 }

@@ -18,7 +18,6 @@ import java.io.Serializable;
 public class ProductDetailDTO implements Serializable {
     private Long productDetailId;
     @NotNull
-    @Min(0)
     @Max(100)
     private double discount;
     @NotNull
@@ -34,6 +33,7 @@ public class ProductDetailDTO implements Serializable {
     private String typeName;
     public ProductDetailDTO(ProductDetail productDetail){
         this.productDetailId = productDetail.getProductDetailId();
+        this.proId = productDetail.getProduct().getProId();
         this.productName = productDetail.getProduct().getProName();
         this.colorName = productDetail.getColor().getColorName();
         this.typeName = productDetail.getType().getTypeName();

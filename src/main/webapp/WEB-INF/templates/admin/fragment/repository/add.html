@@ -143,7 +143,7 @@
                             <div class="form-group">
                                 <label for="discount">Discount</label>
                                 <input type="number" class="form-control" id="discount" th:field="*{discount}">
-                                <small th:if="${#fields.hasErrors('discount')}" class="text-danger">Discount must greater than 0</small>
+                                <small th:if="${#fields.hasErrors('discount')}" class="text-danger">Discount must smaller than 100</small>
                             </div>
                             <div class="form-group">
                                 <label for="quantity">Quantity</label>

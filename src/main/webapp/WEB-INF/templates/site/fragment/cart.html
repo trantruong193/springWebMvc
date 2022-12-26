@@ -75,8 +75,8 @@
                     </table>
                     <tr>
                         <div th:if="${amount <= 0}" class="text-center mt-3">
-                            <h5>Giỏ hàng trống <i class="far fa-surprise"></i></h5>
-                            <a class="text-success" th:href="@{/site/products}"><i class="far fa-cart-plus"></i> Tiếp tục mua sắm</a>
+                            <h5>Empty cart <i class="far fa-surprise"></i></h5>
+                            <a class="text-success" th:href="@{/site/products}"><i class="far fa-cart-plus"></i>Continue shopping</a>
                         </div>
                     </tr>
                 </div>
@@ -99,7 +99,7 @@
                                 <h6 th:text="${#numbers.formatDecimal(amount*1.1,1,1)}+'$'"></h6>
                             </div>
                             <a th:if="${amount>0}" class="btn btn-block btn-primary font-weight-bold my-3 py-3"
-                               th:href="@{/site/checkout}">Thanh toán
+                               th:href="@{/site/checkout}">Check out
                             </a>
                         </div>
                     </div>

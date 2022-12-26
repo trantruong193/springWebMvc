@@ -104,13 +104,13 @@ public class RepositController {
         // case field proId has exits (update product detail)
         if (detailDTO.getProId() != null){
             if (productDetailService.findByProIdAndColorIdAndTypeId(detailDTO.getProId(), detailDTO.getColorId(), detailDTO.getTypeId()) == null){
-                // if found set new data
+                // if not found creat new product detail
                 BeanUtils.copyProperties(detailDTO,productDetail);
                 productDetail.setProduct(productService.findById(detailDTO.getProId()));
                 productDetail.setColor(colorService.getColorById(detailDTO.getColorId()));
                 productDetail.setType(typeService.getById(detailDTO.getTypeId()));
             }else {
-                // if not found creat new product detail
+                // if found set new data
                 productDetail = productDetailService.findByProIdAndColorIdAndTypeId(detailDTO.getProId(), detailDTO.getColorId(), detailDTO.getTypeId());
                 productDetail.setDiscount(detailDTO.getDiscount());
                 productDetail.setQuantity(detailDTO.getQuantity());
@@ -137,7 +137,7 @@ public class RepositController {
                          @PathVariable("productDetailId") Long productDetailId,
                          @RequestParam("discount") double discount,
                          @RequestParam("quantity") int quantity){
-        if (discount < 0 || discount > 100 || quantity < 0){
+        if (discount > 100 || quantity < 0){
             model.addAttribute("errorMessage","Invalid data");
             return "forward:/admin/repository";
         }
@@ -146,8 +146,10 @@ public class RepositController {
             productDetail.setDiscount(discount);
             productDetail.setQuantity(quantity);
             productDetailService.save(productDetail);
+            model.addAttribute("message","Update successfully");
+        }else {
+            model.addAttribute("errorMessage","Invalid data");
         }
-        model.addAttribute("message","Update successfully");
         return "forward:/admin/repository";
     }
 }

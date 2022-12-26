@@ -7,6 +7,8 @@ import com.example.springWebMvc.persistent.dto.*;
 import com.example.springWebMvc.persistent.entities.*;
 import com.example.springWebMvc.repository.*;
 import com.example.springWebMvc.service.*;
+import com.example.springWebMvc.utility.OrderExcelExporter;
+import com.example.springWebMvc.utility.Utility;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,11 +57,10 @@ public class WebController {
     OrderService orderService;
     RoleRepository roleRepository;
     CustomerRepository customerRepository;
-    OrderRepository orderRepository;
     MailSenderService mailSenderService;
-    private final UserRepository userRepository;
-    private final OrderDetailRepository orderDetailRepository;
-
+    OrderDetailRepository orderDetailRepository;
+    ReviewService reviewService;
+    MessageService messageService;
 
     @Autowired
     public WebController (ProductService productService,
@@ -78,9 +79,9 @@ public class WebController {
                           CustomerRepository customerRepository,
                           OrderDetailService orderDetailService,
                           OrderService orderService,
-                          OrderRepository orderRepository,
                           MailSenderService mailSenderService,
-                          UserRepository userRepository,
+                          MessageService messageService,
+                          ReviewService reviewService,
                           OrderDetailRepository orderDetailRepository){
         this.categoryService = categoryService;
         this.catalogService = catalogService;
@@ -98,10 +99,10 @@ public class WebController {
         this.customerRepository = customerRepository;
         this.orderDetailService = orderDetailService;
         this.orderService = orderService;
-        this.orderRepository = orderRepository;
         this.mailSenderService = mailSenderService;
-        this.userRepository = userRepository;
         this.orderDetailRepository = orderDetailRepository;
+        this.messageService = messageService;
+        this.reviewService = reviewService;
     }
     @ModelAttribute("feature")
     public List<Product> getFeatureProduct(){
@@ -146,7 +147,7 @@ public class WebController {
 //    }
     @GetMapping("")
     // to home page
-    private String home(Model model){
+    public String home(Model model){
         // get product with max discount
         List<ProductDetail> productDetails = productDetailService.getAll();
         productDetails.sort(Comparator.comparing(ProductDetail::getDiscount));
@@ -164,12 +165,12 @@ public class WebController {
     }
     @GetMapping("cart")
     // to cart item
-    private String cart(Model model){
+    public String cart(Model model){
         return "site/fragment/cart";
     }
     @GetMapping("updateCart")
     // update cart item
-    private String updateCart(@RequestParam(name = "productDetailId",required = false)Long productDetailId,
+    public String updateCart(@RequestParam(name = "productDetailId",required = false)Long productDetailId,
                               @RequestParam(name = "quantity") int quantity){
 
         cartService.update(productDetailId,quantity);
@@ -177,13 +178,13 @@ public class WebController {
     }
     @GetMapping("removeCart/{productDetailId}")
     // remove cart item
-    private String removeCart(@PathVariable("productDetailId")Long productDetailId){
+    public String removeCart(@PathVariable("productDetailId")Long productDetailId){
         cartService.remove(productDetailId);
         return "redirect:/site/cart";
     }
     @GetMapping("checkout")
     // to check out page
-    private String checkout(@AuthenticationPrincipal CustomizeUserDetails userDetails,Model model){
+    public String checkout(@AuthenticationPrincipal CustomizeUserDetails userDetails,Model model){
         // check if user is login
         if (userDetails != null){
             Customer customer = customerService.findByUSerId(userDetails.getUserId());
@@ -202,7 +203,8 @@ public class WebController {
         return "site/fragment/checkout";
     }
     @GetMapping("findOrder")
-    private String findOrder(Model model,@RequestParam(name = "orderCode",required = false)String orderCode){
+    // to search order page
+    public String findOrder(Model model,@RequestParam(name = "orderCode",required = false)String orderCode){
         if (StringUtils.hasText(orderCode)){
             Order order = orderService.getByOrderCode(orderCode);
             if (order!= null)
@@ -213,7 +215,8 @@ public class WebController {
         return "site/fragment/findOrder";
     }
     @GetMapping("export-csv/{orderCode}")
-    private void exportCSVOrder(Model model,
+    // export to csv
+    public void exportCSVOrder(Model model,
                                @PathVariable("orderCode") String code,
                                HttpServletResponse response) throws IOException {
         Order order = orderService.getByOrderCode(code);
@@ -221,7 +224,7 @@ public class WebController {
             response.setContentType("text/csv");
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
             String currentDate = dateFormat.format(new Date());
-            String fileName = dateFormat + "_Order" + code;
+            String fileName = currentDate + "_Order" + code;
             String headerKey = "Content-Disposition";
             String headerValue = "attachment; filename=" + fileName;
             response.setHeader(headerKey,headerValue);
@@ -248,9 +251,9 @@ public class WebController {
         }
     }
     @GetMapping("export-excel/{orderCode}")
-    private void exportExcelOrder(Model model,
-                             @PathVariable("orderCode") String code,
-                             HttpServletResponse response) throws IOException {
+    // export to excel
+    public void exportExcelOrder(@PathVariable("orderCode") String code,
+                                 HttpServletResponse response) throws IOException {
         Order order = orderService.getByOrderCode(code);
         if (order != null){
             response.setContentType("application/octet-stream");
@@ -269,7 +272,7 @@ public class WebController {
     }
     @PostMapping("order")
     // process order
-    private String order(@AuthenticationPrincipal CustomizeUserDetails userDetails, Model model,
+    public String order(@AuthenticationPrincipal CustomizeUserDetails userDetails, Model model,
                         @Valid @ModelAttribute("order") OrderDTO dto,
                         BindingResult bindingResult, @RequestParam(name = "paymentMethod",required = false) String method) throws MessagingException {
         // check if cart is empty
@@ -296,7 +299,7 @@ public class WebController {
         else
             price = cartService.getAmount()*1.1;
         order.setTotalPrice(price);
-        Order order1 = orderRepository.save(order);
+        Order order1 = orderService.save(order);
         // create order detail and save
         Collection<CartItem> items = new HashSet<>(cartService.getCartItems());
         items.forEach(item -> {
@@ -325,7 +328,7 @@ public class WebController {
     }
     @GetMapping("customer")
     // to customer page
-    private String customer(@AuthenticationPrincipal CustomizeUserDetails userDetails,Model model){
+    public String customer(@AuthenticationPrincipal CustomizeUserDetails userDetails,Model model){
         // get customer information
         Customer customer = customerService.findByUSerId(userDetails.getUserId());
         if (customer != null)
@@ -346,11 +349,13 @@ public class WebController {
         return "site/fragment/customer/customer-infor";
     }
     @GetMapping("customer/update-password")
+    // to update password page
     public String updatePassword(@RequestParam("username") String username,Model model){
         model.addAttribute("username",username);
         return "site/fragment/customer/update-password";
     }
     @PostMapping("customer/update-password")
+    // do update password
     public String doUpdatePassword(Model model, @RequestParam(name = "username",required = false) String username,
                                    @RequestParam(name = "oldPassword",required = false) String oldPassword,
                                    @RequestParam(name = "newPassword",required = false) String newPassword,
@@ -378,7 +383,8 @@ public class WebController {
         return "site/fragment/customer/update-password";
     }
     @PostMapping("customer/update")
-    private String updateCustomer(Model model,@AuthenticationPrincipal CustomizeUserDetails userDetails,
+    // update customer information
+    public String updateCustomer(Model model,@AuthenticationPrincipal CustomizeUserDetails userDetails,
                              @Valid @ModelAttribute("customer") CustomerDTO dto,
                              BindingResult  bindingResult,
                              @RequestParam("avatarImg")MultipartFile img) throws IOException {
@@ -392,8 +398,9 @@ public class WebController {
             // check duplicate phone
             if (dto.getPhone()!=null)
                 if (customerService.checkPhone(dto.getPhone())){
-                    model.addAttribute("pMessage","Số điện thoại đã được sử dụng");
+                    model.addAttribute("pMessage","Phone number has been used !!!");
                     model.addAttribute("username",userDetails.getUsername());
+                    model.addAttribute("email",userDetails.getEmail());
                     return "site/fragment/customer/customer-infor";
                 }
         }
@@ -405,8 +412,9 @@ public class WebController {
         // check duplicate phone
         if (!dto.getPhone().equals(customer.getPhone()))
             if (customerService.checkPhone(dto.getPhone())){
-                model.addAttribute("eMessage","Phone đã được sử dụng");
+                model.addAttribute("pMessage","Phone number has been used !!!");
                 model.addAttribute("username",userDetails.getUsername());
+                model.addAttribute("email",userDetails.getEmail());
                 return "site/fragment/customer/customer-infor";
             }
         BeanUtils.copyProperties(dto,customer);
@@ -423,12 +431,13 @@ public class WebController {
         return "redirect:/site/customer";
     }
     @PostMapping("customer/updateOrder/{orderId}")
-    private String updateOrder(@PathVariable("orderId") Long orderId,
+    // update order
+    public String updateOrder(@PathVariable("orderId") Long orderId,
                                @RequestParam("cusName")String cusName,
                                @RequestParam("phone")String phone,
                                @RequestParam("address")String address,Model model){
         if (orderId != null){
-            Order order = orderRepository.getReferenceById(orderId);
+            Order order = orderService.getByOrderId(orderId);
             if (order != null){
                 order.setCusName(cusName);
                 order.setPhone(phone);
@@ -441,9 +450,10 @@ public class WebController {
         return "redirect:/site/customer";
     }
     @GetMapping("customer/cancelOrder/{orderId}")
-    private String cancelOrder(@PathVariable("orderId") Long orderId){
+    // cancel order
+    public String cancelOrder(@PathVariable("orderId") Long orderId){
         if (orderId!=null){
-            Order order = orderRepository.getReferenceById(orderId);
+            Order order = orderService.getByOrderId(orderId);
             if (order != null){
                 order.setStatus(OrderStatus.Cancel);
                 orderService.save(order);
@@ -452,37 +462,84 @@ public class WebController {
         return "redirect:/site/customer";
     }
     @GetMapping("contact")
-    private String contact(){
+    // to contact page
+    public String contact(Model model,@AuthenticationPrincipal CustomizeUserDetails userDetails){
+        MessageDTO message = new MessageDTO();
+        if (userDetails!=null){
+            List<Message> list = messageService.getByUserId(userDetails.getUserId());
+            List<MessageDTO> dtos = new ArrayList<>();
+            if (!list.isEmpty()){
+                list.forEach(message1 -> dtos.add(new MessageDTO(message1)));
+            }
+            model.addAttribute("list",dtos);
+            message.setCusEmail(userDetails.getEmail());
+            if (customerService.findByUSerId(userDetails.getUserId())!=null){
+                message.setCusName(customerService.findByUSerId(userDetails.getUserId()).getCusName());
+                message.setPhone(customerService.findByUSerId(userDetails.getUserId()).getPhone());
+            }
+        }
+        model.addAttribute("newMessage",message);
         return "site/fragment/contact";
     }
     @PostMapping("do-contact")
-    private String doContact(){
-
-        return "site/fragment/home";
+    // send contact message
+    public String doContact(@Valid @ModelAttribute("newMessage") MessageDTO messageDTO,
+                            BindingResult bindingResult,@AuthenticationPrincipal CustomizeUserDetails userDetails){
+        if (bindingResult.hasErrors()){
+            return "site/fragment/contact";
+        }
+        Message message = new Message();
+        BeanUtils.copyProperties(messageDTO,message);
+        message.setStatus(false);
+        if (userDetails!=null){
+            message.setUser(userService.getUserById(userDetails.getUserId()));
+        }
+        messageService.save(message);
+        return "redirect:/site/contact";
+    }
+    @PostMapping("do-review/{proId}")
+    // send review
+    public String doReview(@PathVariable("proId") Long proId,@AuthenticationPrincipal CustomizeUserDetails details,
+                           @RequestParam("rate") int rate,@Valid @ModelAttribute("review")ReviewDTO dto,
+                           BindingResult result,Model model){
+        if (result.hasErrors()){
+            model.addAttribute("message","Invalid reviews");
+            return "redirect:/site/detail/"+proId;
+        }
+        Review review = new Review();
+        BeanUtils.copyProperties(dto,review);
+        if (details!=null){
+            review.setUser(userService.getUserById(details.getUserId()));
+        }
+        review.setProduct(productService.findById(proId));
+        review.setRate(rate);
+        review.setStatus(false);
+        reviewService.save(review);
+        return "redirect:/site/detail/"+proId;
     }
     @PostMapping("register")
     // register user
-    private String register(Model model, HttpServletRequest request,
+    public String register(Model model, HttpServletRequest request,
                             @RequestParam("rUsername") String username,
                             @RequestParam("rPassword") String password,
                             @RequestParam("rEmail") String email) throws MessagingException {
         // check information
         if (username.length() < 3 || username.length() > 20)
         {
-            model.addAttribute("uMessage","Tên đăng nhập phải từ 3 tới 20 kí tự");
+            model.addAttribute("uMessage","Username's length must be between 3 and 20 characters !!!");
             return "/site/fragment/login";
         }
         if (password.length() < 6 || password.length() > 20)
         {
-            model.addAttribute("pMessage","Mật khẩu phải từ 6 tới 20 kí tự");
+            model.addAttribute("pMessage","Password's length must be between 6 and 20 characters !!!");
             return "/site/fragment/login";
         }
         if (userService.getUserByUsername(username) != null){
-            model.addAttribute("error","Tên đăng nhập đã tồn tại");
+            model.addAttribute("error","Username has been used !!!");
             return "/site/fragment/login";
         }
         if (userService.checkEmail(email)){
-            model.addAttribute("error","Email đã được sử dụng");
+            model.addAttribute("error","Email has been used !!!");
             return "/site/fragment/login";
         }
         // create new user
@@ -512,29 +569,32 @@ public class WebController {
         mailMessage += "<hr><img src='cid:logoImg' />";
         // send mail
         mailSenderService.sendVerifyMail(email,"[MultiShop] Verification Email !!!",mailMessage);
-        model.addAttribute("message","Your account has been create. Check your mail to active !!");
+        model.addAttribute("message","Your account has been create. Check your mail to active !");
         return "/site/fragment/login";
     }
     @GetMapping("/verify")
-    private String verify(@RequestParam(name = "code",required = false)String code,Model model){
+    // verify account
+    public String verify(@RequestParam(name = "code",required = false)String code,Model model){
         if (!code.isEmpty())
             if (userService.verify(code)){
-                model.addAttribute("message","Xác thực thành công. Vui lòng đăng nhập.");
+                model.addAttribute("message","Verify successfully. Please login to continue !");
             }
         return "/site/fragment/login";
     }
     @GetMapping("/forget-password")
-    private String forgetPassword(){
+    // to forget password page
+    public String forgetPassword(){
         return "/site/fragment/customer/reset-password";
     }
     @PostMapping("/verifyMail")
-    private String resetPassword(Model model,@RequestParam("email") String email,HttpServletRequest request) throws MessagingException {
+    // verify mail before resetting password
+    public String resetPassword(Model model,@RequestParam("email") String email,HttpServletRequest request) throws MessagingException {
         if (userService.checkEmail(email)){
-            User user = userRepository.getUsersByEmail(email).get();
+            User user = userService.getUserByEmail(email);
             // generate verify link
             String verifyCode = RandomString.make(24);
             user.setResetPasswordCode(verifyCode);
-            userRepository.save(user);
+            userService.save(user);
             String activeLink = Utility.getSiteUrl(request);
             activeLink += "/site/reset-password?code="+verifyCode;
             // generate mail content
@@ -551,7 +611,8 @@ public class WebController {
         return "/site/fragment/customer/reset-password";
     }
     @GetMapping("/reset-password")
-    private String doReset(Model model,@RequestParam("code")String code) throws MessagingException {
+    // reset password, send new password to mail
+    public String doReset(Model model,@RequestParam("code")String code) throws MessagingException {
         User user = userService.getUserByResetPasswordCode(code);
         if (user != null){
             String newPassword = userService.resetPassword(user.getEmail());
@@ -573,11 +634,30 @@ public class WebController {
     }
     @GetMapping("detail/{proId}")
     // to detail page
-    private String detail( Model model,
-                           @PathVariable("proId") Long proId,
+    public String detail( Model model,@AuthenticationPrincipal CustomizeUserDetails details,
+                           @PathVariable("proId") Long proId, Optional<String> message,
                            @RequestParam(name = "typeId", required = false)Long typeId){
+        // fail review message
+        message.ifPresent(s -> model.addAttribute("message", s));
         // get product by id
         model.addAttribute("product",productService.findById(proId));
+        // create new review dto
+        ReviewDTO reviewDTO = new ReviewDTO();
+        if (details!=null){
+            if (customerService.findByUSerId(details.getUserId())!=null){
+                reviewDTO.setCusName(customerService.findByUSerId(details.getUserId()).getCusName());
+            }
+            reviewDTO.setCusEmail(details.getEmail());
+        }
+        // get all reviews by productId
+        List<ReviewDTO> reviewDTOS = new ArrayList<>();
+        List<Review> reviews = reviewService.getByProIdAndStatus(proId,true);
+        reviews.forEach(review -> {
+            reviewDTOS.add(new ReviewDTO(review));
+        });
+
+        model.addAttribute("reviewDTO",reviewDTO);
+        model.addAttribute("reviews",reviewDTOS);
         // get list detail of product
         List<ProductDetail> productDetails = productDetailService.getByProId(proId);
         // get list type of product
@@ -609,7 +689,8 @@ public class WebController {
         return "site/fragment/productDetail";
     }
     @GetMapping("products")
-    private String shop(Model model,
+    // to all products page
+    public String shop(Model model,
                         @RequestParam(name = "producerId",required = false) Long producerId,
                         @RequestParam(name = "catId",required = false) Long catId,
                         @RequestParam(name = "search",required = false) String search,

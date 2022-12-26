@@ -3,12 +3,14 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{site/homelayout.html}">
 <head>
+    <title>Multi-Shop Home</title>
 </head>
 <body>
     <div layout:fragment="content">
-        <!-- Carousel Start -->
+        <!-- Banner Start -->
         <div class="container-fluid">
             <div class="row px-xl-5">
+                <!-- Main banner -->
                 <div class="col-lg-8">
                     <div id="header-carousel" class="carousel slide carousel-fade mb-30 mb-lg-0" data-ride="carousel">
                         <ol class="carousel-indicators">
@@ -32,6 +34,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- Sub banner -->
                 <div class="col-lg-4">
                     <div class="product-offer mb-30" style="height: 430px;">
                         <img class="img-fluid" th:src="@{'/img/'+${offer.product.imgUrl}}">
@@ -44,26 +47,27 @@
                 </div>
             </div>
         </div>
-        <!-- Carousel End -->
+        <!-- Banner End -->
 
-        <!-- Vendor Start -->
+        <!-- Producer Start -->
         <div class="container-fluid py-5">
             <div class="row px-xl-5">
                 <div class="col">
                     <div class="owl-carousel vendor-carousel text-center h1">
-                        <div class="rounded bg-primary" th:each="p:${producers}">
-                            <a th:href="@{'/site/products?producerId='+${p.producerId}}"
-                               th:text="${p.producerName}" class="text-decoration-none" style="color: #3D464D !important"></a>
+                        <div class="rounded" th:each="p:${producers}">
+                            <a th:href="@{'/site/products?producerId='+${p.producerId}}">
+                                <img th:src="@{'/img/logo/'+${p.imgUrl}}" height="80px" class="bg-light p-30 rounded">
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Vendor End -->
+        <!-- Producer End -->
 
         <!-- Categories Start -->
         <div class="container-fluid pt-1">
-            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Danh Mục</span></h2>
+            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Category</span></h2>
             <div class="row px-xl-5 pb-3">
                 <div class="col-lg-4 col-md-4 col-sm-6 pb-1">
                     <a class="text-decoration-none" th:href="@{/site/products?catId=1}">
@@ -72,8 +76,8 @@
                                 <img class="img-fluid p-2" th:src="@{/img/cat-1.png}" alt="">
                             </div>
                             <div class="flex-fill pl-3">
-                                <h6>Điện thoại</h6>
-                                <small class="text-body">100 Products</small>
+                                <h6>Phone</h6>
+                                <small class="text-body"><span th:text="${phones.size()}"></span> Products</small>
                             </div>
                         </div>
                     </a>
@@ -86,7 +90,7 @@
                             </div>
                             <div class="flex-fill pl-3">
                                 <h6>Laptop</h6>
-                                <small class="text-body">100 Products</small>
+                                <small class="text-body"><span th:text="${laptops.size()}"></span> Products</small>
                             </div>
                         </div>
                     </a>
@@ -98,8 +102,8 @@
                                 <img class="img-fluid p-2" th:src="@{/img/cat-3.jpg}" alt="">
                             </div>
                             <div class="flex-fill pl-3">
-                                <h6>Máy tính bảng</h6>
-                                <small class="text-body">100 Products</small>
+                                <h6>Tablet</h6>
+                                <small class="text-body"><span th:text="${tablets.size()}"></span> Products</small>
                             </div>
                         </div>
                     </a>
@@ -111,8 +115,8 @@
                                 <img class="img-fluid p-2" th:src="@{/img/cat-4.jpg}" alt="">
                             </div>
                             <div class="flex-fill pl-3">
-                                <h6>Đồng hồ</h6>
-                                <small class="text-body">100 Products</small>
+                                <h6>Watch</h6>
+                                <small class="text-body"><span th:text="${watches.size()}"></span> Products</small>
                             </div>
                         </div>
                     </a>
@@ -124,21 +128,21 @@
                                 <img class="img-fluid p-2" th:src="@{/img/cat-5.jpg}" alt="">
                             </div>
                             <div class="flex-fill pl-3">
-                                <h6>Tai nghe</h6>
-                                <small class="text-body">100 Products</small>
+                                <h6>Earphone</h6>
+                                <small class="text-body"><span th:text="${ears.size()}"></span> Products</small>
                             </div>
                         </div>
                     </a>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-6 pb-1">
-                    <a class="text-decoration-none" th:href="@{/site/products?catId=6}">
+                    <a class="text-decoration-none" th:href="@{/site/products?catId=5}">
                         <div class="cat-item d-flex align-items-center mb-4">
                             <div class="overflow-hidden" style="width: 100px; height: 100px;">
                                 <img class="img-fluid p-2" th:src="@{/img/cat-6.jpg}" alt="">
                             </div>
                             <div class="flex-fill pl-3">
-                                <h6>Phụ kiện</h6>
-                                <small class="text-body">100 Products</small>
+                                <h6>Accessories</h6>
+                                <small class="text-body"><span th:text="${accessories.size()}"></span> Products</small>
                             </div>
                         </div>
                     </a>
@@ -151,7 +155,7 @@
 
         <!-- Cellphone-->
         <div class="container-fluid py-5">
-            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-2"><span class="bg-secondary pr-3">Điện thoại</span></h2>
+            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-2"><span class="bg-secondary pr-3">Phone</span></h2>
             <div class="row">
                 <div class="col offset-5 mb-4">
                     <a class="btn btn-primary mr-1 rounded"
@@ -175,15 +179,20 @@
                                 <div class="text-center text-truncate py-4 pr-3 pl-3">
                                     <a class="h6 text-decoration-none" th:href="@{'/site/detail/'+${p.proId}}" th:text="${p.proName}"></a>
                                     <div class="d-flex align-items-center justify-content-center mt-2">
-                                        <h5 th:text="${p.basePrice - p.basePrice * p.discount/100}+'$'"></h5><h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
+                                        <h5 th:text="${p.basePrice - p.basePrice * p.highestDiscount()/100}+'$'"></h5><h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-center mb-1">
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small>(99)</small>
+                                        <small th:if="${p.getRate()>0}" class="fas fa-star text-primary mr-1"></small>
+                                        <small th:unless="${p.getRate()>0}" class="far fa-star text-primary mr-1"></small>
+                                        <small th:if="${p.getRate()>1}" class="fas fa-star text-primary mr-1"></small>
+                                        <small th:unless="${p.getRate()>1}" class="far fa-star text-primary mr-1"></small>
+                                        <small th:if="${p.getRate()>2}" class="fas fa-star text-primary mr-1"></small>
+                                        <small th:unless="${p.getRate()>2}" class="far fa-star text-primary mr-1"></small>
+                                        <small th:if="${p.getRate()>3}" class="fas fa-star text-primary mr-1"></small>
+                                        <small th:unless="${p.getRate()>3}" class="far fa-star text-primary mr-1"></small>
+                                        <small th:if="${p.getRate()>4}" class="fas fa-star text-primary mr-1"></small>
+                                        <small th:unless="${p.getRate()>4}" class="far fa-star text-primary mr-1"></small>
+                                        <small>(<span th:text="${p.reviews.size()}"></span>)</small>
                                     </div>
                                 </div>
                             </div>
@@ -204,15 +213,20 @@
                             <div class="text-center text-truncate py-4 pr-3 pl-3">
                                 <a class="h6 text-decoration-none" th:href="@{'/site/detail/'+${p.proId}}" th:text="${p.proName}"></a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5 th:text="${p.basePrice - p.basePrice * p.discount/100}+'$'"></h5><h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
+                                    <h5 th:text="${p.basePrice - p.basePrice * p.highestDiscount()/100}+'$'"></h5><h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center mb-1">
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small>(99)</small>
+                                    <small th:if="${p.getRate()>0}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>0}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>1}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>1}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>2}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>2}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>3}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>3}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>4}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>4}" class="far fa-star text-primary mr-1"></small>
+                                    <small>(<span th:text="${p.reviews.size()}"></span>)</small>
                                 </div>
                             </div>
                         </div>
@@ -248,16 +262,22 @@
                             <div class="text-center text-truncate py-4 pr-3 pl-3">
                                 <a class="h6 text-decoration-none" th:href="@{'/site/detail/'+${p.proId}}" th:text="${p.proName}"></a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5 th:text="${p.basePrice - p.basePrice * p.discount/100}+'$'"></h5><h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
+                                    <h5 th:text="${p.basePrice - p.basePrice * p.highestDiscount()/100}+'$'"></h5><h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center mb-1">
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small>(99)</small>
+                                    <small th:if="${p.getRate()>0}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>0}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>1}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>1}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>2}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>2}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>3}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>3}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>4}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>4}" class="far fa-star text-primary mr-1"></small>
+                                    <small>(<span th:text="${p.reviews.size()}"></span>)</small>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -277,16 +297,22 @@
                             <div class="text-center text-truncate py-4 pr-3 pl-3">
                                 <a class="h6 text-decoration-none" th:href="@{'/site/detail/'+${p.proId}}" th:text="${p.proName}"></a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5 th:text="${p.basePrice - p.basePrice * p.discount/100}+'$'"></h5><h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
+                                    <h5 th:text="${p.basePrice - p.basePrice * p.highestDiscount()/100}+'$'"></h5><h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center mb-1">
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small>(99)</small>
+                                    <small th:if="${p.getRate()>0}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>0}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>1}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>1}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>2}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>2}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>3}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>3}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>4}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>4}" class="far fa-star text-primary mr-1"></small>
+                                    <small>(<span th:text="${p.reviews.size()}"></span>)</small>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -297,7 +323,7 @@
 
         <!-- Tablet-->
         <div class="container-fluid py-5">
-            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-2"><span class="bg-secondary pr-3">Máy tính bảng</span></h2>
+            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-2"><span class="bg-secondary pr-3">Tablet</span></h2>
             <div class="row">
                 <div class="col offset-5 mb-4">
                     <a class="btn btn-primary mr-1 rounded"
@@ -321,16 +347,22 @@
                             <div class="text-center text-truncate py-4 pr-3 pl-3">
                                 <a class="h6 text-decoration-none" th:href="@{'/site/detail/'+${p.proId}}" th:text="${p.proName}"></a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5 th:text="${p.basePrice - p.basePrice * p.discount/100}+'$'"></h5><h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
+                                    <h5 th:text="${p.basePrice - p.basePrice * p.highestDiscount()/100}+'$'"></h5><h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center mb-1">
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small>(99)</small>
+                                    <small th:if="${p.getRate()>0}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>0}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>1}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>1}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>2}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>2}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>3}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>3}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>4}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>4}" class="far fa-star text-primary mr-1"></small>
+                                    <small>(<span th:text="${p.reviews.size()}"></span>)</small>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -350,16 +382,22 @@
                             <div class="text-center text-truncate py-4 pr-3 pl-3">
                                 <a class="h6 text-decoration-none" th:href="@{'/site/detail/'+${p.proId}}" th:text="${p.proName}"></a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5 th:text="${p.basePrice - p.basePrice * p.discount/100}+'$'"></h5><h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
+                                    <h5 th:text="${p.basePrice - p.basePrice * p.highestDiscount()/100}+'$'"></h5><h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center mb-1">
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small>(99)</small>
+                                    <small th:if="${p.getRate()>0}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>0}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>1}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>1}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>2}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>2}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>3}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>3}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>4}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>4}" class="far fa-star text-primary mr-1"></small>
+                                    <small>(<span th:text="${p.reviews.size()}"></span>)</small>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -370,7 +408,7 @@
 
         <!-- Watch-->
         <div class="container-fluid py-5">
-            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-2"><span class="bg-secondary pr-3">Đồng hồ</span></h2>
+            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-2"><span class="bg-secondary pr-3">Watch</span></h2>
             <div class="row">
                 <div class="col offset-5 mb-4">
                     <a class="btn btn-primary mr-1 rounded"
@@ -394,16 +432,22 @@
                             <div class="text-center text-truncate py-4 pr-3 pl-3">
                                 <a class="h6 text-decoration-none"th:href="@{'/site/detail/'+${p.proId}}"  th:text="${p.proName}"></a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5 th:text="${p.basePrice - p.basePrice * p.discount/100}+'$'"></h5><h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
+                                    <h5 th:text="${p.basePrice - p.basePrice * p.highestDiscount()/100}+'$'"></h5><h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center mb-1">
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small>(99)</small>
+                                    <small th:if="${p.getRate()>0}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>0}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>1}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>1}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>2}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>2}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>3}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>3}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>4}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>4}" class="far fa-star text-primary mr-1"></small>
+                                    <small>(<span th:text="${p.reviews.size()}"></span>)</small>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -423,16 +467,22 @@
                             <div class="text-center text-truncate py-4 pr-3 pl-3">
                                 <a class="h6 text-decoration-none" th:href="@{'/site/detail/'+${p.proId}}" th:text="${p.proName}"></a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5 th:text="${p.basePrice - p.basePrice * p.discount/100}+'$'"></h5><h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
+                                    <h5 th:text="${p.basePrice - p.basePrice * p.highestDiscount()/100}+'$'"></h5><h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center mb-1">
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small>(99)</small>
+                                    <small th:if="${p.getRate()>0}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>0}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>1}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>1}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>2}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>2}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>3}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>3}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>4}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>4}" class="far fa-star text-primary mr-1"></small>
+                                    <small>(<span th:text="${p.reviews.size()}"></span>)</small>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -443,7 +493,7 @@
 
         <!-- Ears-->
         <div class="container-fluid py-5">
-            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-2"><span class="bg-secondary pr-3">Tai nghe</span></h2>
+            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-2"><span class="bg-secondary pr-3">EarPhone</span></h2>
             <div class="row">
                 <div class="col offset-5 mb-4">
                     <a class="btn btn-primary mr-1 rounded"
@@ -467,16 +517,22 @@
                             <div class="text-center text-truncate py-4 pr-3 pl-3">
                                 <a class="h6 text-decoration-none" th:href="@{'/site/detail/'+${p.proId}}" th:text="${p.proName}"></a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5 th:text="${p.basePrice - p.basePrice * p.discount/100}+'$'"></h5><h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
+                                    <h5 th:text="${p.basePrice - p.basePrice * p.highestDiscount()/100}+'$'"></h5><h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center mb-1">
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small>(99)</small>
+                                    <small th:if="${p.getRate()>0}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>0}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>1}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>1}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>2}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>2}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>3}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>3}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>4}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>4}" class="far fa-star text-primary mr-1"></small>
+                                    <small>(<span th:text="${p.reviews.size()}"></span>)</small>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -496,16 +552,22 @@
                             <div class="text-center text-truncate py-4 pr-3 pl-3">
                                 <a class="h6 text-decoration-none" th:href="@{'/site/detail/'+${p.proId}}" th:text="${p.proName}"></a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5 th:text="${p.basePrice - p.basePrice * p.discount/100}+'$'"></h5><h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
+                                    <h5 th:text="${p.basePrice - p.basePrice * p.highestDiscount()/100}+'$'"></h5><h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center mb-1">
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small>(99)</small>
+                                    <small th:if="${p.getRate()>0}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>0}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>1}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>1}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>2}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>2}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>3}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>3}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>4}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>4}" class="far fa-star text-primary mr-1"></small>
+                                    <small>(<span th:text="${p.reviews.size()}"></span>)</small>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -516,7 +578,7 @@
 
         <!-- Accessory-->
         <div class="container-fluid py-5">
-            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-2"><span class="bg-secondary pr-3">Phụ kiện</span></h2>
+            <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-2"><span class="bg-secondary pr-3">Accessory</span></h2>
             <div class="row">
                 <div class="col offset-5 mb-4">
                     <a class="btn btn-primary mr-1 rounded"
@@ -540,16 +602,22 @@
                             <div class="text-center text-truncate py-4 pr-3 pl-3">
                                 <a class="h6 text-decoration-none" th:href="@{'/site/detail/'+${p.proId}}" th:text="${p.proName}"></a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5 th:text="${p.basePrice - p.basePrice * p.discount/100}+'$'"></h5><h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
+                                    <h5 th:text="${p.basePrice - p.basePrice * p.highestDiscount()/100}+'$'"></h5><h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center mb-1">
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small>(99)</small>
+                                    <small th:if="${p.getRate()>0}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>0}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>1}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>1}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>2}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>2}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>3}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>3}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>4}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>4}" class="far fa-star text-primary mr-1"></small>
+                                    <small>(<span th:text="${p.reviews.size()}"></span>)</small>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -569,16 +637,22 @@
                             <div class="text-center text-truncate py-4 pr-3 pl-3">
                                 <a class="h6 text-decoration-none" th:href="@{'/site/detail/'+${p.proId}}" href="" th:text="${p.proName}"></a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5 th:text="${p.basePrice - p.basePrice * p.discount/100}+'$'"></h5><h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
+                                    <h5 th:text="${p.basePrice - p.basePrice * p.highestDiscount()/100}+'$'"></h5><h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center mb-1">
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small class="fa fa-star text-primary mr-1"></small>
-                                    <small>(99)</small>
+                                    <small th:if="${p.getRate()>0}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>0}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>1}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>1}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>2}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>2}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>3}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>3}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${p.getRate()>4}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${p.getRate()>4}" class="far fa-star text-primary mr-1"></small>
+                                    <small>(<span th:text="${p.reviews.size()}"></span>)</small>
                                 </div>
+
                             </div>
                         </div>
                     </div>

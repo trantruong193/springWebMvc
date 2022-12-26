@@ -1,4 +1,4 @@
-package com.example.springWebMvc.controller.site;
+package com.example.springWebMvc.utility;
 
 import javax.servlet.http.HttpServletRequest;
 

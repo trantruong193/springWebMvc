@@ -143,7 +143,7 @@
             <div class="row px-xl-5">
                 <div class="col">
                     <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Order Status</span></h5>
-                    <h4  th:if="${list.isEmpty()}" class="text-center">Bạn chưa mua sắm gì <span><i class="fas fa-sad-tear"></i></span></h4>
+                    <h4  th:if="${list.isEmpty()}" class="text-center">You haven't bought anythings <span><i class="fas fa-sad-tear"></i></span></h4>
                     <div class="bg-light p-30 mb-3"  th:if="${!list.isEmpty()}">
                         <table class=" table-responsive table">
                             <thead class="table-success text-center">
@@ -163,7 +163,7 @@
                             <tbody th:each="item:${list}">
                             <form method="post" th:action="@{'/site/customer/updateOrder/'+${item.orderId}}">
                                 <tr class="table-info">
-                                    <td th:text="${item.orderCode}"></td>
+                                    <td class="text-truncate" th:text="${item.orderCode}"></td>
                                     <td>
                                         <input type="text" class="rounded text-center border-0" name="cusName" th:value="${item.cusName}" required>
                                     </td>
@@ -174,7 +174,7 @@
                                         <input type="text" class="rounded text-center border-0" name="address" th:value="${item.address}" required>
                                     </td>
                                     <td th:text="${item.paymentMethod}"></td>
-                                    <td th:text="${#dates.format(item.createTime,'dd/MM/yyyy HH:mm')}"></td>
+                                    <td th:text="${#dates.format(item.createTime,'dd/MM/yyyy_HH:mm')}"></td>
                                     <td th:text="${#numbers.formatDecimal(item.totalPrice,1,1)}+'$'"></td>
                                     <td th:text="${item.status}"></td>
                                     <td th:if="${#strings.equals(item.status,'Ordering')}">
@@ -198,7 +198,7 @@
                                         <td th:unless="${#strings.equals(p.productDetailDTO.typeName,'----')}" th:text="${p.productDetailDTO.typeName}"></td>
                                         <td th:if="${#strings.equals(p.productDetailDTO.typeName,'----')}"></td>
                                         <td th:text="${p.productDetailDTO.colorName}"></td>
-                                        <td th:text="'Quantity : '+${p.quantity}"></td>
+                                        <td th:text="'Quantity '+${p.quantity}"></td>
                                         <td></td>
                                         <td th:text="${#numbers.formatDecimal(p.price,1,1)}+'$'"></td>
                                         <td></td>

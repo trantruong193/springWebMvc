@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://wwww.thymeleaf.org/thymeleaf-extras-springsecurity5"
-      layout:decorate="~{site/homelayout.html}">
+      layout:decorate="~{admin/adminlayout.html}">
 <head>
 </head>
 
 <body>
-    <div layout:fragment="content">
+    <div layout:fragment="adminContent">
         <!-- Breadcrumb Start -->
         <div class="container-fluid">
             <div class="row px-xl-5">
@@ -24,72 +24,130 @@
 
             <div class="row px-xl-5">
                 <div class="col">
-                    <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Order Status</span></h5>
-                    <h4  th:if="${list.isEmpty()}" class="text-center">Bạn chưa mua sắm gì <span><i class="fas fa-sad-tear"></i></span></h4>
-                    <div class="bg-light p-30 mb-3"  th:if="${!list.isEmpty()}">
-                        <table class=" table-responsive table">
-                            <thead class="table-success">
-                            <tr>
-                                <td>Id</td>
-                                <td>Name</td>
-                                <td>Phone</td>
-                                <td>Address</td>
-                                <td>Method</td>
-                                <td>Time</td>
-                                <td>Price</td>
-                                <td>Status</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            </thead>
-                            <tbody th:each="item:${list}">
-                            <form method="post" th:action="@{'/site/customer/updateOrder/'+${item.orderId}}">
-                                <tr class="table-info">
-                                    <td th:text="${item.orderId}"></td>
-                                    <td>
-                                        <input type="text" class="rounded border-0" name="cusName" th:value="${item.cusName}" required>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="rounded" name="phone" th:value="${item.phone}" required>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="rounded" name="address" th:value="${item.address}" required>
-                                    </td>
-                                    <td th:text="${item.paymentMethod}"></td>
-                                    <td th:text="${#dates.format(item.createTime,'dd/MM/yyyy')}"></td>
-                                    <td th:text="${#numbers.formatDecimal(item.totalPrice,1,1)}+'$'"></td>
-                                    <td th:text="${item.status}"></td>
-                                    <td th:if="${#strings.equals(item.status,'Ordering')}">
-                                        <button type="submit" class="rounded btn btn-sm btn-outline-warning"  data-toggle="tooltip" title="Edit">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                    </td>
-                                    <td th:if="${#strings.equals(item.status,'Ordering')}">
-                                        <a class="rounded btn btn-sm btn-outline-danger"
-                                           data-toggle="tooltip" title="Cancel"
-                                           onclick="confirm('Are you sure ??')"
-                                            th:href="@{'/site/customer/cancelOrder/'+${item.orderId}}">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <th:block th:each="p:${item.orderDetailDTOList}">
-                                    <tr class="text-center">
-                                        <td></td>
-                                        <td th:text="${p.productDetailDTO.productName}"></td>
-                                        <td th:text="${p.productDetailDTO.typeName}"></td>
-                                        <td th:text="${p.productDetailDTO.colorName}"></td>
-                                        <td th:text="'Quantity : '+${p.quantity}"></td>
-                                        <td></td>
-                                        <td th:text="${#numbers.formatDecimal(p.price,1,1)}+'$'"></td>
-                                        <td></td>
+                    <div class="row">
+                        <div class="col">
+                            <form th:action="@{/admin/order}" method="get">
+                                <div class="bg-light p-30 mb-3 form-inline">
+                                    <div class="col d-flex justify-content-center">
+                                        <input type="text" class="form-control border-success rounded"
+                                               onchange="this.form.submit()"
+                                               name="phone" th:value="${phone}" placeholder="Enter phone number">
+                                    </div>
+                                    <div class="col d-flex justify-content-center">
+                                        <input type="date" class="form-control border-success rounded"
+                                               onchange="this.form.submit()" th:value="${#dates.format(date,'yyyy-MM-dd')}"
+                                               name="date">
+                                    </div>
+                                    <div class="col d-flex justify-content-center">
+                                        <select class="form-control border-success rounded" name="status" onchange="this.form.submit()">
+                                            <option th:each="status : ${T(com.example.springWebMvc.persistent.OrderStatus).values()}"
+                                                    th:value="${status}" th:text="${status}" th:selected="${#strings.equals(status,mStatus)}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col d-flex justify-content-center">
+                                        <a th:href="@{/admin/order}" class="btn btn-outline-success rounded">Clear</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                    <div class="row justify-content-center">
+                        <h5 th:if="${list.isEmpty()}" class="text-danger p-30">Không có đơn hàng thỏa mãn !!</h5>
+                        <div class="col" th:unless="${list.isEmpty()}">
+                            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Order Status</span></h5>
+                            <div class="bg-light p-30 mb-3">
+                                <table class=" table-responsive table text-center">
+                                    <thead class="table-success">
+                                    <tr>
+                                        <td>Id</td>
+                                        <td>Name</td>
+                                        <td>Phone</td>
+                                        <td>Address</td>
+                                        <td>Method</td>
+                                        <td>Time</td>
+                                        <td>Price</td>
+                                        <td>Status</td>
                                         <td></td>
                                         <td></td>
                                     </tr>
-                                </th:block>
-                            </form>
-                            </tbody>
-                        </table>
+                                    </thead>
+                                    <tbody th:each="item:${list}">
+                                    <form method="get" th:action="@{'/admin/updateOrder/'+${item.orderId}}">
+                                        <tr class="table-info">
+                                            <td th:text="${item.orderId}"></td>
+                                            <td>
+                                                <input type="text" class="rounded border-0" name="cusName" th:value="${item.cusName}" required>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="rounded border-0" name="phone" th:value="${item.phone}" required>
+                                            </td>
+                                            <td>
+                                                <input type="text" class="rounded border-0" name="address" th:value="${item.address}" required>
+                                            </td>
+                                            <td th:text="${item.paymentMethod}"></td>
+                                            <td th:text="${#dates.format(item.createTime,'dd/MM/yyyy_HH:mm')}"></td>
+                                            <td th:text="${#numbers.formatDecimal(item.totalPrice,1,1)}+'$'"></td>
+                                            <td th:unless="${#strings.equals(item.status,'Complete')}">
+                                                <select name="status" class="border-0 rounded" onchange="this.form.submit()">
+                                                    <option th:each="status : ${T(com.example.springWebMvc.persistent.OrderStatus).values()}"
+                                                            th:value="${status}" th:text="${status}" th:selected="${#strings.equals(status,item.status)}">
+                                                    </option>
+                                                </select>
+                                            </td>
+                                            <td class="text-success" th:if="${#strings.equals(item.status,'Complete')}">
+                                                Complete
+                                            </td>
+                                            <td th:unless="${#strings.equals(item.status,'Complete')}">
+                                                <button type="submit" class="rounded btn btn-sm btn-outline-warning"  data-toggle="tooltip" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </td>
+                                            <td  th:unless="${#strings.equals(item.status,'Complete')}">
+                                                <a class="rounded btn btn-sm btn-outline-danger"
+                                                   data-toggle="tooltip" title="Cancel"
+                                                   onclick="confirm('Are you sure ??')"
+                                                   th:href="@{'/admin/cancelOrder/'+${item.orderId}}">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </form>
+                                    <th:block th:each="p:${item.orderDetailDTOList}">
+                                        <form th:action="@{'/admin/updateOrderDetail/'+${p.orderDetailId}}">
+                                            <tr class="text-center">
+                                                <td></td>
+                                                <td th:text="${p.productDetailDTO.productName}"></td>
+                                                <td th:text="${p.productDetailDTO.typeName}"></td>
+                                                <td th:text="${p.productDetailDTO.colorName}"></td>
+                                                <td>
+                                                    <input type="number" class="text-center" name="quantity" th:value="${p.quantity}">
+                                                </td>
+                                                <td></td>
+                                                <td th:text="${#numbers.formatDecimal(p.price,1,1)}+'$'"></td>
+                                                <td></td>
+                                                <td  th:unless="${#strings.equals(item.status,'Complete')}">
+                                                    <button type="submit" class="rounded btn btn-sm btn-outline-warning"  data-toggle="tooltip" title="Edit">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                </td>
+                                                <td  th:unless="${#strings.equals(item.status,'Complete')}">
+                                                    <a class="rounded btn btn-sm btn-outline-danger"
+                                                       data-toggle="tooltip" title="Cancel"
+                                                       onclick="confirm('Are you sure ??')"
+                                                       th:href="@{'admin/cancelOrderDetail/'+${p.orderDetailId}}">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </form>
+                                    </th:block>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 

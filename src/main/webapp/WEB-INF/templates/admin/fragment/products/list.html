@@ -109,30 +109,30 @@
                         <div class="form-inline">
                             <nav aria-label="Page navigation">
                                 <ul class="pagination justify-content-center">
-                                    <li th:class="${pages.number == 0?'page-item active':'page-item'}">
+                                    <li th:class="${pages.number == 0?'page-item mr-2 active':'page-item mr-2'}">
                                         <a class="page-link" th:href="@{/admin/products(page=${0},size=${pages.size},sort=${sort},search=${search})}">
                                             <span aria-hidden="true">First</span>
                                         </a>
                                     </li>
                                     <li class="page-item">
-                                        <a th:class="${(pages.number <= 0)?'page-link btn disabled':'page-link'}"
+                                        <a th:class="${(pages.number <= 0)?'page-link d-none':'page-link mr-2'}"
                                            th:href="@{/admin/products(page=${(pages.number)-1},size=${pages.size},sort=${sort},search=${search})}"
                                            th:text="${pages.number}">
                                         </a>
                                     </li>
                                     <li class="page-item active">
-                                        <a class="page-link"
+                                        <a class="page-link mr-2"
                                            th:href="@{/admin/products(page=${(pages.number)},size=${pages.size},sort=${sort},search=${search})}"
                                            th:text="${(pages.number)+1}"></a>
                                     </li>
                                     <li class="page-item">
-                                        <a th:class="${(pages.number >= (pages.totalPages)-1)?'page-link btn disabled':'page-link'}"
+                                        <a th:class="${(pages.number >= (pages.totalPages)-1)?'page-link d-none':'page-link'}"
                                            th:href="@{/admin/products(page=${(pages.number)+1},size=${pages.size},sort=${sort},search=${search})}"
                                            th:text="${(pages.number)+2}">
 
                                         </a>
                                     </li>
-                                    <li  th:class="${pages.number == (pages.totalPages)-1?'page-item active':'page-item'}">
+                                    <li  th:class="${pages.number == (pages.totalPages)-1?'page-item ml-2 active':'page-item ml-2'}">
                                         <a class="page-link" th:href="@{/admin/products(page=${(pages.totalPages)-1},size=${pages.size},sort=${sort},search=${search})}">
                                             <span aria-hidden="true">Last</span>
                                         </a>

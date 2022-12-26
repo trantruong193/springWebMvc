@@ -6,8 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Data
 @AllArgsConstructor
@@ -27,7 +26,7 @@ public class Product implements Serializable {
     @Column(name = "basePrice")
     private double basePrice;
     @Column(name = "discount")
-    private Float discount;
+    private double discount;
     @Column(name = "importDate",nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date importDate;
@@ -45,7 +44,21 @@ public class Product implements Serializable {
     private String description1;
     @Column(name = "description2",length = 1000)
     private String description2;
-
+    @Transient
+    public int getRate(){
+        if (reviews.size()>0){
+            return reviews.stream().mapToInt(Review::getRate).sum()/reviews.size();
+        }else
+            return 0;
+    }
+    @Transient
+    public double highestDiscount(){
+        if (productDetails.size()>0){
+            productDetails.sort(Comparator.comparing(ProductDetail::getDiscount));
+            return productDetails.get(productDetails.size()-1).getDiscount();
+        }
+        return discount;
+    }
     @ManyToOne
     @JoinColumn(name = "catId",referencedColumnName = "catId")
     private Category category;
@@ -61,4 +74,9 @@ public class Product implements Serializable {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<ProductDetail> productDetails;
+
+    @OneToMany(mappedBy = "product")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private List<Review> reviews;
 }

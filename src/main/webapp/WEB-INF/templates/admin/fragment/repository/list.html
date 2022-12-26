@@ -132,8 +132,8 @@
                                         <tr th:class="'form'+${index.index}">
                                             <td th:text="${d.typeName}"></td>
                                             <td th:text="${d.colorName}"></td>
-                                            <td><input class="rounded text-center border-0" type="number" name="discount" th:value="${d.discount}"></td>
-                                            <td><input class="rounded text-center border-0" type="number" name="quantity" th:value="${d.quantity}"></td>
+                                            <td><input class="rounded text-center border-0" type="number" step="0.1" name="discount" th:value="${d.discount}"></td>
+                                            <td><input class="rounded text-center border-0" type="number" min="0" name="quantity" th:value="${d.quantity}"></td>
                                             <td>
                                                 <button class="btn btn-sm btn-outline-warning rounded" type="submit" data-toggle="tooltip" title="Update" ><i class="fas fa-edit"></i></button>
                                             </td>
@@ -157,12 +157,12 @@
                                             <small th:if="${#fields.hasErrors('colorId')}" class="text-danger">ColorId can't be null</small>
                                         </td>
                                         <td>
-                                            <input class="rounded text-center border-0" type="number"
+                                            <input class="rounded text-center border-0" type="number" step="0.01"
                                                    th:field="*{discount}">
                                             <small th:if="${#fields.hasErrors('discount')}" class="text-danger">Discount is invalid</small>
                                         </td>
                                         <td>
-                                            <input class="rounded text-center border-0" type="number"
+                                            <input class="rounded text-center border-0" type="number" min="0"
                                                    th:field="*{quantity}"></td>
                                         <small th:if="${#fields.hasErrors('quantity')}" class="text-danger">Quantity is invalid</small>
                                         <td>

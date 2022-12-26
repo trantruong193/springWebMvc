@@ -1,4 +1,4 @@
-package com.example.springWebMvc.controller.site;
+package com.example.springWebMvc.utility;
 
 import com.example.springWebMvc.persistent.dto.OrderDTO;
 import com.example.springWebMvc.persistent.dto.OrderDetailDTO;
@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -25,15 +26,20 @@ public class OrderExcelExporter {
     private XSSFWorkbook workbook;
     private XSSFSheet sheet;
     private OrderDTO dto;
-
+    private List<OrderDTO> list;
     public OrderExcelExporter(OrderDTO dto) {
         this.dto = dto;
         workbook = new XSSFWorkbook();
         sheet = workbook.createSheet("Orders");
     }
+    public OrderExcelExporter(List<OrderDTO> list) {
+        this.list = list;
+        workbook = new XSSFWorkbook();
+        sheet = workbook.createSheet("Orders");
+    }
 
-    private void writeOrderHeader(){
-        Row row = sheet.createRow(0);
+    private void writeOrderHeader(int index){
+        Row row = sheet.createRow(index);
         // set font
         CellStyle style = workbook.createCellStyle();
         XSSFFont font = workbook.createFont();
@@ -67,15 +73,16 @@ public class OrderExcelExporter {
 
         cell = row.createCell(6);
         cell.setCellStyle(style);
-        cell.setCellValue("Price");
+        cell.setCellValue("Total Price (include tax)");
+        sheet.autoSizeColumn(0);
     }
-    private void writeProductHeader(){
-        Row row = sheet.createRow(2);
+    private void writeProductHeader(int index){
+        Row row = sheet.createRow(index);
         // set font
         CellStyle style = workbook.createCellStyle();
         XSSFFont font = workbook.createFont();
         font.setBold(true);
-        font.setFontHeight(16);
+        font.setFontHeight(14);
         style.setFont(font);
         // insert cell
         Cell cell = row.createCell(0);
@@ -93,42 +100,44 @@ public class OrderExcelExporter {
         cell = row.createCell(3);
         cell.setCellStyle(style);
         cell.setCellValue("Quantity");
+
+        cell = row.createCell(4);
+        cell.setCellStyle(style);
+        cell.setCellValue("Unit Price");
     }
-    private void writeOrderDetail(){
-        Row row = sheet.createRow(1);
+    private void writeOrderDetail(OrderDTO orderDTO,int index){
+        Row row = sheet.createRow(index);
 
         Cell cell = row.createCell(0);
-        cell.setCellValue(dto.getOrderCode());
+        cell.setCellValue(orderDTO.getOrderCode());
         sheet.autoSizeColumn(0);
 
         cell = row.createCell(1);
-        cell.setCellValue(dto.getCusName());
+        cell.setCellValue(orderDTO.getCusName());
         sheet.autoSizeColumn(1);
 
         cell = row.createCell(2);
-        cell.setCellValue(dto.getPhone());
+        cell.setCellValue(orderDTO.getPhone());
         sheet.autoSizeColumn(2);
 
         cell = row.createCell(3);
-        cell.setCellValue(dto.getAddress());
+        cell.setCellValue(orderDTO.getAddress());
         sheet.autoSizeColumn(3);
 
         cell = row.createCell(4);
-        cell.setCellValue(dto.getEmail());
+        cell.setCellValue(orderDTO.getEmail());
         sheet.autoSizeColumn(4);
 
         cell = row.createCell(5);
-        cell.setCellValue(dateFormat.format(dto.getCreateTime()));
+        cell.setCellValue(dateFormat.format(orderDTO.getCreateTime()));
         sheet.autoSizeColumn(5);
 
         cell = row.createCell(6);
-        cell.setCellValue(dto.getTotalPrice()+" $");
+        cell.setCellValue(Math.round((orderDTO.getTotalPrice()*100)/100)+" $");
     }
-    private void writeProductDetail(){
-        int rowCount = 3;
-        for (OrderDetailDTO p: dto.getOrderDetailDTOList()){
-            Row row = sheet.createRow(rowCount);
-
+    private void writeProductDetail(OrderDTO orderDTO,int index){
+        for (OrderDetailDTO p: orderDTO.getOrderDetailDTOList()){
+            Row row = sheet.createRow(index);
             Cell cell = row.createCell(0);
             cell.setCellValue(p.getProductDetailDTO().getProductName());
             sheet.autoSizeColumn(0);
@@ -141,14 +150,34 @@ public class OrderExcelExporter {
 
             cell = row.createCell(3);
             cell.setCellValue(p.getQuantity());
-            rowCount++;
+
+            cell = row.createCell(4);
+            cell.setCellValue(Math.round((p.getPrice()*100)/100)+"$");
+            index++;
         }
     }
     public void export(HttpServletResponse response) throws IOException {
-        writeOrderHeader();
-        writeOrderDetail();
-        writeProductHeader();
-        writeProductDetail();
+        writeOrderHeader(0);
+        writeOrderDetail(dto,1);
+        writeProductHeader(2);
+        writeProductDetail(dto,3);
+        ServletOutputStream outputStream = response.getOutputStream();
+        workbook.write(outputStream);
+        workbook.close();
+        outputStream.close();
+    }
+    public void exportAll(HttpServletResponse response) throws IOException {
+        int index = 0;
+        for (OrderDTO order : list){
+            writeOrderHeader(index);
+            index++;
+            writeOrderDetail(order,index);
+            index++;
+            writeProductHeader(index);
+            index++;
+            writeProductDetail(order,index);
+            index+=order.getOrderDetailDTOList().size();
+        }
         ServletOutputStream outputStream = response.getOutputStream();
         workbook.write(outputStream);
         workbook.close();
