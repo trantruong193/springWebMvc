@@ -22,7 +22,6 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
     List<Order> getOrdersByPhoneAndStatus(String phone, OrderStatus status);
     List<Order> getOrdersByPhoneAndCreateTimeBetween(String phone, Date start,Date end);
     List<Order> getOrdersByStatusAndCreateTimeBetween(OrderStatus status, Date start,Date end);
-    @Query()
     List<Order> getOrdersByCreateTimeBetween(Date start,Date end);
     List<Order> getOrdersByStatus(OrderStatus status);
 }

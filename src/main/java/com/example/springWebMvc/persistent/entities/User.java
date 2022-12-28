@@ -15,9 +15,7 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-    @Column(nullable = false)
     private String username;
-    @Column(nullable = false)
     private String password;
     @Column(nullable = false)
     private String email;

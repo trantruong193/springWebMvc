@@ -74,8 +74,8 @@
                         </tbody>
                     </table>
                     <tr>
-                        <div th:if="${amount <= 0}" class="text-center mt-3">
-                            <h5>Empty cart <i class="far fa-surprise"></i></h5>
+                        <div class="text-center mt-5">
+                            <h5 th:if="${amount <= 0}">Empty cart <i class="far fa-surprise"></i></h5>
                             <a class="text-success" th:href="@{/site/products}"><i class="far fa-cart-plus"></i>Continue shopping</a>
                         </div>
                     </tr>

@@ -1,9 +1,16 @@
 package com.example.springWebMvc.controller.admin;
 
 import com.example.springWebMvc.persistent.OrderStatus;
+import com.example.springWebMvc.persistent.ShippingFee;
+import com.example.springWebMvc.persistent.Tax;
+import com.example.springWebMvc.persistent.dto.CustomerDTO;
 import com.example.springWebMvc.persistent.dto.OrderDTO;
+import com.example.springWebMvc.persistent.dto.UserDTO;
 import com.example.springWebMvc.persistent.entities.*;
+import com.example.springWebMvc.repository.CustomerRepository;
+import com.example.springWebMvc.repository.OrderRepository;
 import com.example.springWebMvc.repository.ReviewRepository;
+import com.example.springWebMvc.repository.RoleRepository;
 import com.example.springWebMvc.service.*;
 import com.example.springWebMvc.test.ProRepo;
 import com.example.springWebMvc.utility.OrderExcelExporter;
@@ -22,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.expression.Lists;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -41,6 +49,10 @@ public class adminPageController {
     MessageService messageService;
     ReviewService reviewService;
     ProductDetailService productDetailService;
+    UserService userService;
+    private final OrderRepository orderRepository;
+    private final RoleRepository roleRepository;
+    MailSenderService mailSenderService;
 
     @Autowired
     public adminPageController(BannerService bannerService,
@@ -49,14 +61,22 @@ public class adminPageController {
                                OrderDetailService orderDetailService,
                                MessageService messageService,
                                ProductDetailService productDetailService,
-                               ReviewService reviewService){
+                               UserService userService,
+                               ReviewService reviewService,
+                               OrderRepository orderRepository,
+                               RoleRepository roleRepository,
+                               MailSenderService mailSenderService){
         this.bannerService = bannerService;
         this.orderService = orderService;
         this.orderDetailService = orderDetailService;
         this.fileUploadService = fileUploadService;
         this.messageService = messageService;
         this.reviewService = reviewService;
+        this.userService  = userService;
         this.productDetailService = productDetailService;
+        this.orderRepository = orderRepository;
+        this.roleRepository = roleRepository;
+        this.mailSenderService = mailSenderService;
     }
     @RequestMapping("")
     public String adminPage(Model model){
@@ -104,7 +124,13 @@ public class adminPageController {
                             @RequestParam(name = "status",required = false) OrderStatus status,
                             @RequestParam(name = "date",required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date
                             ) throws ParseException {
-        List<Order> orders = new ArrayList<>();
+        orderService.getAll().forEach(order -> {
+            if (order.getOrderDetails().isEmpty()){
+                order.setStatus(OrderStatus.Cancel);
+                orderService.save(order);
+            }
+        });
+        List<Order> orders;
         if (orderId != null)
             orders = orderService.getAllByOrderId(orderId);
         else{
@@ -114,7 +140,7 @@ public class adminPageController {
                 // format date
                 DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 // get day
-                String date1 = new String();
+                String date1;
                 date1 = format.format(date);
                 // creat start date
                 Date start  = format.parse(date1);
@@ -139,7 +165,9 @@ public class adminPageController {
                 }else if (phone == null && status != null){
                     orders = orderService.findByStatus(status);
                 }else {
-                    orders = orderService.getAll();
+                    Date today = new Date();
+                    Date end = new Date(today.getTime() - 86400000*7);
+                    orders = orderService.findByDate(end,today);
                 }
             }
         }
@@ -238,20 +266,33 @@ public class adminPageController {
         return "redirect:/admin/order";
     }
     @GetMapping("updateOrderDetail/{detailId}")
-    public String updateOrderDetail(@PathVariable("detailId") Long detailId,@RequestParam("quantity") int quantity){
+    public String updateOrderDetail(@PathVariable("detailId") Long detailId,Model model,
+                                    @RequestParam("quantity") int quantity){
+        if (quantity<0){
+            model.addAttribute("error","Invalid data !!!");
+            return "redirect:/admin/order";
+        }
         if (detailId != null){
             OrderDetail detail = orderDetailService.getById(detailId);
             if (detail != null){
+                Long orderId = detail.getOrder().getOrderId();
                 if (quantity!=0){
+                    // set new quantity for order detail
                     detail.setQuantity(quantity);
                     orderDetailService.save(detail);
                 }else{
                     orderDetailService.delete(detailId);
-                    Order order = orderService.getByOrderId(detail.getOrder().getOrderId());
-                    if (order.getOrderDetails().isEmpty()){
-                        order.setStatus(OrderStatus.Cancel);
-                        orderService.save(order);
+                }
+                // re-calculate total price
+                Order order = orderService.getByOrderId(orderId);
+                if (!order.getOrderDetails().isEmpty()){
+                    double price = order.getOrderDetails().stream().mapToDouble(item->(item.getQuantity()*item.getPrice())).sum();
+                    if (price>50){
+                        order.setTotalPrice(price * Tax.tax10);
+                    }else {
+                        order.setTotalPrice(price * Tax.tax10 + ShippingFee.Ship10);
                     }
+                    orderService.save(order);
                 }
             }
         }
@@ -260,11 +301,21 @@ public class adminPageController {
     @GetMapping("cancelOrderDetail/{orderDetailId}")
     public String cancelOrderDetail(@PathVariable("orderDetailId") Long orderDetailId){
         if (orderDetailId!=null){
-            orderDetailService.delete(orderDetailId);
-            Order order = orderService.getByOrderId(orderDetailService.getById(orderDetailId).getOrder().getOrderId());
-            if (order.getOrderDetails().isEmpty()){
-                order.setStatus(OrderStatus.Cancel);
-                orderService.save(order);
+            OrderDetail detail = orderDetailService.getById(orderDetailId);
+            if (detail != null){
+                Long orderId = detail.getOrder().getOrderId();
+                orderDetailService.delete(orderDetailId);
+                // re-calculate total price
+                Order order = orderService.getByOrderId(orderId);
+                if (!order.getOrderDetails().isEmpty()){
+                    double price = order.getOrderDetails().stream().mapToDouble(item->(item.getQuantity()*item.getPrice())).sum();
+                    if (price>50){
+                        order.setTotalPrice(price * Tax.tax10);
+                    }else {
+                        order.setTotalPrice(price * Tax.tax10 + ShippingFee.Ship10);
+                    }
+                    orderService.save(order);
+                }
             }
         }
         return "forward:/admin/order";
@@ -283,6 +334,67 @@ public class adminPageController {
     public String replyReview(@PathVariable("id") Long id,@RequestParam(name = "reply",required = false) String reply){
         reviewService.addReply(id,reply);
         return "redirect:/admin";
+    }
+    @GetMapping("/account")
+    public String userAccount(Model model,@RequestParam(name = "email",required = false)String email){
+        User user;
+        Customer customer;
+        if (email != null){
+            user = userService.getUserByEmail(email);
+            if (user!=null){
+                model.addAttribute("user",new UserDTO(user));
+                if (user.getCustomer()!=null){
+                    customer = user.getCustomer();
+                    model.addAttribute("customer",new CustomerDTO(customer));
+                }
+            }
+        }else {
+            model.addAttribute("customer",new CustomerDTO());
+        }
+        return "admin/fragment/webmanager/customer-infor";
+    }
+    @GetMapping("/account/update/{userId}")
+    public String updateAccount(@PathVariable("userId") Long userId,
+                                @RequestParam("role") Long role,
+                                @RequestParam("status") int status){
+        User user = userService.getUserById(userId);
+        List<Long> list = new ArrayList<>();
+        if (!user.getRoles().isEmpty()){
+            user.getRoles().forEach(r -> list.add(r.getAuthority().getAuthorityId()));
+            if (!list.contains(role)){
+                Role role1 = new Role();
+                role1.setUser(user);
+                role1.setAuthority(Authority.builder()
+                                .authorityId(role)
+                                .authorityName(role==2?"ROLE_CUSTOMER":"ROLE_ADMIN")
+                        .build());
+                roleRepository.save(role1);
+            }
+        }
+        user.setStatus(status);
+        userService.save(user);
+        return "redirect:/admin/account?email="+user.getEmail();
+    }
+    @GetMapping("/account/reset-password")
+    public String updateAccount(@RequestParam("username") String username,Model model) throws MessagingException {
+        User user = userService.getUserByUsername(username);
+        if (user != null){
+            String newPassword = userService.resetPassword(user.getEmail());
+            if (Objects.equals(newPassword, ""))
+                return "/site/fragment/errorPage";
+            else {
+                // send mail
+                String mailMessage = "<p>Your new password</p>";
+                mailMessage += "<p><b>"+newPassword+"</b></p>";
+                mailMessage += "<b>Sincere !!</b>";
+                mailMessage += "<hr><img src='cid:logoImg' />";
+                mailSenderService.sendEmail(user.getEmail(),"[MultiShopReset] Password Success",mailMessage);
+                model.addAttribute("message","Reset success.Please check email");
+                return "redirect:/admin/account?email="+user.getEmail();
+            }
+        }else {
+            return "/site/fragment/errorPage";
+        }
     }
 }
 

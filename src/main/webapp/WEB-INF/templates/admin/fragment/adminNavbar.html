@@ -49,17 +49,21 @@
                             </button>
                             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                                 <div class="navbar-nav mr-auto py-0">
-                                    <a th:href="@{/admin}" class="nav-item nav-link active">Trang chủ</a>
-                                    <a th:href="@{/admin/categories}" class="nav-item nav-link">Danh mục</a>
-                                    <a th:href="@{/admin/products}" class="nav-item nav-link">Sản phẩm</a>
-                                    <a th:href="@{/admin/repository}" class="nav-item nav-link">Kho</a>
+                                    <a th:href="@{/admin}" class="nav-item nav-link active">Home</a>
+                                    <a th:href="@{/admin/categories}" class="nav-item nav-link">Category</a>
+                                    <a th:href="@{/admin/products}" class="nav-item nav-link">Product</a>
+                                    <a th:href="@{/admin/repository}" class="nav-item nav-link">Repository</a>
                                     <a th:href="@{/admin/order}" class="nav-item nav-link">Order</a>
-                                    <a th:href="@{/admin/contact}" class="nav-item nav-link">Process</a>
+                                    <a th:href="@{/admin/account}" class="nav-item nav-link">Account</a>
                                 </div>
                             </div>
                         </nav>
                     </div>
                     <div class="navbar-nav ml-auto mt-3 py-0 d-none d-lg-block">
+                        <a th:href="@{/site/cart}" class="btn px-0 mr-3">
+                            <i class="fas fa-cart-plus text-primary"></i>
+                            <span id="cart-quantity" th:text="${cartQuantity}" class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;"></span>
+                        </a>
                         <a th:href="@{/logout}" class="btn px-0" sec:authorize="isAuthenticated()">
                             <i class="fas fa-sign-out-alt text-primary"></i>
                         </a>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://wwww.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      layout:decorate="~{admin/adminlayout.html}">
+<head>
+</head>
+<body>
+    <div layout:fragment="adminContent">
+        <!-- Breadcrumb Start -->
+        <div class="container-fluid">
+            <div class="row px-xl-5">
+                <div class="col-12">
+                    <nav class="breadcrumb bg-light mb-30">
+                        <a class="breadcrumb-item text-dark" th:href="@{/admin}">Home</a>
+                        <span class="breadcrumb-item active">Account Information</span>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- Breadcrumb End -->
+        <!-- Checkout Start -->
+        <div class="container-fluid">
+            <div class="row px-xl-5">
+                <div class="col">
+                    <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Account Information</span></h5>
+                    <div class="bg-light p-30 mb-3">
+                        <div class="row justify-content-center form-group">
+                            <form th:action="@{/admin/account}">
+                                <input type="text" name="email" class="form-control rounded border-success" placeholder="User Email"
+                                onchange="this.form.submit()">
+                            </form>
+                            <p th:text="${message}"></p>
+                        </div>
+                        <form th:if="${user!=null}" th:action="@{'admin/account/update/'+${user.userId}}" method="get">
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label>Account</label>
+                                    <input class="form-control rounded border-success" th:value="${user.username}" type="text" readonly>
+                                    <input type="number" hidden th:value="${customer.cusId}">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <div class="row d-flex justify-content-center">
+                                        <img th:src="@{'/img/avatar/'+${customer.avatarUrl}}" class="border border-success"
+                                             style="border-radius: 50%" width="100px" height="100px"
+                                             id="avatar">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Email</label>
+                                    <input class="form-control rounded border-success" type="email" readonly
+                                           th:value="${user.email}">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Full Name</label>
+                                    <input class="form-control rounded border-success" type="text" readonly
+                                           th:value="${customer.cusName}">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Role : </label><span> </span><span class="text-success" th:text="${user.roles}"></span>
+                                    <select class="form-control rounded border-success" name="role" readonly>
+                                        <option value="3">Customer</option>
+                                        <option value="2">Employee</option>
+                                        <option value="1">Admin</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Birthday</label>
+                                    <input class="form-control rounded border-success" type="date" readonly
+                                           th:value="${#dates.format(customer.birthday,'yyyy-MM-dd')}">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Phone</label>
+                                    <input class="form-control rounded border-success" type="text" readonly
+                                           th:value="${customer.phone}">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Shipping Address</label>
+                                    <input class="form-control rounded border-success" type="text" readonly
+                                           th:value="${customer.address}">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Status</label>
+                                    <select class="form-control rounded border-success" name="status" readonly>
+                                        <option th:selected="${user.status == 1}" value="1">Enable</option>
+                                        <option th:selected="${user.status == 0}" value="0">Disable</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 d-flex justify-content-center">
+                                    <div class="row">
+                                        <div class="col-md-6 form-group d-flex justify-content-center">
+                                            <button type="submit" class="btn btn-sm w-75 mt-3 rounded btn-success">Update information</button>
+                                        </div>
+                                        <div class="col-md-6 form-group d-flex justify-content-center">
+                                            <a th:href="@{'/admin/account/reset-password?username='+${user.username}}" class="btn btn-sm w-75 mt-3 rounded btn-danger">Reset Password</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Checkout End -->
+    </div>
+
+</body>
+</html>

@@ -21,7 +21,6 @@
         <!-- Breadcrumb End -->
         <!-- Checkout Start -->
         <div class="container-fluid">
-
             <div class="row px-xl-5">
                 <div class="col">
                     <div class="row">
@@ -40,8 +39,9 @@
                                     </div>
                                     <div class="col d-flex justify-content-center">
                                         <select class="form-control border-success rounded" name="status" onchange="this.form.submit()">
+                                            <option class="text-center" th:value="null"  th:selected="${#strings.equals(status,mstatus)}">--Status--</option>
                                             <option th:each="status : ${T(com.example.springWebMvc.persistent.OrderStatus).values()}"
-                                                    th:value="${status}" th:text="${status}" th:selected="${#strings.equals(status,mStatus)}">
+                                                    th:value="${status}" th:text="${status}" th:selected="${#strings.equals(status,mstatus)}">
                                             </option>
                                         </select>
                                     </div>
@@ -50,6 +50,7 @@
                                     </div>
                                 </div>
                             </form>
+                            <h4 class="text-danger text-center" th:if="${error != null}">Invalid data !!!</h4>
                         </div>
 
                     </div>
@@ -59,7 +60,7 @@
                             <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Order Status</span></h5>
                             <div class="bg-light p-30 mb-3">
                                 <table class=" table-responsive table text-center">
-                                    <thead class="table-success">
+                                    <thead class="table-dark">
                                     <tr>
                                         <td>Id</td>
                                         <td>Name</td>
@@ -76,7 +77,7 @@
                                     <tbody th:each="item:${list}">
                                     <form method="get" th:action="@{'/admin/updateOrder/'+${item.orderId}}">
                                         <tr class="table-info">
-                                            <td th:text="${item.orderId}"></td>
+                                            <td><b th:text="${item.orderId}"></b></td>
                                             <td>
                                                 <input type="text" class="rounded border-0" name="cusName" th:value="${item.cusName}" required>
                                             </td>
@@ -122,7 +123,7 @@
                                                 <td th:text="${p.productDetailDTO.typeName}"></td>
                                                 <td th:text="${p.productDetailDTO.colorName}"></td>
                                                 <td>
-                                                    <input type="number" class="text-center" name="quantity" th:value="${p.quantity}">
+                                                    <input type="number" class="text-center" name="quantity" min="0" th:value="${p.quantity}">
                                                 </td>
                                                 <td></td>
                                                 <td th:text="${#numbers.formatDecimal(p.price,1,1)}+'$'"></td>

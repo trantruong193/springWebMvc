@@ -42,20 +42,20 @@
                     <!-- Menu -->
                     <div class="col-lg-3 d-none d-lg-block">
                         <a class="btn d-flex align-items-center justify-content-between bg-dark w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; padding: 0 30px;">
-                            <h6 class="text-warning m-0"><i class="fa fa-bars mr-2"></i>Danh mục</h6>
+                            <h6 class="text-warning m-0"><i class="fa fa-bars mr-2"></i>Category</h6>
                             <i class="fa fa-angle-down text-warning"></i>
                         </a>
                         <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
                             <div class="navbar-nav w-100">
                                 <div class="nav-item dropdown dropright">
-                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown">Điện thoại<i class="fa fa-angle-right float-right mt-1"></i></a>
+                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown">Phone<i class="fa fa-angle-right float-right mt-1"></i></a>
                                     <div class="dropdown-menu position-absolute rounded-0 border-0 m-0">
                                         <a class="dropdown-item"
                                            th:each="p:${producers}"
                                            th:href="@{'/site/products?catId=1&producerId='+${p.producerId}}"
                                            th:text="${p.producerName}">
                                         </a>
-                                        <a th:href="@{/site/products?catalogId=1}" class="dropdown-item">Điện thoại phổ thông</a>
+                                        <a th:href="@{/site/products?catalogId=1}" class="dropdown-item">Normal Phone</a>
                                         <a th:href="@{/site/products?catalogId=2}" class="dropdown-item">Smart Phone</a>
                                     </div>
                                 </div>
@@ -68,12 +68,12 @@
                                            th:text="${p.producerName}">
                                         </a>
                                         <a th:href="@{/site/products?catalogId=3}" class="dropdown-item">Laptop Gaming</a>
-                                        <a th:href="@{/site/products?catalogId=4}" class="dropdown-item">Laptop văn phòng</a>
+                                        <a th:href="@{/site/products?catalogId=4}" class="dropdown-item">Laptop Office</a>
                                         <a th:href="@{/site/products?catalogId=5}" class="dropdown-item">Macbook</a>
                                     </div>
                                 </div>
                                 <div class="nav-item dropdown dropright">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Máy tính bảng<i class="fa fa-angle-right float-right mt-1"></i></a>
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tablet<i class="fa fa-angle-right float-right mt-1"></i></a>
                                     <div class="dropdown-menu position-absolute rounded-0 border-0 m-0">
                                         <a class="dropdown-item"
                                            th:each="p:${producers}"
@@ -85,28 +85,28 @@
                                     </div>
                                 </div>
                                 <div class="nav-item dropdown dropright">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tai nghe<i class="fa fa-angle-right float-right mt-1"></i></a>
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Ears pod<i class="fa fa-angle-right float-right mt-1"></i></a>
                                     <div class="dropdown-menu position-absolute rounded-0 border-0 m-0">
-                                        <a th:href="@{/site/products?catalogId=14}" class="dropdown-item">Tai nghe bluetooth</a>
-                                        <a th:href="@{/site/products?catalogId=15}" class="dropdown-item">Tai nghe chụp tai</a>
-                                        <a th:href="@{/site/products?catalogId=16}" class="dropdown-item">Tai nghe gaming</a>
+                                        <a th:href="@{/site/products?catalogId=14}" class="dropdown-item">Bluetooth</a>
+                                        <a th:href="@{/site/products?catalogId=15}" class="dropdown-item">In-ears</a>
+                                        <a th:href="@{/site/products?catalogId=16}" class="dropdown-item">Gaming ears pod</a>
                                         <a th:href="@{/site/products?catalogId=17}" class="dropdown-item">Apple airpod</a>
                                     </div>
                                 </div>
                                 <div class="nav-item dropdown dropright">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Đồng hồ<i class="fa fa-angle-right float-right mt-1"></i></a>
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Watch<i class="fa fa-angle-right float-right mt-1"></i></a>
                                     <div class="dropdown-menu position-absolute rounded-0 border-0 m-0">
-                                        <a th:href="@{/site/products?catalogId=8}" class="dropdown-item">Đồng hồ thông minh</a>
-                                        <a th:href="@{/site/products?catalogId=9}" class="dropdown-item">Đồng hồ cơ</a>
-                                        <a th:href="@{/site/products?catalogId=10}" class="dropdown-item">Đồng hồ định vị trẻ em</a>
+                                        <a th:href="@{/site/products?catalogId=8}" class="dropdown-item">Smart watch</a>
+                                        <a th:href="@{/site/products?catalogId=9}" class="dropdown-item">Mechanical watch</a>
+                                        <a th:href="@{/site/products?catalogId=10}" class="dropdown-item">Locating children device</a>
                                     </div>
                                 </div>
                                 <div class="nav-item dropdown dropright">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Phụ kiện<i class="fa fa-angle-right float-right mt-1"></i></a>
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Accessory<i class="fa fa-angle-right float-right mt-1"></i></a>
                                     <div class="dropdown-menu position-absolute rounded-0 border-0 m-0">
-                                        <a th:href="@{/site/products?catalogId=11}" class="dropdown-item">Phụ kiện Apple</a>
-                                        <a th:href="@{/site/products?catalogId=12}" class="dropdown-item">Phụ kiện điện thoại</a>
-                                        <a th:href="@{/site/products?catalogId=13}" class="dropdown-item">Phụ kiện máy tính</a>
+                                        <a th:href="@{/site/products?catalogId=11}" class="dropdown-item">Apple accessory</a>
+                                        <a th:href="@{/site/products?catalogId=12}" class="dropdown-item">Phone accessory</a>
+                                        <a th:href="@{/site/products?catalogId=13}" class="dropdown-item">Laptop accessory</a>
                                     </div>
                                 </div>
                             </div>

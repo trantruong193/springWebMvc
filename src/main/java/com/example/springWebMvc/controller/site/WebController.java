@@ -1,11 +1,12 @@
 package com.example.springWebMvc.controller.site;
 
-import com.example.springWebMvc.persistent.OrderStatus;
-import com.example.springWebMvc.persistent.PaymentMethod;
-import com.example.springWebMvc.persistent.ProductStatus;
+import com.example.springWebMvc.persistent.*;
 import com.example.springWebMvc.persistent.dto.*;
 import com.example.springWebMvc.persistent.entities.*;
-import com.example.springWebMvc.repository.*;
+import com.example.springWebMvc.repository.CustomerRepository;
+import com.example.springWebMvc.repository.OrderDetailRepository;
+import com.example.springWebMvc.repository.RoleRepository;
+import com.example.springWebMvc.repository.UserRepository;
 import com.example.springWebMvc.service.*;
 import com.example.springWebMvc.utility.OrderExcelExporter;
 import com.example.springWebMvc.utility.Utility;
@@ -61,6 +62,7 @@ public class WebController {
     OrderDetailRepository orderDetailRepository;
     ReviewService reviewService;
     MessageService messageService;
+    private final UserRepository userRepository;
 
     @Autowired
     public WebController (ProductService productService,
@@ -82,7 +84,8 @@ public class WebController {
                           MailSenderService mailSenderService,
                           MessageService messageService,
                           ReviewService reviewService,
-                          OrderDetailRepository orderDetailRepository){
+                          OrderDetailRepository orderDetailRepository,
+                          UserRepository userRepository){
         this.categoryService = categoryService;
         this.catalogService = catalogService;
         this.productService = productService;
@@ -103,6 +106,7 @@ public class WebController {
         this.orderDetailRepository = orderDetailRepository;
         this.messageService = messageService;
         this.reviewService = reviewService;
+        this.userRepository = userRepository;
     }
     @ModelAttribute("feature")
     public List<Product> getFeatureProduct(){
@@ -184,11 +188,12 @@ public class WebController {
     }
     @GetMapping("checkout")
     // to check out page
-    public String checkout(@AuthenticationPrincipal CustomizeUserDetails userDetails,Model model){
+    public String checkout(@AuthenticationPrincipal CustomizeUserDetails userDetails,
+                           @AuthenticationPrincipal CustomizeOAth2User oAth2User, Model model){
         // check if user is login
+        Customer customer;
         if (userDetails != null){
-            Customer customer = customerService.findByUSerId(userDetails.getUserId());
-            // check if user has customer information
+            customer = customerService.findByUSerId(userDetails.getUserId());
             if (customer != null){
                 OrderDTO orderDTO = new OrderDTO();
                 BeanUtils.copyProperties(new CustomerDTO(customer),orderDTO);
@@ -197,7 +202,17 @@ public class WebController {
                 model.addAttribute("update","update");
                 model.addAttribute("order",new OrderDTO());
             }
-        }else {
+        }else if (oAth2User!= null) {
+            customer = customerService.findByUSerId(oAth2User.getUserId());
+            if (customer != null) {
+                OrderDTO orderDTO = new OrderDTO();
+                BeanUtils.copyProperties(new CustomerDTO(customer), orderDTO);
+                model.addAttribute("order", orderDTO);
+            } else {
+                model.addAttribute("update", "update");
+                model.addAttribute("order", new OrderDTO());
+            }
+        }else{
             model.addAttribute("order",new OrderDTO());
         }
         return "site/fragment/checkout";
@@ -272,7 +287,9 @@ public class WebController {
     }
     @PostMapping("order")
     // process order
-    public String order(@AuthenticationPrincipal CustomizeUserDetails userDetails, Model model,
+    public String order(@AuthenticationPrincipal CustomizeUserDetails userDetails,
+                        @AuthenticationPrincipal CustomizeOAth2User oAth2User,
+                        Model model,
                         @Valid @ModelAttribute("order") OrderDTO dto,
                         BindingResult bindingResult, @RequestParam(name = "paymentMethod",required = false) String method) throws MessagingException {
         // check if cart is empty
@@ -291,13 +308,16 @@ public class WebController {
         if (method != null)
             order.setPaymentMethod(PaymentMethod.valueOf(method));
         order.setStatus(OrderStatus.Ordering);
+        // set user for order
         if (userDetails!= null)
             order.setUserId(userDetails.getUserId());
-        double price = 0;
+        if (oAth2User!=null)
+            order.setUserId(oAth2User.getUserId());
+        double price;
         if (cartService.getAmount()<50)
-            price = cartService.getAmount()*1.1+10;
+            price = cartService.getAmount() * Tax.tax10 + ShippingFee.Ship10;
         else
-            price = cartService.getAmount()*1.1;
+            price = cartService.getAmount() * Tax.tax10;
         order.setTotalPrice(price);
         Order order1 = orderService.save(order);
         // create order detail and save
@@ -328,15 +348,28 @@ public class WebController {
     }
     @GetMapping("customer")
     // to customer page
-    public String customer(@AuthenticationPrincipal CustomizeUserDetails userDetails,Model model){
+    public String customer(@AuthenticationPrincipal CustomizeUserDetails userDetails,
+                           @AuthenticationPrincipal CustomizeOAth2User oAth2User, Model model){
         // get customer information
-        Customer customer = customerService.findByUSerId(userDetails.getUserId());
+        Customer customer;
+        List<Order> list;
+        if (oAth2User!=null){
+            User user = userService.getUserByEmail(oAth2User.getEmail());
+            customer = customerService.findByUSerId(user.getUserId());
+            list = orderService.getAllByUserId(user.getUserId());
+            model.addAttribute("username",user.getUsername());
+            model.addAttribute("email",user.getEmail());
+        }else {
+            customer = customerService.findByUSerId(userDetails.getUserId());
+            list = orderService.getAllByUserId(userDetails.getUserId());
+            model.addAttribute("username",userDetails.getUsername());
+            model.addAttribute("email",userDetails.getEmail());
+        }
         if (customer != null)
             model.addAttribute("customer",new CustomerDTO(customer));
         else
             model.addAttribute("customer",new CustomerDTO());
         // get orders of customer
-        List<Order> list = orderService.getAllByUserId(userDetails.getUserId());
         List<OrderDTO> dtoList = new ArrayList<>();
         list.forEach(order -> {
             dtoList.add(new OrderDTO(order));
@@ -344,8 +377,6 @@ public class WebController {
         // sort returned list
         dtoList.sort((o1, o2) -> o2.getCreateTime().compareTo(o1.getCreateTime()));
         model.addAttribute("list",dtoList);
-        model.addAttribute("username",userDetails.getUsername());
-        model.addAttribute("email",userDetails.getEmail());
         return "site/fragment/customer/customer-infor";
     }
     @GetMapping("customer/update-password")
@@ -362,7 +393,7 @@ public class WebController {
                                    @RequestParam(name = "confirmPassword",required = false) String confirmPassword){
 
         if (!StringUtils.hasText(oldPassword) || !StringUtils.hasText(newPassword)
-                || newPassword.length()<6 || newPassword.length()>20 || !confirmPassword.equals(oldPassword)){
+                || newPassword.length()<6 || newPassword.length()>20 || !confirmPassword.equals(newPassword)){
             model.addAttribute("message","error");
             return "site/fragment/customer/update-password";
         }
@@ -385,12 +416,18 @@ public class WebController {
     @PostMapping("customer/update")
     // update customer information
     public String updateCustomer(Model model,@AuthenticationPrincipal CustomizeUserDetails userDetails,
+                             @AuthenticationPrincipal CustomizeOAth2User oAuth2User,
                              @Valid @ModelAttribute("customer") CustomerDTO dto,
                              BindingResult  bindingResult,
                              @RequestParam("avatarImg")MultipartFile img) throws IOException {
+        User user  = new User();
+        if (userDetails!=null)
+            user = userService.getUserById(userDetails.getUserId());
+        if (oAuth2User!=null)
+            user = userService.getUserByEmail(oAuth2User.getEmail());
         // check form error
         if (bindingResult.hasErrors()){
-            model.addAttribute("username",userDetails.getUsername());
+            model.addAttribute("username",user.getUsername());
             return "site/fragment/customer/customer-infor";
         }
         // case user doesn't have customer information -> new
@@ -399,27 +436,27 @@ public class WebController {
             if (dto.getPhone()!=null)
                 if (customerService.checkPhone(dto.getPhone())){
                     model.addAttribute("pMessage","Phone number has been used !!!");
-                    model.addAttribute("username",userDetails.getUsername());
-                    model.addAttribute("email",userDetails.getEmail());
+                    model.addAttribute("username",user.getUsername());
+                    model.addAttribute("email",user.getEmail());
                     return "site/fragment/customer/customer-infor";
                 }
         }
         Customer customer = new Customer();
         // case user has customer information -> update
         if (dto.getCusId() != null){
-            customer = customerRepository.getCustomerByUser_UserId(userDetails.getUserId());
+            customer = customerService.findByUSerId(user.getUserId());
         }
         // check duplicate phone
         if (!dto.getPhone().equals(customer.getPhone()))
             if (customerService.checkPhone(dto.getPhone())){
                 model.addAttribute("pMessage","Phone number has been used !!!");
-                model.addAttribute("username",userDetails.getUsername());
-                model.addAttribute("email",userDetails.getEmail());
+                model.addAttribute("username",user.getUsername());
+                model.addAttribute("email",user.getEmail());
                 return "site/fragment/customer/customer-infor";
             }
         BeanUtils.copyProperties(dto,customer);
         // set user for customer
-        customer.setUser(userService.getUserById(userDetails.getUserId()));
+        customer.setUser(userService.getUserById(user.getUserId()));
         // update avatar
         if (!img.isEmpty()){
             if (!Objects.equals(dto.getAvatarUrl(), ""))
@@ -463,19 +500,27 @@ public class WebController {
     }
     @GetMapping("contact")
     // to contact page
-    public String contact(Model model,@AuthenticationPrincipal CustomizeUserDetails userDetails){
+    public String contact(Model model,@AuthenticationPrincipal CustomizeUserDetails userDetails,
+                          @AuthenticationPrincipal CustomizeOAth2User oAth2User){
         MessageDTO message = new MessageDTO();
+        Long userId = null;
         if (userDetails!=null){
-            List<Message> list = messageService.getByUserId(userDetails.getUserId());
+            userId = userDetails.getUserId();
+        }
+        if (oAth2User!=null){
+            userId = oAth2User.getUserId();
+        }
+        if (userId != null){
+            List<Message> list = messageService.getByUserId(userId);
             List<MessageDTO> dtos = new ArrayList<>();
             if (!list.isEmpty()){
                 list.forEach(message1 -> dtos.add(new MessageDTO(message1)));
             }
             model.addAttribute("list",dtos);
-            message.setCusEmail(userDetails.getEmail());
-            if (customerService.findByUSerId(userDetails.getUserId())!=null){
-                message.setCusName(customerService.findByUSerId(userDetails.getUserId()).getCusName());
-                message.setPhone(customerService.findByUSerId(userDetails.getUserId()).getPhone());
+            message.setCusEmail(userService.getUserById(userId).getEmail());
+            if (customerService.findByUSerId(userId)!=null){
+                message.setCusName(customerService.findByUSerId(userId).getCusName());
+                message.setPhone(customerService.findByUSerId(userId).getPhone());
             }
         }
         model.addAttribute("newMessage",message);
@@ -484,15 +529,21 @@ public class WebController {
     @PostMapping("do-contact")
     // send contact message
     public String doContact(@Valid @ModelAttribute("newMessage") MessageDTO messageDTO,
-                            BindingResult bindingResult,@AuthenticationPrincipal CustomizeUserDetails userDetails){
+                            BindingResult bindingResult,@AuthenticationPrincipal CustomizeUserDetails userDetails,
+                            @AuthenticationPrincipal CustomizeOAth2User oAth2User){
         if (bindingResult.hasErrors()){
             return "site/fragment/contact";
         }
         Message message = new Message();
         BeanUtils.copyProperties(messageDTO,message);
         message.setStatus(false);
-        if (userDetails!=null){
-            message.setUser(userService.getUserById(userDetails.getUserId()));
+        Long userId = null;
+        if (userDetails!=null)
+            userId = userDetails.getUserId();
+        if (oAth2User!=null)
+            userId = oAth2User.getUserId();
+        if (userId!=null){
+            message.setUser(userService.getUserById(userId));
         }
         messageService.save(message);
         return "redirect:/site/contact";
@@ -500,6 +551,7 @@ public class WebController {
     @PostMapping("do-review/{proId}")
     // send review
     public String doReview(@PathVariable("proId") Long proId,@AuthenticationPrincipal CustomizeUserDetails details,
+                           @AuthenticationPrincipal CustomizeOAth2User oAth2User,
                            @RequestParam("rate") int rate,@Valid @ModelAttribute("review")ReviewDTO dto,
                            BindingResult result,Model model){
         if (result.hasErrors()){
@@ -508,8 +560,13 @@ public class WebController {
         }
         Review review = new Review();
         BeanUtils.copyProperties(dto,review);
-        if (details!=null){
-            review.setUser(userService.getUserById(details.getUserId()));
+        Long userId = null;
+        if (details!=null)
+            userId = details.getUserId();
+        if (oAth2User!=null)
+            userId = oAth2User.getUserId();
+        if (userId!=null){
+            review.setUser(userService.getUserById(userId));
         }
         review.setProduct(productService.findById(proId));
         review.setRate(rate);
@@ -635,6 +692,7 @@ public class WebController {
     @GetMapping("detail/{proId}")
     // to detail page
     public String detail( Model model,@AuthenticationPrincipal CustomizeUserDetails details,
+                           @AuthenticationPrincipal CustomizeOAth2User oAth2User,
                            @PathVariable("proId") Long proId, Optional<String> message,
                            @RequestParam(name = "typeId", required = false)Long typeId){
         // fail review message
@@ -642,12 +700,22 @@ public class WebController {
         // get product by id
         model.addAttribute("product",productService.findById(proId));
         // create new review dto
-        ReviewDTO reviewDTO = new ReviewDTO();
+        Long userId = null;
+        String email = null;
         if (details!=null){
-            if (customerService.findByUSerId(details.getUserId())!=null){
-                reviewDTO.setCusName(customerService.findByUSerId(details.getUserId()).getCusName());
+            email = details.getEmail();
+            userId = details.getUserId();
+        }
+        if (oAth2User!=null){
+            userId = oAth2User.getUserId();
+            email = oAth2User.getEmail();
+        }
+        ReviewDTO reviewDTO = new ReviewDTO();
+        if (userId!=null){
+            if (customerService.findByUSerId(userId)!=null){
+                reviewDTO.setCusName(customerService.findByUSerId(userId).getCusName());
             }
-            reviewDTO.setCusEmail(details.getEmail());
+            reviewDTO.setCusEmail(email);
         }
         // get all reviews by productId
         List<ReviewDTO> reviewDTOS = new ArrayList<>();
