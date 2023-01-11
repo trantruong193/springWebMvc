@@ -7,6 +7,6 @@ public interface MailSenderService {
     void sendVerifyMail(String to,String subject,String message) throws MessagingException;
     void sendResetPasswordMail(String to,String message) throws MessagingException;
 
-    void sendEmail(String email, String s, String mailMessage) throws MessagingException;
+    void sendEmail(String email, String subject, String mailMessage) throws MessagingException;
 }
 

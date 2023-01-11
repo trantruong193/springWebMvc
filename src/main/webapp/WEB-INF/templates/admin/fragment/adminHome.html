@@ -3,6 +3,47 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{admin/adminlayout.html}">
 <head>
+    <link rel="stylesheet" th:href="@{/css/chart.css}">
+    <script>
+        function hideTable(index){
+            $(".form"+index).toggle();
+            $("#btnHide"+index).toggle();
+            $("#btnShow"+index).toggle();
+        }
+        function hideALl(){
+            $("#hideAll").toggle();
+            $("#showAll").toggle();
+            $("tr[class^='form']").hide();
+            $("button[id^='btnHide']").hide();
+            $("button[id^='btnShow']").show();
+        }
+        function showALl(){
+            $("#hideAll").toggle();
+            $("#showAll").toggle();
+            $("tr[class^='form']").show();
+            $("button[id^='btnShow']").hide();
+            $("button[id^='btnHide']").show();
+        }
+        function hideTable2(index){
+            $(".form2"+index).toggle();
+            $("#btnHide2"+index).toggle();
+            $("#btnShow2"+index).toggle();
+        }
+        function hideALl2(){
+            $("#hideAll").toggle();
+            $("#showAll").toggle();
+            $("tr[class^='form2']").hide();
+            $("button[id^='btnHide2']").hide();
+            $("button[id^='btnShow2']").show();
+        }
+        function showALl2(){
+            $("#hideAll2").toggle();
+            $("#showAll2").toggle();
+            $("tr[class^='form2']").show();
+            $("button[id^='btnShow2']").hide();
+            $("button[id^='btnHide2']").show();
+        }
+    </script>
 </head>
 <body>
     <div layout:fragment="adminContent">
@@ -100,18 +141,29 @@
         <!-- Banner End -->
 
         <div class="container-fluid justify-content-center p-30">
-            <h5 th:if="${orders.isEmpty()}" class="text-danger p-30">You don't have any new orders today !!</h5>
+            <h5 th:if="${orders.isEmpty() && updates.isEmpty()}" class="text-danger p-30">You don't have any new orders today !!</h5>
             <div class="col" th:unless="${orders.isEmpty()}">
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">New orders</span></h5>
-                <div class="bg-light p-30 mb-3">
-                    <table class="table-responsive table text-center" style="height: 600px">
+                <div class="bg-light p-30 mb-1">
+                    <table class="table-responsive table text-center" style="height: 500px">
                         <thead class="table-success">
                         <tr>
+                            <td>
+                                <button id="showAll" class="btn btn-outline-success border-0 rounded"
+                                        onclick="showALl()">
+                                    <i class="far fa-info-circle"></i>
+                                </button>
+                                <button id="hideAll" style="display: none" class="btn btn-outline-danger border-0 rounded"
+                                        onclick="hideALl()">
+                                    <i class="fas fa-eye-slash"></i>
+                                </button>
+                            </td>
                             <td>
                                 <a class="text-success" th:href="@{/admin/exportExcelAll}">
                                     <i class="fas fa-file-excel"></i> Export All
                                 </a>
                             </td>
+                            <td>Order code</td>
                             <td>Name</td>
                             <td>Phone</td>
                             <td>Address</td>
@@ -124,22 +176,38 @@
                             <td></td>
                         </tr>
                         </thead>
-                        <tbody th:each="item:${orders}">
+                        <tbody th:each="item,index:${orders}">
                         <form method="get" th:action="@{'/admin/updateOrder/'+${item.orderId}}">
                             <tr class="table-info">
+                                <td>
+                                    <button th:id="'btnShow'+${index.index}" type="button" class="btn btn-outline-success border-0 rounded"
+                                            th:value="${index.index}" onclick="hideTable(this.value)">
+                                        <i class="far fa-info-circle"></i>
+                                    </button>
+                                    <button th:id="'btnHide'+${index.index}" type="button" style="display: none" class="btn btn-outline-danger border-0 rounded"
+                                            th:value="${index.index}" onclick="hideTable(this.value)">
+                                        <i class="fas fa-eye-slash"></i>
+                                    </button>
+                                </td>
                                 <td>
                                     <a class="text-success" th:href="@{'/admin/exportExcel/'+${item.orderCode}}">
                                         <i class="fas fa-file-excel"></i>
                                     </a>
                                 </td>
                                 <td>
-                                    <input type="text" class="rounded border-0" name="cusName" th:value="${item.cusName}" required>
+                                    <a class="text-success"
+                                       th:href="@{'/site/findOrder?orderCode='+${item.orderCode}}"
+                                       th:text="${item.orderCode}">
+                                    </a>
                                 </td>
                                 <td>
-                                    <input type="text" class="rounded border-0" name="phone" th:value="${item.phone}" required>
+                                    <input type="text" class="rounded text-center border-0" name="cusName" th:value="${item.cusName}" required>
                                 </td>
                                 <td>
-                                    <input type="text" class="rounded border-0" name="address" th:value="${item.address}" required>
+                                    <input type="text" class="rounded text-center border-0" name="phone" th:value="${item.phone}" required>
+                                </td>
+                                <td>
+                                    <input type="text" class="rounded text-center border-0" name="address" th:value="${item.address}" required>
                                 </td>
                                 <td th:text="${item.paymentMethod}"></td>
                                 <td th:text="${#dates.format(item.createTime,'dd/MM/yyyy_HH:mm')}"></td>
@@ -176,7 +244,9 @@
                         </form>
                         <th:block th:each="p:${item.orderDetailDTOList}">
                             <form th:action="@{'/admin/updateOrderDetail/'+${p.orderDetailId}}">
-                                <tr class="text-center">
+                                <tr th:class="'form'+${index.index}" style="display: none">
+                                    <td></td>
+                                    <td></td>
                                     <td></td>
                                     <td>
                                         <a class="text-muted"  data-toggle="tooltip" title="Click to repository"
@@ -213,6 +283,185 @@
                         </th:block>
                         </tbody>
                     </table>
+                </div>
+            </div>
+            <div class="col" th:unless="${updates.isEmpty()}">
+                <h5 class="section-title position-relative text-uppercase mb-3 mt-4"><span class="bg-secondary pr-3">Recently update orders</span></h5>
+                <div class="bg-light p-30">
+                    <table class="table-responsive table text-center" style="height: 500px">
+                        <thead class="table-success">
+                        <tr>
+                            <td>
+                                <button id="showAll2" class="btn btn-outline-success border-0 rounded"
+                                        onclick="showALl2()">
+                                    <i class="far fa-info-circle"></i>
+                                </button>
+                                <button id="hideAll2" style="display: none" class="btn btn-outline-danger border-0 rounded"
+                                        onclick="hideALl2()">
+                                    <i class="fas fa-eye-slash"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <a class="text-success" th:href="@{/admin/exportExcelAll}">
+                                    <i class="fas fa-file-excel"></i> Export All
+                                </a>
+                            </td>
+                            <td>Order code</td>
+                            <td>Name</td>
+                            <td>Phone</td>
+                            <td>Address</td>
+                            <td>Method</td>
+                            <td>Time</td>
+                            <td>Price</td>
+                            <td>Status</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </thead>
+                        <tbody th:each="item,index:${updates}">
+                        <form method="get" th:action="@{'/admin/updateOrder/'+${item.orderId}}">
+                            <tr class="table-info">
+                                <td>
+                                    <button th:id="'btnShow2'+${index.index}" type="button" class="btn btn-outline-success border-0 rounded"
+                                            th:value="${index.index}" onclick="hideTable2(this.value)">
+                                        <i class="far fa-info-circle"></i>
+                                    </button>
+                                    <button th:id="'btnHide2'+${index.index}" type="button" style="display: none" class="btn btn-outline-danger border-0 rounded"
+                                            th:value="${index.index}" onclick="hideTable2(this.value)">
+                                        <i class="fas fa-eye-slash"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <a class="text-success" th:href="@{'/admin/exportExcel/'+${item.orderCode}}">
+                                        <i class="fas fa-file-excel"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a class="text-success" title="To detail page"
+                                       th:text="${item.orderCode}"
+                                       th:href="@{'/site/findOrder?orderCode='+${item.orderCode}}">
+                                    </a>
+                                </td>
+                                <td>
+                                    <input type="text" class="rounded text-center border-0" name="cusName" th:value="${item.cusName}" required>
+                                </td>
+                                <td>
+                                    <input type="text" class="rounded text-center border-0" name="phone" th:value="${item.phone}" required>
+                                </td>
+                                <td>
+                                    <input type="text" class="rounded text-center border-0" name="address" th:value="${item.address}" required>
+                                </td>
+                                <td th:text="${item.paymentMethod}"></td>
+                                <td th:text="${#dates.format(item.createTime,'dd/MM/yyyy_HH:mm')}"></td>
+                                <td th:text="${#numbers.formatDecimal(item.totalPrice,1,1)}+'$'"></td>
+                                <td th:unless="${#strings.equals(item.status,'Complete')}">
+                                    <select name="status" class="border-0 rounded" onchange="this.form.submit()">
+                                        <option th:each="status : ${T(com.example.springWebMvc.persistent.OrderStatus).values()}"
+                                                th:value="${status}" th:text="${status}" th:selected="${#strings.equals(status,item.status)}">
+                                        </option>
+                                    </select>
+                                </td>
+                                <td class="text-success" th:if="${#strings.equals(item.status,'Complete')}">
+                                    Complete
+                                </td>
+                                <td>
+                                    <a class="btn btn-sm rounded btn-outline-success">
+                                        <i class="fas fa-warehouse"></i>
+                                    </a>
+                                </td>
+                                <td th:unless="${#strings.equals(item.status,'Complete')}">
+                                    <button type="submit" class="rounded btn btn-sm btn-outline-warning"  data-toggle="tooltip" title="Edit address">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                </td>
+                                <td  th:unless="${#strings.equals(item.status,'Complete')}">
+                                    <a class="rounded btn btn-sm btn-outline-danger"
+                                       data-toggle="tooltip" title="Cancel order"
+                                       onclick="confirm('Are you sure ??')"
+                                       th:href="@{'/admin/cancelOrder/'+${item.orderId}}">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </form>
+                        <th:block th:each="p:${item.orderDetailDTOList}">
+                            <form th:action="@{'/admin/updateOrderDetail/'+${p.orderDetailId}}">
+                                <tr th:class="'form2'+${index.index}" style="display: none">
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <a class="text-muted"  data-toggle="tooltip" title="Click to repository"
+                                           th:href="@{'admin/repository?proId='+${p.productDetailDTO.proId}}"
+                                           th:text="${p.productDetailDTO.productName}">
+                                        </a>
+                                    </td>
+                                    <td th:text="${p.productDetailDTO.typeName}"></td>
+                                    <td th:text="${p.productDetailDTO.colorName}"></td>
+                                    <td>
+                                        <input type="number" class="text-center" min="0" name="quantity" th:value="${p.quantity}">
+                                    </td>
+                                    <td></td>
+                                    <td th:text="${#numbers.formatDecimal(p.price,1,1)}+'$'"></td>
+                                    <td></td>
+                                    <td th:class="${(p.productDetailDTO.quantity <= p.quantity)?'text-danger':'text-success'}"
+                                        th:text="${p.productDetailDTO.quantity}"
+                                        data-toggle="tooltip" title="Remain quantity">
+                                    </td>
+                                    <td  th:unless="${#strings.equals(item.status,'Complete')}">
+                                        <button type="submit" class="rounded btn btn-sm btn-outline-warning" data-toggle="tooltip" title="Edit quantity">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    </td>
+                                    <td  th:unless="${#strings.equals(item.status,'Complete')}">
+                                        <a class="rounded btn btn-sm btn-outline-danger"
+                                           data-toggle="tooltip" title="Remove product"
+                                           onclick="confirm('Are you sure ??')"
+                                           th:href="@{'admin/cancelOrderDetail/'+${p.orderDetailId}}">
+                                            <i class="fas fa-minus-circle"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </form>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid justify-content-center p-5">
+            <div class="col">
+                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Order Report</span></h5>
+                <div class="row bg-light mb-3 p-30">
+                    <div class="chart col col-7 pb-30 rounded" style="border-style:solid; border-width: 2px; border-color: green">
+                        <div class="item bg-warning position-relative rounded-top" th:style="'--percent: '+${report.orderPer}+'%'">
+                            <b class="position-absolute" style="transform: translate(-10px,-20px);" th:text="${report.orderPer}+'%'"></b>
+                        </div>
+                        <div class="item bg-info position-relative rounded-top" th:style="'--percent: '+${report.confirmPer}+'%'">
+                            <b class="position-absolute" style="transform: translate(-10px,-20px);" th:text="${report.confirmPer}+'%'"></b>
+                        </div>
+                        <div class="item bg-info position-relative rounded-top" th:style="'--percent: '+${report.shippingPer}+'%'">
+                            <b class="position-absolute" style="transform: translate(-10px,-20px);" th:text="${report.shippingPer}+'%'"></b>
+                        </div>
+                        <div class="item bg-success position-relative rounded-top" th:style="'--percent: '+${report.successPer}+'%'">
+                            <b class="position-absolute" style="transform: translate(-10px,-20px);" th:text="${report.successPer}+'%'"></b>
+                        </div>
+                        <div class="item bg-danger position-relative rounded-top" th:style="'--percent: '+${report.cancelPer}+'%'">
+                            <b class="position-absolute" style="transform: translate(-10px,-20px);" th:text="${report.cancelPer}+'%'"></b>
+                        </div>
+                    </div>
+                    <div class="col col-4 text-center pt-5">
+                        <h5 class="mt-4 mb-3">Order Report (30 days)</h5>
+                        <h6 class="d-inline">Total orders: </h6><span th:text="${report.total}"></span><br>
+                        <h6 class="d-inline">Total income: </h6><span th:text="${#numbers.formatDecimal(report.totalPrice,0,2)}+'$'"></span><br>
+                        <h6 class="text-warning d-inline">Ordering : </h6><span th:text="${report.ordering}"></span><br>
+                        <h6 class="text-info d-inline">Confirm : </h6><span th:text="${report.confirm}"></span><br>
+                        <h6 class="text-info d-inline">Shipping : </h6><span th:text="${report.shipping}"></span><br>
+                        <h6 class="text-success d-inline">Success : </h6><span th:text="${report.success}"></span><br>
+                        <h6 class="text-danger d-inline">Cancel : </h6><span th:text="${report.cancel}"></span><br>
+                    </div>
                 </div>
             </div>
 

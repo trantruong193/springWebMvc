@@ -8,6 +8,7 @@ import com.example.springWebMvc.repository.RoleRepository;
 import com.example.springWebMvc.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -29,9 +30,12 @@ public class CustomizeOath2ServiceImpl extends DefaultOAuth2UserService {
 
         OAuth2User oAuth2User = super.loadUser(userRequest);
         String email = oAuth2User.getAttribute("email");
+        // check if email has been used
         Optional<User> user = userRepository.getUsersByEmail(email);
+        // case email has not been used, create new account
         if (user.isEmpty()){
             User user1 = new User();
+            // generate new account
             String username = "";
             if (email != null){
                 int index = email.indexOf("@");
@@ -41,10 +45,12 @@ public class CustomizeOath2ServiceImpl extends DefaultOAuth2UserService {
             boolean condition = true;
             do {
                 random = UUID.randomUUID().toString().trim().replace("-","").substring(0,6);
+                // check if new account exist
                 if (userRepository.getUsersByUsername(username+random).isEmpty()){
                     condition = false;
                 }
             }while (condition);
+            // save new user
             username += random;
             user1.setUsername(username);
             String password = UUID.randomUUID().toString().substring(0,9);
@@ -57,8 +63,10 @@ public class CustomizeOath2ServiceImpl extends DefaultOAuth2UserService {
             role.setUser(user2);
             role.setAuthority(Authority.builder().authorityId(3L).authorityName("ROLE_CUSTOMER").build());
             roleRepository.save(role);
+            // get user has been created
             user = userRepository.getUsersByEmail(email);
         }
+        // add user existed to authentication
         return new CustomizeOAth2User(oAuth2User,user);
     }
 }

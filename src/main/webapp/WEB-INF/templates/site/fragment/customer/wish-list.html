@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{site/homelayout.html}">
+<head>
+</head>
+<body>
+    <div layout:fragment="content">
+        <!-- Breadcrumb Start -->
+        <div class="container-fluid">
+            <div class="row px-xl-5">
+                <div class="col-12">
+                    <nav class="breadcrumb bg-light mb-30">
+                        <a class="breadcrumb-item text-dark" th:href="@{/site}">Home</a>
+                        <a class="breadcrumb-item text-dark" th:href="@{/site/customer}">Customer</a>
+                        <span class="breadcrumb-item active">Wish List</span>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <!-- Breadcrumb End -->
+        <!-- Cart Start -->
+        <div class="container-fluid">
+            <div class="row px-xl-5">
+                <div class="col p-30 bg-light overflow-auto" style="height: 800px" >
+                    <th:block th:each="item: ${list}">
+                        <div class="row mb-2 ml-5">
+                            <div class="col-4">
+                                <img style="height: 160px;width: 160px"
+                                     th:src="@{'/img/'+${item.product.imgUrl}}"/>
+                            </div>
+                            <div class="col-8">
+                                <a class="text-decoration-none h4"
+                                   th:href="@{'/site/detail/'+${item.product.proId}}"
+                                   th:text="${item.product.proName}">
+                                </a>
+                                <span class="h3 ml-3">
+                                    <a class="text-danger" th:href="@{'/site/customer/remove-wish-list/'+${item.id}}">
+                                        <i class="fas fa-times-circle"></i>
+                                    </a>
+                                </span>
+                                <h5 class="text-success mt-1" th:text="'Max offer: '+${item.product.highestDiscount}+'%'"></h5>
+                                <span class="h5">Rate: </span>
+                                <span class="h5 ml-1 mt-1">
+                                    <small th:if="${item.product.getRate()>0}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${item.product.getRate()>0}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${item.product.getRate()>1}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${item.product.getRate()>1}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${item.product.getRate()>2}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${item.product.getRate()>2}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${item.product.getRate()>3}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${item.product.getRate()>3}" class="far fa-star text-primary mr-1"></small>
+                                    <small th:if="${item.product.getRate()>4}" class="fas fa-star text-primary mr-1"></small>
+                                    <small th:unless="${item.product.getRate()>4}" class="far fa-star text-primary mr-1"></small>
+                                    <small>(<span th:text="${item.product.reviews.size()}"></span>)</small>
+                                </span>
+                            </div>
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+        <!-- Cart End -->
+    </div>
+</body>
+
+</html>

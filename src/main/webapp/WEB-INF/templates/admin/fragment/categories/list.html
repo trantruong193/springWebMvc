@@ -10,7 +10,7 @@
         <div class="col col-11 text-center">
             <div class="card">
                 <div class="card-header">
-                    <h3>Quản lí danh mục</h3><br>
+                    <h3>Category Management</h3><br>
                     <div th:if="${message != null}" class="alert alert-success" role="alert">
                         <h4 class="alert-heading"></h4>
                         <i th:text="${message}"></i>
@@ -18,7 +18,7 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <a class="btn btn-outline-success text-success float-left ml-5" style="border-radius: 10px" th:href="@{/admin/categories/add}">Tạo mới danh mục</a>
+                            <a class="btn btn-outline-success text-success float-left ml-5" style="border-radius: 10px" th:href="@{/admin/categories/add}">Create new category</a>
                         </div>
                         <div class="col">
                             <div class="form-group pt-2 float-right mr-5">
@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <table class="table table-striped table-hover table-inverse">
+                    <table class="table table-striped table-hover table-inverse mt-3">
                         <thead class="thead-inverse thead-dark">
                         <tr>
                             <th>Category ID</th>
@@ -50,24 +50,24 @@
                             <td th:text="${c.catName}"></td>
                             <td th:text="${c.status==true?'Đang kinh doanh':'Ngừng kinh doanh'}"></td>
                             <td>
-                                <a class="btn btn-outline-info" data-toggle="tooltip" title="Details" th:href="@{/admin/categories/view}"><i class="fas fa-info-circle"></i></a>
-                                <a class="btn btn-outline-warning" data-toggle="tooltip" title="Edit" th:href="@{'/admin/categories/edit/'+${c.catId}}"><i class="fas fa-edit"></i></a>
+                                <a class="btn btn-outline-info rounded" data-toggle="tooltip" title="Details" th:href="@{/admin/categories/view}"><i class="fas fa-info-circle"></i></a>
+                                <a class="btn btn-outline-warning rounded" data-toggle="tooltip" title="Edit" th:href="@{'/admin/categories/edit/'+${c.catId}}"><i class="fas fa-edit"></i></a>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="card-footer text-muted form-inline justify-content-center">
-                    <div class="form-inline">
+                    <div class="form-inline mt-3">
                         <nav aria-label="Page navigation">
                             <ul class="pagination justify-content-center">
-                                <li th:class="${pages.number == 0?'page-item active':'page-item'}">
+                                <li th:class="${pages.number == 0?'page-item mr-2 active':'page-item mr-2'}">
                                     <a class="page-link" th:href="@{/admin/categories(page=${0},size=${pages.size},sort=${sort})}">
                                         <span aria-hidden="true">First</span>
                                     </a>
                                 </li>
                                 <li class="page-item">
-                                    <a th:class="${(pages.number <= 0)?'page-link btn disabled':'page-link'}"
+                                    <a th:class="${(pages.number <= 0)?'page-link d-none':'page-link mr-2'}"
                                        th:href="@{/admin/categories(page=${(pages.number)-1},size=${pages.size},sort=${sort})}"
                                        th:text="${pages.number}">
                                     </a>
@@ -78,13 +78,13 @@
                                        th:text="${(pages.number)+1}"></a>
                                 </li>
                                 <li class="page-item">
-                                    <a th:class="${(pages.number >= (pages.totalPages)-1)?'page-link btn disabled':'page-link'}"
+                                    <a th:class="${(pages.number >= (pages.totalPages)-1)?'page-link d-none':'page-link'}"
                                        th:href="@{/admin/categories(page=${(pages.number)+1},size=${pages.size},sort=${sort})}"
                                        th:text="${(pages.number)+2}">
 
                                     </a>
                                 </li>
-                                <li  th:class="${pages.number == (pages.totalPages)-1?'page-item active':'page-item'}">
+                                <li  th:class="${pages.number == (pages.totalPages)-1?'page-item ml-2 active':'page-item ml-2'}">
                                     <a class="page-link" th:href="@{/admin/categories(page=${(pages.totalPages)-1},size=${pages.size},sort=${sort})}">
                                         <span aria-hidden="true">Last</span>
                                     </a>

@@ -6,7 +6,6 @@ import com.example.springWebMvc.persistent.entities.*;
 import com.example.springWebMvc.repository.CustomerRepository;
 import com.example.springWebMvc.repository.OrderDetailRepository;
 import com.example.springWebMvc.repository.RoleRepository;
-import com.example.springWebMvc.repository.UserRepository;
 import com.example.springWebMvc.service.*;
 import com.example.springWebMvc.utility.OrderExcelExporter;
 import com.example.springWebMvc.utility.Utility;
@@ -42,71 +41,32 @@ import java.util.*;
 @RequestMapping(value = {"/site"})
 // http://localhost:8080/site
 public class WebController {
-    ProductService productService;
-    ProducerService producerService;
-    CategoryService categoryService;
-    CatalogService catalogService;
-    ProductDetailService productDetailService;
-    CartService cartService;
-    UserService userService;
-    RoleService roleService;
-    CustomerService customerService;
-    FileUploadService fileUploadService;
-    PasswordEncoder passwordEncoder;
-    BannerService bannerService;
-    OrderDetailService orderDetailService;
-    OrderService orderService;
-    RoleRepository roleRepository;
-    CustomerRepository customerRepository;
-    MailSenderService mailSenderService;
-    OrderDetailRepository orderDetailRepository;
-    ReviewService reviewService;
-    MessageService messageService;
-    private final UserRepository userRepository;
+    ProductService productService; ProducerService producerService; CategoryService categoryService;
+    CatalogService catalogService; ProductDetailService productDetailService; CartService cartService;
+    UserService userService; RoleService roleService; CustomerService customerService;
+    FileUploadService fileUploadService; PasswordEncoder passwordEncoder; BannerService bannerService;
+    OrderDetailService orderDetailService; OrderService orderService; OrderTrackingService trackingService;
+    RoleRepository roleRepository; CustomerRepository customerRepository; MailSenderService mailSenderService;
+    OrderDetailRepository orderDetailRepository; ReviewService reviewService; MessageService messageService;
+    WishListService wishListService;
 
     @Autowired
-    public WebController (ProductService productService,
-                          CategoryService categoryService,
-                          ProducerService producerService,
-                          CatalogService catalogService,
-                          ProductDetailService productDetailService,
-                          CartService cartService,
-                          BannerService bannerService,
-                          UserService userService,
-                          RoleService roleService,
-                          CustomerService customerService,
-                          FileUploadService fileUploadService,
-                          PasswordEncoder passwordEncoder,
-                          RoleRepository roleRepository,
-                          CustomerRepository customerRepository,
-                          OrderDetailService orderDetailService,
-                          OrderService orderService,
-                          MailSenderService mailSenderService,
-                          MessageService messageService,
-                          ReviewService reviewService,
-                          OrderDetailRepository orderDetailRepository,
-                          UserRepository userRepository){
-        this.categoryService = categoryService;
-        this.catalogService = catalogService;
-        this.productService = productService;
-        this.producerService = producerService;
-        this.bannerService = bannerService;
-        this.productDetailService = productDetailService;
-        this.cartService = cartService;
-        this.userService = userService;
-        this.roleService = roleService;
-        this.customerService = customerService;
-        this.fileUploadService = fileUploadService;
-        this.passwordEncoder = passwordEncoder;
-        this.roleRepository = roleRepository;
-        this.customerRepository = customerRepository;
-        this.orderDetailService = orderDetailService;
-        this.orderService = orderService;
-        this.mailSenderService = mailSenderService;
-        this.orderDetailRepository = orderDetailRepository;
-        this.messageService = messageService;
-        this.reviewService = reviewService;
-        this.userRepository = userRepository;
+    public WebController (ProductService productService, CategoryService categoryService, ProducerService producerService,
+                          CatalogService catalogService, ProductDetailService productDetailService, CartService cartService,
+                          BannerService bannerService, UserService userService, RoleService roleService,
+                          CustomerService customerService, FileUploadService fileUploadService, PasswordEncoder passwordEncoder,
+                          RoleRepository roleRepository, CustomerRepository customerRepository, OrderDetailService orderDetailService,
+                          OrderService orderService, OrderTrackingService trackingService, MailSenderService mailSenderService,
+                          MessageService messageService, ReviewService reviewService, WishListService wishListService,
+                          OrderDetailRepository orderDetailRepository){
+        this.categoryService = categoryService; this.catalogService = catalogService; this.productService = productService;
+        this.producerService = producerService; this.bannerService = bannerService; this.productDetailService = productDetailService;
+        this.cartService = cartService; this.userService = userService; this.roleService = roleService;
+        this.customerService = customerService; this.fileUploadService = fileUploadService; this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository; this.customerRepository = customerRepository; this.orderDetailService = orderDetailService;
+        this.orderService = orderService; this.trackingService = trackingService; this.mailSenderService = mailSenderService;
+        this.orderDetailRepository = orderDetailRepository; this.messageService = messageService; this.reviewService = reviewService;
+        this.wishListService = wishListService;
     }
     @ModelAttribute("feature")
     public List<Product> getFeatureProduct(){
@@ -135,6 +95,13 @@ public class WebController {
     @ModelAttribute("cartQuantity")
     public int getCartQuantity(){
         return cartService.getCount();
+    }
+    @ModelAttribute("wishList")
+    public int getWishList(@AuthenticationPrincipal CustomizeUserDetails userDetails){
+        if (userDetails != null){
+            return wishListService.getByUserId(userDetails.getUserId()).size();
+        }else
+            return 0;
     }
     @ModelAttribute("amount")
     public double getAmount(){
@@ -192,8 +159,16 @@ public class WebController {
                            @AuthenticationPrincipal CustomizeOAth2User oAth2User, Model model){
         // check if user is login
         Customer customer;
-        if (userDetails != null){
-            customer = customerService.findByUSerId(userDetails.getUserId());
+        Long userId;
+        if (userDetails!=null){
+            userId = userDetails.getUserId();
+        }else if (oAth2User != null){
+            userId = oAth2User.getUserId();
+        }else {
+            userId = null;
+        }
+        if (userId != null){
+            customer = customerService.findByUSerId(userId);
             if (customer != null){
                 OrderDTO orderDTO = new OrderDTO();
                 BeanUtils.copyProperties(new CustomerDTO(customer),orderDTO);
@@ -202,17 +177,7 @@ public class WebController {
                 model.addAttribute("update","update");
                 model.addAttribute("order",new OrderDTO());
             }
-        }else if (oAth2User!= null) {
-            customer = customerService.findByUSerId(oAth2User.getUserId());
-            if (customer != null) {
-                OrderDTO orderDTO = new OrderDTO();
-                BeanUtils.copyProperties(new CustomerDTO(customer), orderDTO);
-                model.addAttribute("order", orderDTO);
-            } else {
-                model.addAttribute("update", "update");
-                model.addAttribute("order", new OrderDTO());
-            }
-        }else{
+        }else {
             model.addAttribute("order",new OrderDTO());
         }
         return "site/fragment/checkout";
@@ -222,11 +187,18 @@ public class WebController {
     public String findOrder(Model model,@RequestParam(name = "orderCode",required = false)String orderCode){
         if (StringUtils.hasText(orderCode)){
             Order order = orderService.getByOrderCode(orderCode);
-            if (order!= null)
+            if (order!= null){
+                List<OrderTrackingDTO> dtos = new ArrayList<>();
+                if (!order.getOrderTracings().isEmpty()){
+                    order.getOrderTracings().forEach(orderTracking -> dtos.add(new OrderTrackingDTO(orderTracking)));
+                }
                 model.addAttribute("order",new OrderDTO(order));
+                model.addAttribute("track",dtos);
+            }
         }else {
             model.addAttribute("order",null);
         }
+        model.addAttribute("link","order");
         return "site/fragment/findOrder";
     }
     @GetMapping("export-csv/{orderCode}")
@@ -331,16 +303,19 @@ public class WebController {
                     .order(order1)
                     .build());
         });
+        // save order tracking
+        trackingService.trackOrder(OrderStatus.Ordering, order1.getOrderId(),"Customer creates new order");
+
         model.addAttribute("order",new OrderDTO(orderService.getByOrderCode(orderCode)));
         model.addAttribute("items",items);
         model.addAttribute("price",price);
         model.addAttribute("orderCode",orderCode);
+
         // send mail
         String mailMessage = "<p>Your order <b>" + orderCode + "</b> has been created !!</p>";
         mailMessage += "<p>Save your order code to check order status.</p>";
         mailMessage += "<b>Sincere !!</b>";
         mailMessage += "<hr><img src='cid:logoImg' />";
-
         mailSenderService.sendOrderEmail(order1.getEmail(),"[MultiShop] Your order has been created",mailMessage);
         // clear cart item
         cartService.clear();
@@ -371,9 +346,7 @@ public class WebController {
             model.addAttribute("customer",new CustomerDTO());
         // get orders of customer
         List<OrderDTO> dtoList = new ArrayList<>();
-        list.forEach(order -> {
-            dtoList.add(new OrderDTO(order));
-        });
+        list.forEach(order -> dtoList.add(new OrderDTO(order)));
         // sort returned list
         dtoList.sort((o1, o2) -> o2.getCreateTime().compareTo(o1.getCreateTime()));
         model.addAttribute("list",dtoList);
@@ -476,14 +449,22 @@ public class WebController {
         if (orderId != null){
             Order order = orderService.getByOrderId(orderId);
             if (order != null){
-                order.setCusName(cusName);
-                order.setPhone(phone);
-                order.setAddress(address);
-                orderService.save(order);
+                if (!order.getCusName().equals(cusName)&&
+                        !order.getPhone().equals(phone)&&
+                        !order.getAddress().equals(address))
+                {
+                    order.setCusName(cusName);
+                    order.setPhone(phone);
+                    order.setAddress(address);
+                    order.setStatus(OrderStatus.Update);
+                    orderService.save(order);
+
+                    // save new order tracking
+                    trackingService.trackOrder(OrderStatus.Update,orderId,"Customer updates shipping address");
+                }
                 model.addAttribute("message","Update success!!");
             }
         }
-
         return "redirect:/site/customer";
     }
     @GetMapping("customer/cancelOrder/{orderId}")
@@ -494,6 +475,9 @@ public class WebController {
             if (order != null){
                 order.setStatus(OrderStatus.Cancel);
                 orderService.save(order);
+
+                // save new order tracking
+                trackingService.trackOrder(OrderStatus.Cancel,orderId,"Customer cancels order");
             }
         }
         return "redirect:/site/customer";
@@ -524,6 +508,7 @@ public class WebController {
             }
         }
         model.addAttribute("newMessage",message);
+        model.addAttribute("link","contact");
         return "site/fragment/contact";
     }
     @PostMapping("do-contact")
@@ -751,6 +736,8 @@ public class WebController {
             model.addAttribute("currentId",productDetailService.getByProIdAndTypeId(proId,typeId).get(0).getProductDetailId());
             model.addAttribute("types",typeDTOHashSet);
             model.addAttribute("typeId",typeId);
+            model.addAttribute("link","product");
+
             model.addAttribute("colorId",productDetailService.getByProIdAndTypeId(proId,typeId).get(0).getColor().getColorId());
             model.addAttribute("quantity",productDetailService.getByProIdAndTypeId(proId,typeId).get(0).getQuantity());
         }
@@ -792,6 +779,8 @@ public class WebController {
         model.addAttribute("sort","proName,asc");
         model.addAttribute("producerId",producerId);
         model.addAttribute("catId",catId);
+        model.addAttribute("link","product");
+
         return "site/fragment/allProducts";
     }
 }

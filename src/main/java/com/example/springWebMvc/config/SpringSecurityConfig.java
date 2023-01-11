@@ -1,14 +1,7 @@
 package com.example.springWebMvc.config;
 
-import com.example.springWebMvc.persistent.dto.CustomizeOAth2User;
-import com.example.springWebMvc.persistent.entities.Authority;
-import com.example.springWebMvc.persistent.entities.Role;
-import com.example.springWebMvc.persistent.entities.User;
-import com.example.springWebMvc.repository.RoleRepository;
-import com.example.springWebMvc.repository.UserRepository;
 import com.example.springWebMvc.service.impl.CustomizeOath2ServiceImpl;
 import com.example.springWebMvc.service.impl.UserDetailServiceImpl;
-import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,8 +20,6 @@ import org.springframework.security.web.authentication.rememberme.JdbcTokenRepos
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import javax.sql.DataSource;
-import java.util.Optional;
-import java.util.UUID;
 
 @EnableWebSecurity
 @Configuration
@@ -84,6 +75,7 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests()
                     .antMatchers("/admin/**").hasRole("ADMIN")
                     .antMatchers("/site/customer/**").authenticated()
+                    .antMatchers("/site/wish-list/**","/site/add-wish-list/**").authenticated()
                     .antMatchers("/oauth2/**").permitAll()
                     .anyRequest().permitAll()
                 .and()

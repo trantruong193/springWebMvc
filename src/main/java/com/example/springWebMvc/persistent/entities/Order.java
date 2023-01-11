@@ -47,4 +47,9 @@ public class Order implements Serializable {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<OrderDetail> orderDetails;
+
+    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL,orphanRemoval = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<OrderTracking> orderTracings;
 }

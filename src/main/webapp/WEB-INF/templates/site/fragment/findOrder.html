@@ -37,9 +37,9 @@
                 </div>
             </div>
             <div class="row px-xl-5 d-flex justify-content-center" th:if="${order != null}">
-                <div class="col col-10 bg-light p30 text-center mt-5">
+                <div class="col col-12 bg-light p30 text-center mt-5 p-30">
                     <div class="row mt-2">
-                        <div class="col col-6">
+                        <div class="col col-4">
                             <h4>Order information</h4>
                             <p>Code : <span th:text="${order.orderCode}"></span></p>
                             <p>Create date : <span th:text="${order.createTime}"></span></p>
@@ -49,18 +49,28 @@
                                 <span th:if="${p.productDetailDTO.productName.length()>25}" th:text="${#strings.substring((p.productDetailDTO.productName),0,25)}"></span><span> </span>
                                 <span th:if="${p.productDetailDTO.productName.length()<=25}" th:text="${p.productDetailDTO.productName}"></span><span> </span>
                                 <span th:text="${p.productDetailDTO.colorName}"></span><span> </span>
-                                <span th:unless="${#strings.equals(p.productDetailDTO.typeName,'----')}" th:text="${p.productDetailDTO.typeName}"></span><span>. Số lượng : </span>
+                                <span th:unless="${#strings.equals(p.productDetailDTO.typeName,'----')}" th:text="${p.productDetailDTO.typeName}"></span><span>. Quantity : </span>
                                 <span th:text="${p.quantity}"></span><br>
                             </th:block>
                         </div>
-                        <div class="col col-6">
+                        <div class="col col-4">
                             <h4>Shipping address</h4>
                             <p th:text="${order.cusName}"></p>
                             <p th:text="${order.phone}"></p>
                             <p th:text="${order.address}"></p>
                             <p th:text="${order.email}"></p>
-                            <p><b>Status</b></p>
-                            <p class="text-success" th:text="${order.status}"></p>
+                            <b>Status : </b>
+                            <span class="text-success" th:text="${order.status}"></span>
+                        </div>
+                        <div class="col col-4">
+                            <h4>Order Tracking</h4>
+                            <th:block th:each="t:${track}">
+                                <p>
+                                    <span class="text-success" th:text="${#dates.format(t.date,'yyyy/MMM/dd HH:mm')}+' : '"></span>
+                                    <span class="text-success" th:text="${t.orderStatus}"></span><br>
+                                    <span th:text="${t.description}"></span>
+                                </p>
+                            </th:block>
                         </div>
                     </div>
                 </div>

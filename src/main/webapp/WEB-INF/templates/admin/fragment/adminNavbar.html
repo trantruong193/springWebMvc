@@ -49,12 +49,12 @@
                             </button>
                             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                                 <div class="navbar-nav mr-auto py-0">
-                                    <a th:href="@{/admin}" class="nav-item nav-link active">Home</a>
-                                    <a th:href="@{/admin/categories}" class="nav-item nav-link">Category</a>
-                                    <a th:href="@{/admin/products}" class="nav-item nav-link">Product</a>
-                                    <a th:href="@{/admin/repository}" class="nav-item nav-link">Repository</a>
-                                    <a th:href="@{/admin/order}" class="nav-item nav-link">Order</a>
-                                    <a th:href="@{/admin/account}" class="nav-item nav-link">Account</a>
+                                    <a th:href="@{/admin}" th:class="${#strings.equals(link,'home')?'nav-item nav-link active':'nav-item nav-link'}">Home</a>
+                                    <a th:href="@{/admin/categories}" th:class="${#strings.equals(link,'category')?'nav-item nav-link active':'nav-item nav-link'}">Category</a>
+                                    <a th:href="@{/admin/products}" th:class="${#strings.equals(link,'product')?'nav-item nav-link active':'nav-item nav-link'}">Product</a>
+                                    <a th:href="@{/admin/repository}" th:class="${#strings.equals(link,'repository')?'nav-item nav-link active':'nav-item nav-link'}">Repository</a>
+                                    <a th:href="@{/admin/order}" th:class="${#strings.equals(link,'order')?'nav-item nav-link active':'nav-item nav-link'}">Order</a>
+                                    <a th:href="@{/admin/account}" th:class="${#strings.equals(link,'account')?'nav-item nav-link active':'nav-item nav-link'}">Account</a>
                                 </div>
                             </div>
                         </nav>

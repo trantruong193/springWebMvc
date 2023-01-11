@@ -3,6 +3,27 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://wwww.thymeleaf.org/thymeleaf-extras-springsecurity5"
       layout:decorate="~{admin/adminlayout.html}">
 <head>
+    <script>
+        function hideTable(index){
+            $(".form"+index).toggle();
+            $("#btnHide"+index).toggle();
+            $("#btnShow"+index).toggle();
+        }
+        function hideALl(){
+            $("#hideAll").toggle();
+            $("#showAll").toggle();
+            $("tr[class^='form']").hide();
+            $("button[id^='btnHide']").hide();
+            $("button[id^='btnShow']").show();
+        }
+        function showALl(){
+            $("#hideAll").toggle();
+            $("#showAll").toggle();
+            $("tr[class^='form']").show();
+            $("button[id^='btnShow']").hide();
+            $("button[id^='btnHide']").show();
+        }
+    </script>
 </head>
 
 <body>
@@ -55,14 +76,29 @@
 
                     </div>
                     <div class="row justify-content-center">
-                        <h5 th:if="${list.isEmpty()}" class="text-danger p-30">Không có đơn hàng thỏa mãn !!</h5>
+                        <h5 th:if="${list.isEmpty()}" class="text-danger p-30">No data founded !!!</h5>
                         <div class="col" th:unless="${list.isEmpty()}">
                             <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Order Status</span></h5>
                             <div class="bg-light p-30 mb-3">
                                 <table class=" table-responsive table text-center">
                                     <thead class="table-dark">
                                     <tr>
-                                        <td>Id</td>
+                                        <td>
+                                            <button id="showAll" class="btn btn-outline-success border-0 rounded"
+                                                    onclick="showALl()">
+                                                <i class="far fa-info-circle"></i>
+                                            </button>
+                                            <button id="hideAll" style="display: none" class="btn btn-outline-danger border-0 rounded"
+                                                    onclick="hideALl()">
+                                                <i class="fas fa-eye-slash"></i>
+                                            </button>
+                                        </td>
+                                        <td  data-toggle="tooltip" title="Export All">
+                                            <a class="text-success" th:href="@{/admin/exportExcelAll}">
+                                                <i class="fas fa-file-excel"></i>
+                                            </a>
+                                        </td>
+                                        <td>Order code</td>
                                         <td>Name</td>
                                         <td>Phone</td>
                                         <td>Address</td>
@@ -72,12 +108,33 @@
                                         <td>Status</td>
                                         <td></td>
                                         <td></td>
+                                        <td></td>
                                     </tr>
                                     </thead>
-                                    <tbody th:each="item:${list}">
+                                    <tbody th:each="item,index:${list}">
                                     <form method="get" th:action="@{'/admin/updateOrder/'+${item.orderId}}">
                                         <tr class="table-info">
-                                            <td><b th:text="${item.orderId}"></b></td>
+                                            <td>
+                                                <button th:id="'btnShow'+${index.index}" type="button" class="btn btn-outline-success border-0 rounded"
+                                                        th:value="${index.index}" onclick="hideTable(this.value)">
+                                                    <i class="far fa-info-circle"></i>
+                                                </button>
+                                                <button th:id="'btnHide'+${index.index}" type="button" style="display: none" class="btn btn-outline-danger border-0 rounded"
+                                                        th:value="${index.index}" onclick="hideTable(this.value)">
+                                                    <i class="fas fa-eye-slash"></i>
+                                                </button>
+                                            </td>
+                                            <td  data-toggle="tooltip" title="Export this order">
+                                                <a class="text-success" th:href="@{'/admin/exportExcel/'+${item.orderCode}}">
+                                                    <i class="fas fa-file-excel"></i>
+                                                </a>
+                                            </td>
+                                            <td  data-toggle="tooltip" title="To detail page">
+                                                <a class="text-success"
+                                                   th:text="${item.orderCode}"
+                                                   th:href="@{'/site/findOrder?orderCode='+${item.orderCode}}">
+                                                </a>
+                                            </td>
                                             <td>
                                                 <input type="text" class="rounded border-0" name="cusName" th:value="${item.cusName}" required>
                                             </td>
@@ -100,6 +157,14 @@
                                             <td class="text-success" th:if="${#strings.equals(item.status,'Complete')}">
                                                 Complete
                                             </td>
+                                            <td>
+                                                <a class="btn btn-sm rounded btn-outline-success">
+                                                    <i class="fas fa-warehouse"></i>
+                                                </a>
+                                            </td>
+                                            <td th:if="${#strings.equals(item.status,'Complete')}"></td>
+                                            <td th:if="${#strings.equals(item.status,'Complete')}"></td>
+
                                             <td th:unless="${#strings.equals(item.status,'Complete')}">
                                                 <button type="submit" class="rounded btn btn-sm btn-outline-warning"  data-toggle="tooltip" title="Edit">
                                                     <i class="fas fa-edit"></i>
@@ -117,7 +182,8 @@
                                     </form>
                                     <th:block th:each="p:${item.orderDetailDTOList}">
                                         <form th:action="@{'/admin/updateOrderDetail/'+${p.orderDetailId}}">
-                                            <tr class="text-center">
+                                            <tr th:class="'form'+${index.index}" style="display: none">
+                                                <td></td>
                                                 <td></td>
                                                 <td th:text="${p.productDetailDTO.productName}"></td>
                                                 <td th:text="${p.productDetailDTO.typeName}"></td>
@@ -128,8 +194,12 @@
                                                 <td></td>
                                                 <td th:text="${#numbers.formatDecimal(p.price,1,1)}+'$'"></td>
                                                 <td></td>
+                                                <td th:class="${(p.productDetailDTO.quantity <= p.quantity)?'text-danger':'text-success'}"
+                                                    th:text="${p.productDetailDTO.quantity}"
+                                                    data-toggle="tooltip" title="Remain quantity">
+                                                </td>
                                                 <td  th:unless="${#strings.equals(item.status,'Complete')}">
-                                                    <button type="submit" class="rounded btn btn-sm btn-outline-warning"  data-toggle="tooltip" title="Edit">
+                                                    <button type="submit" class="rounded btn btn-sm btn-outline-warning" data-toggle="tooltip" title="Edit">
                                                         <i class="fas fa-edit"></i>
                                                     </button>
                                                 </td>

@@ -42,13 +42,13 @@
         <div class="col">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="text-center">Quản lí sản phẩm</h2>
+                    <h2 class="text-center">Product Management</h2>
                     <div th:if="${message != null}" class="alert alert-success" role="alert">
                         <h4 class="alert-heading"></h4>
                         <i th:text="${message}"></i>
                         <p class="mb-0"></p>
                     </div>
-                    <a th:href="@{/admin/products}" class="float-right mr-5 text-success btn btn-outline-success" style="border-radius: 10px">Tất cả sản phẩm</a>
+                    <a th:href="@{/admin/products}" class="float-right mr-5 text-success btn btn-outline-success" style="border-radius: 10px">All products</a>
                 </div>
                 <div class="card-body">
                     <!--/*@thymesVar id="product" type="com.example.springWebMvc.persistent.dto.ProductDTO"*/-->
@@ -58,9 +58,9 @@
                             <div class="col">
                                 <div class="bg-light p-30">
                                     <div class="nav nav-tabs mb-4">
-                                        <a class="nav-item nav-link text-dark active" data-toggle="tab" href="#tab-pane-1">Thông tin sản phẩm</a>
-                                        <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-2">Mô tả</a>
-                                        <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-3">Ảnh sản phẩm</a>
+                                        <a class="nav-item nav-link text-dark active" data-toggle="tab" href="#tab-pane-1">Warranty information</a>
+                                        <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-2">Specification</a>
+                                        <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-3">Images</a>
                                     </div>
                                 </div>
                             </div>
@@ -68,13 +68,16 @@
                         <div class="tab-content">
                             <!-- tab 1 -->
                             <div class="tab-pane fade show active" id="tab-pane-1">
-                                <div class="row">
+                                <div class="row" style="padding:0 100px 50px 100px">
                                     <div class="col-6">
-                                        <input th:field="*{proId}" type="hidden" readonly id="productId" class="form-control rounded" aria-describedby="productHid">
+                                        <input th:field="*{proId}" type="number" hidden readonly
+                                               id="productId" class="form-control rounded" aria-describedby="productHid">
                                         <div class="form-group">
                                             <label class="ml-3" for="proName">Product Name</label>
-                                            <input type="text" th:field="*{proName}" id="proName" required class="form-control rounded" aria-describedby="proNameHid">
-                                            <small th:if="${#fields.hasErrors('proName')}" id="proNameHid" class="text-danger">Product Name is Required</small>
+                                            <input type="text" th:field="*{proName}" id="proName" required
+                                                   class="form-control rounded" aria-describedby="proNameHid">
+                                            <small th:if="${#fields.hasErrors('proName')}" id="proNameHid"
+                                                   class="text-danger">Product Name is Required</small>
                                         </div>
                                         <div class="form-group">
                                             <label class="ml-3" for="catId">Category</label>
@@ -82,7 +85,7 @@
                                                 <option value="">--Category--</option>
                                                 <option th:each="item : ${categories}" th:value="${item.catId}" th:text="${item.catName}"></option>
                                             </select>
-                                            <small th:if="${#fields.hasErrors('catId')}" id="catIdHid" class="text-danger">Catalog Name is Required</small>
+                                            <small th:if="${#fields.hasErrors('catId')}" id="catIdHid" class="text-danger">Category Name is Required</small>
                                         </div>
                                         <div class="form-group">
                                             <label class="ml-3" for="catalogId">Catalog</label>
@@ -91,27 +94,36 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="ml-3" for="producerId">Producer</label>
-                                            <select class="form-control  rounded" th:field="*{producerId}" id="producerId" aria-describedby="producerIdHid">
+                                            <select class="form-control  rounded" th:field="*{producerId}"
+                                                    id="producerId" aria-describedby="producerIdHid">
                                                 <option th:each="item : ${producers}" th:value="${item.producerId}" th:text="${item.producerName}"></option>
                                             </select>
-                                            <small th:if="${#fields.hasErrors('producerId')}" id="producerIdHid" class="text-danger">Producer is Required</small>
+                                            <small th:if="${#fields.hasErrors('producerId')}"
+                                                   id="producerIdHid" class="text-danger">Producer is Required</small>
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label class="ml-3" for="basePrice">Base Price ($)</label>
-                                            <input type="number" th:field="*{basePrice}" id="basePrice" class="form-control rounded"aria-describedby="basePriceHid">
-                                            <small th:if="${#fields.hasErrors('basePrice')}" id="basePriceHid" class="text-danger">Base Price must greater than 0</small>
+                                            <input type="number" th:field="*{basePrice}" id="basePrice"
+                                                   class="form-control rounded"aria-describedby="basePriceHid">
+                                            <small th:if="${#fields.hasErrors('basePrice')}" id="basePriceHid"
+                                                   class="text-danger">Base Price must greater than 0</small>
                                         </div>
                                         <div class="form-group">
                                             <label class="ml-3" for="discount">Discount (%)</label>
-                                            <input type="number" th:field="*{discount}" id="discount" class="form-control rounded" aria-describedby="discountHid">
-                                            <small th:if="${#fields.hasErrors('discount')}" id="discountHid" class="text-danger">Discount must between 0 and 100%</small>
+                                            <input type="number" th:field="*{discount}" id="discount"
+                                                   class="form-control rounded" aria-describedby="discountHid">
+                                            <small th:if="${#fields.hasErrors('discount')}" id="discountHid"
+                                                   class="text-danger">Discount must between 0 and 100%</small>
                                         </div>
                                         <div class="form-group">
                                             <label class="ml-3" for="importDate">Import Date</label>
-                                            <input type="date" th:field="*{importDate}" id="importDate" required class="form-control rounded-top" aria-describedby="importDateHid">
-                                            <small th:if="${#fields.hasErrors('importDate')}" id="importDateHid" class="text-danger">Import Date is Required</small>
+                                            <input type="date" th:field="*{importDate}"
+                                                   th:value="${#dates.format(product.importDate,'yyyy-MM-dd')}" id="importDate"
+                                                   required class="form-control rounded-top" aria-describedby="importDateHid">
+                                            <small th:if="${#fields.hasErrors('importDate')}"
+                                                   id="importDateHid" class="text-danger">Import Date is Required</small>
                                         </div>
                                         <div class="form-group">
                                             <label class="ml-3" for="status">Status</label>
@@ -126,53 +138,69 @@
                             </div>
                             <!-- tab 2 -->
                             <div class="tab-pane fade show" id="tab-pane-2">
-                                <div class="row">
+                                <div class="row p-30">
                                     <div class="col-6 ml-5">
                                         <div class="form-group">
                                             <label class="ml-3" for="description">Thông tin bảo hành</label>
-                                            <textarea class="form-control" th:field="*{description}" required id="description" rows="10" aria-describedby="descriptionHid"></textarea>
-                                            <small th:if="${#fields.hasErrors('description')}" id="descriptionHid" class="text-danger">Check description length!!</small>
+                                            <textarea class="form-control" th:field="*{description}" required
+                                                      id="description" rows="10" aria-describedby="descriptionHid"></textarea>
+                                            <small th:if="${#fields.hasErrors('description')}" id="descriptionHid"
+                                                   class="text-danger">Check description length!!</small>
                                         </div>
                                     </div>
                                     <div class="col-4 ml-3">
                                         <div class="form-group">
                                             <label class="ml-3" for="description">Mô tả sản phẩm</label>
-                                            <textarea class="form-control" th:field="*{description1}" id="description1" rows="5" aria-describedby="descriptionHid1"></textarea>
-                                            <small th:if="${#fields.hasErrors('description1')}" id="descriptionHid1" class="text-danger">Check description length!!</small>
+                                            <textarea class="form-control" th:field="*{description1}" id="description1"
+                                                      rows="5" aria-describedby="descriptionHid1"></textarea>
+                                            <small th:if="${#fields.hasErrors('description1')}" id="descriptionHid1"
+                                                   class="text-danger">Check description length!!</small>
                                         </div>
                                         <div class="form-group">
                                             <label class="ml-3" for="description">Thông số kĩ thuật</label>
-                                            <textarea class="form-control" th:field="*{description2}" id="description2" rows="5" aria-describedby="descriptionHid2"></textarea>
-                                            <small th:if="${#fields.hasErrors('description2')}" id="descriptionHid2" class="text-danger">Check description length!!</small>
+                                            <textarea class="form-control" th:field="*{description2}" id="description2"
+                                                      rows="5" aria-describedby="descriptionHid2"></textarea>
+                                            <small th:if="${#fields.hasErrors('description2')}" id="descriptionHid2"
+                                                   class="text-danger">Check description length!!</small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <!-- tab 3 -->
                             <div class="tab-pane fade show" id="tab-pane-3">
-                                <div class="row d-flex justify-content-start">
+                                <div class="row d-flex justify-content-start" style="padding: 10px 0 30px 100px">
+                                    <input type="text" hidden th:field="*{imgUrl}">
+                                    <input type="text" hidden th:field="*{imgUrl1}">
+                                    <input type="text" hidden th:field="*{imgUrl2}">
+                                    <input type="text" hidden th:field="*{imgUrl3}">
+
                                     <div class="col-md-3 ml-5">
                                         <img id="image0" th:src="@{'/img/'+${product.imgUrl}}" style="height: 200px;max-width: 200px" alt="No image founded">
                                         <div class="form-group mt-4">
-                                            <input type="file" onchange="chooseFile(this,0)" class="form-control-file rounded" accept=".png, .jpg, .jpeg" required name="imgFile">
+                                            <input type="file" onchange="chooseFile(this,0)"
+                                                   class="form-control-file rounded" accept=".png, .jpg, .jpeg"
+                                                   th:required="${editMode==null}" name="imgFile">
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <img id="image1" th:src="@{'/img/'+${product.imgUrl1}}" style="height: 180px;max-width: 180px" alt="No image founded">
                                         <div class="form-group mt-4">
-                                            <input type="file" onchange="chooseFile(this,1)" class="form-control-file rounded" accept=".png, .jpg, .jpeg" required name="imgFile">
+                                            <input type="file" onchange="chooseFile(this,1)" class="form-control-file rounded"
+                                                   accept=".png, .jpg, .jpeg" th:required="${editMode==null}" name="imgFile">
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <img id="image2" th:src="@{'/img/'+${product.imgUrl2}}" style="height: 180px;max-width: 180px" alt="No image founded">
                                         <div class="form-group mt-4">
-                                            <input type="file" onchange="chooseFile(this,2)" class="form-control-file rounded" accept=".png, .jpg, .jpeg" required name="imgFile">
+                                            <input type="file" onchange="chooseFile(this,2)" class="form-control-file rounded"
+                                                   accept=".png, .jpg, .jpeg" th:required="${editMode==null}" name="imgFile">
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <img id="image3" th:src="@{'/img/'+${product.imgUrl3}}" style="height: 180px;max-width: 180px" alt="No image founded">
                                         <div class="form-group mt-4">
-                                            <input type="file" onchange="chooseFile(this,3)" class="form-control-file rounded" accept=".png, .jpg, .jpeg" required name="imgFile">
+                                            <input type="file" onchange="chooseFile(this,3)" class="form-control-file rounded"
+                                                   accept=".png, .jpg, .jpeg" th:required="${editMode==null}" name="imgFile">
                                         </div>
                                     </div>
                                 </div>

@@ -1,0 +1,1134 @@
+2023-01-08 11:53:04,079 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting SpringWebMvcApplication using Java 19 on MacBook-Air-cua-tran.local with PID 4924 (/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes started by trantruong193 in /Users/trantruong193/laptrinh/springmvc/springWebMvc)
+2023-01-08 11:53:04,080 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2023-01-08 11:53:04,080 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.2.5.Final
+2023-01-08 11:53:04,080 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-01-08 11:53:04,178 INFO org.springframework.boot.logging.DeferredLog [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-01-08 11:53:04,178 INFO org.springframework.boot.logging.DeferredLog [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-01-08 11:53:04,502 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-01-08 11:53:04,551 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 45 ms. Found 19 JPA repository interfaces.
+2023-01-08 11:53:04,888 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-01-08 11:53:04,892 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-01-08 11:53:04,892 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2023-01-08 11:53:04,892 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.68]
+2023-01-08 11:53:04,926 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-01-08 11:53:04,926 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 748 ms
+2023-01-08 11:53:05,026 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-08 11:53:05,049 INFO org.hibernate.Version [restartedMain] HHH000412: Hibernate ORM core version 5.6.12.Final
+2023-01-08 11:53:05,121 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [restartedMain] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-01-08 11:53:05,175 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2023-01-08 11:53:05,383 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2023-01-08 11:53:05,392 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2023-01-08 11:53:05,930 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-08 11:53:05,934 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 11:53:06,637 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@340bc6b5, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4e285c34, org.springframework.security.web.context.SecurityContextPersistenceFilter@15817806, org.springframework.security.web.header.HeaderWriterFilter@3fd05770, org.springframework.security.web.authentication.logout.LogoutFilter@41bbb375, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@5e75858a, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@2abc19b, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@17c562fe, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@13632f9f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3217c37a, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@330ed954, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@442782c3, org.springframework.security.web.session.SessionManagementFilter@a61bdc0, org.springframework.security.web.access.ExceptionTranslationFilter@47451e0b, org.springframework.security.web.access.intercept.AuthorizationFilter@6f6219d3]
+2023-01-08 11:53:06,658 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-01-08 11:53:07,065 WARN org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [restartedMain] Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-01-08 11:53:07,084 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-01-08 11:53:07,099 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2023-01-08 11:53:07,107 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2023-01-08 11:53:07,114 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started SpringWebMvcApplication in 3.229 seconds (JVM running for 3.725)
+2023-01-08 11:53:19,082 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-01-08 11:53:19,082 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
+2023-01-08 11:53:19,084 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 1 ms
+2023-01-08 11:53:19,101 WARN org.springframework.web.servlet.DispatcherServlet [http-nio-8080-exec-1] No mapping for GET /
+2023-01-08 11:53:19,162 WARN org.springframework.web.servlet.DispatcherServlet [http-nio-8080-exec-2] No mapping for GET /favicon.ico
+2023-01-08 11:53:48,682 TRACE com.example.springWebMvc.service.impl.UserDetailServiceImpl [http-nio-8080-exec-2] Enter loadUserByUsername() method.
+2023-01-08 11:53:48,683 DEBUG com.example.springWebMvc.service.impl.UserDetailServiceImpl [http-nio-8080-exec-2] Authenticating User : customer11
+2023-01-08 11:53:48,708 INFO com.example.springWebMvc.service.impl.UserDetailServiceImpl [http-nio-8080-exec-2] User authenticated successfully.
+2023-01-08 12:24:24,376 INFO org.springframework.boot.devtools.autoconfigure.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener [File Watcher] Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+2023-01-08 12:24:24,389 INFO org.apache.juli.logging.DirectJDKLog [Thread-5] Pausing ProtocolHandler ["http-nio-8080"]
+2023-01-08 12:24:24,389 INFO org.apache.juli.logging.DirectJDKLog [Thread-5] Stopping service [Tomcat]
+2023-01-08 12:24:24,390 INFO org.apache.juli.logging.DirectJDKLog [Thread-5] Destroying Spring FrameworkServlet 'dispatcherServlet'
+2023-01-08 12:24:24,404 INFO org.apache.juli.logging.DirectJDKLog [Thread-5] Stopping ProtocolHandler ["http-nio-8080"]
+2023-01-08 12:24:24,407 INFO org.apache.juli.logging.DirectJDKLog [Thread-5] Destroying ProtocolHandler ["http-nio-8080"]
+2023-01-08 12:24:24,414 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [Thread-5] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 12:24:24,417 INFO com.zaxxer.hikari.HikariDataSource [Thread-5] HikariPool-1 - Shutdown initiated...
+2023-01-08 12:24:24,424 INFO com.zaxxer.hikari.HikariDataSource [Thread-5] HikariPool-1 - Shutdown completed.
+2023-01-08 12:24:24,537 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting SpringWebMvcApplication using Java 19 on MacBook-Air-cua-tran.local with PID 4924 (/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes started by trantruong193 in /Users/trantruong193/laptrinh/springmvc/springWebMvc)
+2023-01-08 12:24:24,537 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2023-01-08 12:24:24,537 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-01-08 12:24:24,690 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-01-08 12:24:24,715 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 23 ms. Found 19 JPA repository interfaces.
+2023-01-08 12:24:24,807 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-01-08 12:24:24,808 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-01-08 12:24:24,808 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2023-01-08 12:24:24,808 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.68]
+2023-01-08 12:24:24,817 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-01-08 12:24:24,817 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 276 ms
+2023-01-08 12:24:24,858 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-08 12:24:24,861 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-2 - Starting...
+2023-01-08 12:24:24,880 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-2 - Start completed.
+2023-01-08 12:24:24,880 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2023-01-08 12:24:25,118 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-08 12:24:25,118 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 12:24:25,550 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7ca84a6f, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@7d55e869, org.springframework.security.web.context.SecurityContextPersistenceFilter@54d18743, org.springframework.security.web.header.HeaderWriterFilter@7152f83e, org.springframework.security.web.authentication.logout.LogoutFilter@4c586ebf, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@33f65152, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@798461b0, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@106398d1, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@272a27e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@64873906, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@7001e1ae, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@27068f92, org.springframework.security.web.session.SessionManagementFilter@47d6f959, org.springframework.security.web.access.ExceptionTranslationFilter@476222ed, org.springframework.security.web.access.intercept.AuthorizationFilter@2655fb3d]
+2023-01-08 12:24:25,556 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-01-08 12:24:25,673 WARN org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [restartedMain] Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-01-08 12:24:25,677 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-01-08 12:24:25,684 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2023-01-08 12:24:25,685 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2023-01-08 12:24:25,688 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started SpringWebMvcApplication in 1.179 seconds (JVM running for 1882.305)
+2023-01-08 12:24:25,688 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2023-01-08 12:24:27,115 INFO org.springframework.boot.devtools.autoconfigure.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener [File Watcher] Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2023-01-08 12:24:27,121 INFO org.apache.juli.logging.DirectJDKLog [Thread-7] Pausing ProtocolHandler ["http-nio-8080"]
+2023-01-08 12:24:27,121 INFO org.apache.juli.logging.DirectJDKLog [Thread-7] Stopping service [Tomcat]
+2023-01-08 12:24:27,125 INFO org.apache.juli.logging.DirectJDKLog [Thread-7] Stopping ProtocolHandler ["http-nio-8080"]
+2023-01-08 12:24:27,126 INFO org.apache.juli.logging.DirectJDKLog [Thread-7] Destroying ProtocolHandler ["http-nio-8080"]
+2023-01-08 12:24:27,133 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [Thread-7] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 12:24:27,133 INFO com.zaxxer.hikari.HikariDataSource [Thread-7] HikariPool-2 - Shutdown initiated...
+2023-01-08 12:24:27,136 INFO com.zaxxer.hikari.HikariDataSource [Thread-7] HikariPool-2 - Shutdown completed.
+2023-01-08 12:24:27,198 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting SpringWebMvcApplication using Java 19 on MacBook-Air-cua-tran.local with PID 4924 (/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes started by trantruong193 in /Users/trantruong193/laptrinh/springmvc/springWebMvc)
+2023-01-08 12:24:27,198 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2023-01-08 12:24:27,199 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-01-08 12:24:27,262 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-01-08 12:24:27,279 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 16 ms. Found 19 JPA repository interfaces.
+2023-01-08 12:24:27,343 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-01-08 12:24:27,344 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-01-08 12:24:27,344 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2023-01-08 12:24:27,344 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.68]
+2023-01-08 12:24:27,351 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-01-08 12:24:27,352 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 153 ms
+2023-01-08 12:24:27,383 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-08 12:24:27,387 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-3 - Starting...
+2023-01-08 12:24:27,399 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-3 - Start completed.
+2023-01-08 12:24:27,399 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2023-01-08 12:24:27,625 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-08 12:24:27,625 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 12:24:28,080 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5396c6a6, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@70ee6898, org.springframework.security.web.context.SecurityContextPersistenceFilter@13767174, org.springframework.security.web.header.HeaderWriterFilter@5185278c, org.springframework.security.web.authentication.logout.LogoutFilter@e00ec8b, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@30627723, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@7718f74, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@398fa02d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7d28c46e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5e93500, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@175c92a8, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7bef43de, org.springframework.security.web.session.SessionManagementFilter@1d26d737, org.springframework.security.web.access.ExceptionTranslationFilter@16cf1ff3, org.springframework.security.web.access.intercept.AuthorizationFilter@793d2002]
+2023-01-08 12:24:28,085 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-01-08 12:24:28,192 WARN org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [restartedMain] Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-01-08 12:24:28,195 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-01-08 12:24:28,202 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2023-01-08 12:24:28,203 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2023-01-08 12:24:28,205 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started SpringWebMvcApplication in 1.019 seconds (JVM running for 1884.822)
+2023-01-08 12:24:28,206 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2023-01-08 12:24:54,692 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-01-08 12:24:54,696 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
+2023-01-08 12:24:54,714 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 17 ms
+2023-01-08 12:25:11,171 WARN org.springframework.web.servlet.DispatcherServlet [http-nio-8080-exec-5] No mapping for GET /
+2023-01-08 12:25:14,833 WARN org.springframework.web.servlet.DispatcherServlet [http-nio-8080-exec-6] No mapping for GET /
+2023-01-08 12:28:33,631 TRACE com.example.springWebMvc.service.impl.UserDetailServiceImpl [http-nio-8080-exec-1] Enter loadUserByUsername() method.
+2023-01-08 12:28:33,632 DEBUG com.example.springWebMvc.service.impl.UserDetailServiceImpl [http-nio-8080-exec-1] Authenticating User : admin
+2023-01-08 12:28:33,659 INFO com.example.springWebMvc.service.impl.UserDetailServiceImpl [http-nio-8080-exec-1] User authenticated successfully.
+2023-01-08 13:05:10,700 WARN com.zaxxer.hikari.pool.HikariPool$HouseKeeper [HikariPool-3 housekeeper] HikariPool-3 - Thread starvation or clock leap detected (housekeeper delta=29m13s130ms).
+2023-01-08 13:20:43,560 TRACE com.example.springWebMvc.service.impl.UserDetailServiceImpl [http-nio-8080-exec-3] Enter loadUserByUsername() method.
+2023-01-08 13:20:43,561 DEBUG com.example.springWebMvc.service.impl.UserDetailServiceImpl [http-nio-8080-exec-3] Authenticating User : customer11
+2023-01-08 13:20:43,587 INFO com.example.springWebMvc.service.impl.UserDetailServiceImpl [http-nio-8080-exec-3] User authenticated successfully.
+2023-01-08 13:34:59,931 INFO org.springframework.boot.devtools.autoconfigure.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener [File Watcher] Restarting due to 3 class path changes (0 additions, 3 deletions, 0 modifications)
+2023-01-08 13:34:59,938 INFO org.apache.juli.logging.DirectJDKLog [Thread-11] Pausing ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:34:59,938 INFO org.apache.juli.logging.DirectJDKLog [Thread-11] Stopping service [Tomcat]
+2023-01-08 13:34:59,938 INFO org.apache.juli.logging.DirectJDKLog [Thread-11] Destroying Spring FrameworkServlet 'dispatcherServlet'
+2023-01-08 13:34:59,942 INFO org.apache.juli.logging.DirectJDKLog [Thread-11] Stopping ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:34:59,944 INFO org.apache.juli.logging.DirectJDKLog [Thread-11] Destroying ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:34:59,947 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [Thread-11] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 13:34:59,948 INFO com.zaxxer.hikari.HikariDataSource [Thread-11] HikariPool-3 - Shutdown initiated...
+2023-01-08 13:34:59,952 INFO com.zaxxer.hikari.HikariDataSource [Thread-11] HikariPool-3 - Shutdown completed.
+2023-01-08 13:35:00,058 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting SpringWebMvcApplication using Java 19 on MacBook-Air-cua-tran.local with PID 4924 (/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes started by trantruong193 in /Users/trantruong193/laptrinh/springmvc/springWebMvc)
+2023-01-08 13:35:00,059 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2023-01-08 13:35:00,059 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-01-08 13:35:00,174 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-01-08 13:35:00,195 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 21 ms. Found 19 JPA repository interfaces.
+2023-01-08 13:35:00,275 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-01-08 13:35:00,276 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:35:00,276 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2023-01-08 13:35:00,276 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.68]
+2023-01-08 13:35:00,283 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-01-08 13:35:00,284 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 222 ms
+2023-01-08 13:35:00,319 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-08 13:35:00,323 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-4 - Starting...
+2023-01-08 13:35:00,340 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-4 - Start completed.
+2023-01-08 13:35:00,340 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2023-01-08 13:35:00,573 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-08 13:35:00,574 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 13:35:01,007 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5a8bd932, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5211d132, org.springframework.security.web.context.SecurityContextPersistenceFilter@699f7de8, org.springframework.security.web.header.HeaderWriterFilter@265557db, org.springframework.security.web.authentication.logout.LogoutFilter@7176a92b, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@1ee534bb, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@4f544d58, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@66424498, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@126223f8, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2a878812, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@2b634788, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@a6d0101, org.springframework.security.web.session.SessionManagementFilter@30100b18, org.springframework.security.web.access.ExceptionTranslationFilter@15d78a0d, org.springframework.security.web.access.intercept.AuthorizationFilter@31136a9d]
+2023-01-08 13:35:01,013 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-01-08 13:35:01,123 WARN org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [restartedMain] Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-01-08 13:35:01,127 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-01-08 13:35:01,134 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:35:01,135 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2023-01-08 13:35:01,137 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started SpringWebMvcApplication in 1.099 seconds (JVM running for 4394.641)
+2023-01-08 13:35:01,137 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2023-01-08 13:35:02,580 INFO org.springframework.boot.devtools.autoconfigure.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener [File Watcher] Restarting due to 5 class path changes (4 additions, 0 deletions, 1 modification)
+2023-01-08 13:35:02,586 INFO org.apache.juli.logging.DirectJDKLog [Thread-15] Pausing ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:35:02,586 INFO org.apache.juli.logging.DirectJDKLog [Thread-15] Stopping service [Tomcat]
+2023-01-08 13:35:02,589 INFO org.apache.juli.logging.DirectJDKLog [Thread-15] Stopping ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:35:02,590 INFO org.apache.juli.logging.DirectJDKLog [Thread-15] Destroying ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:35:02,596 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [Thread-15] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 13:35:02,597 INFO com.zaxxer.hikari.HikariDataSource [Thread-15] HikariPool-4 - Shutdown initiated...
+2023-01-08 13:35:02,599 INFO com.zaxxer.hikari.HikariDataSource [Thread-15] HikariPool-4 - Shutdown completed.
+2023-01-08 13:35:02,662 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting SpringWebMvcApplication using Java 19 on MacBook-Air-cua-tran.local with PID 4924 (/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes started by trantruong193 in /Users/trantruong193/laptrinh/springmvc/springWebMvc)
+2023-01-08 13:35:02,662 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2023-01-08 13:35:02,662 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-01-08 13:35:02,722 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-01-08 13:35:02,738 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 16 ms. Found 19 JPA repository interfaces.
+2023-01-08 13:35:02,797 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-01-08 13:35:02,798 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:35:02,798 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2023-01-08 13:35:02,798 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.68]
+2023-01-08 13:35:02,804 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-01-08 13:35:02,804 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 141 ms
+2023-01-08 13:35:02,830 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-08 13:35:02,833 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-5 - Starting...
+2023-01-08 13:35:02,850 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-5 - Start completed.
+2023-01-08 13:35:02,850 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2023-01-08 13:35:03,036 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-08 13:35:03,036 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 13:35:03,433 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@42982f18, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1d87e9e5, org.springframework.security.web.context.SecurityContextPersistenceFilter@24d7fc56, org.springframework.security.web.header.HeaderWriterFilter@2d8f6427, org.springframework.security.web.authentication.logout.LogoutFilter@a1201d9, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@73359eb0, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@7928d7b1, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@69b35696, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@42eea3b7, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@14164991, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@31ecd855, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@222d20bb, org.springframework.security.web.session.SessionManagementFilter@671c5679, org.springframework.security.web.access.ExceptionTranslationFilter@25387cff, org.springframework.security.web.access.intercept.AuthorizationFilter@1b2a64cd]
+2023-01-08 13:35:03,438 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-01-08 13:35:03,541 WARN org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [restartedMain] Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-01-08 13:35:03,545 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-01-08 13:35:03,552 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:35:03,552 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2023-01-08 13:35:03,554 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started SpringWebMvcApplication in 0.907 seconds (JVM running for 4397.059)
+2023-01-08 13:35:03,555 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2023-01-08 13:53:37,599 INFO org.springframework.boot.devtools.autoconfigure.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener [File Watcher] Restarting due to 2 class path changes (0 additions, 2 deletions, 0 modifications)
+2023-01-08 13:53:37,607 INFO org.apache.juli.logging.DirectJDKLog [Thread-19] Pausing ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:53:37,607 INFO org.apache.juli.logging.DirectJDKLog [Thread-19] Stopping service [Tomcat]
+2023-01-08 13:53:37,610 INFO org.apache.juli.logging.DirectJDKLog [Thread-19] Stopping ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:53:37,611 INFO org.apache.juli.logging.DirectJDKLog [Thread-19] Destroying ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:53:37,615 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [Thread-19] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 13:53:37,616 INFO com.zaxxer.hikari.HikariDataSource [Thread-19] HikariPool-5 - Shutdown initiated...
+2023-01-08 13:53:37,620 INFO com.zaxxer.hikari.HikariDataSource [Thread-19] HikariPool-5 - Shutdown completed.
+2023-01-08 13:53:37,896 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting SpringWebMvcApplication using Java 19 on MacBook-Air-cua-tran.local with PID 4924 (/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes started by trantruong193 in /Users/trantruong193/laptrinh/springmvc/springWebMvc)
+2023-01-08 13:53:37,896 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2023-01-08 13:53:37,896 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-01-08 13:53:37,978 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-01-08 13:53:37,998 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 20 ms. Found 19 JPA repository interfaces.
+2023-01-08 13:53:38,069 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-01-08 13:53:38,069 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:53:38,069 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2023-01-08 13:53:38,069 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.68]
+2023-01-08 13:53:38,076 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-01-08 13:53:38,076 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 179 ms
+2023-01-08 13:53:38,103 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-08 13:53:38,106 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-6 - Starting...
+2023-01-08 13:53:38,125 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-6 - Start completed.
+2023-01-08 13:53:38,125 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2023-01-08 13:53:38,334 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-08 13:53:38,335 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 13:53:38,746 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@631eb219, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@796568d5, org.springframework.security.web.context.SecurityContextPersistenceFilter@15ad779, org.springframework.security.web.header.HeaderWriterFilter@61262e2f, org.springframework.security.web.authentication.logout.LogoutFilter@2bb151f6, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@755df798, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@4c6b6530, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@5a2d116a, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@13a27d82, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@43a56e8f, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@510a4f13, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6eb0d02c, org.springframework.security.web.session.SessionManagementFilter@3940dbb0, org.springframework.security.web.access.ExceptionTranslationFilter@606e5080, org.springframework.security.web.access.intercept.AuthorizationFilter@74347e1]
+2023-01-08 13:53:38,753 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-01-08 13:53:38,871 WARN org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [restartedMain] Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-01-08 13:53:38,875 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-01-08 13:53:38,882 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:53:38,883 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2023-01-08 13:53:38,886 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started SpringWebMvcApplication in 1.196 seconds (JVM running for 5512.412)
+2023-01-08 13:53:38,886 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2023-01-08 13:53:40,315 INFO org.springframework.boot.devtools.autoconfigure.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener [File Watcher] Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2023-01-08 13:53:40,320 INFO org.apache.juli.logging.DirectJDKLog [Thread-23] Pausing ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:53:40,320 INFO org.apache.juli.logging.DirectJDKLog [Thread-23] Stopping service [Tomcat]
+2023-01-08 13:53:40,322 INFO org.apache.juli.logging.DirectJDKLog [Thread-23] Stopping ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:53:40,323 INFO org.apache.juli.logging.DirectJDKLog [Thread-23] Destroying ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:53:40,329 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [Thread-23] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 13:53:40,330 INFO com.zaxxer.hikari.HikariDataSource [Thread-23] HikariPool-6 - Shutdown initiated...
+2023-01-08 13:53:40,332 INFO com.zaxxer.hikari.HikariDataSource [Thread-23] HikariPool-6 - Shutdown completed.
+2023-01-08 13:53:40,398 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting SpringWebMvcApplication using Java 19 on MacBook-Air-cua-tran.local with PID 4924 (/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes started by trantruong193 in /Users/trantruong193/laptrinh/springmvc/springWebMvc)
+2023-01-08 13:53:40,398 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2023-01-08 13:53:40,398 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-01-08 13:53:40,456 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-01-08 13:53:40,473 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 16 ms. Found 19 JPA repository interfaces.
+2023-01-08 13:53:40,532 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-01-08 13:53:40,532 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:53:40,532 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2023-01-08 13:53:40,532 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.68]
+2023-01-08 13:53:40,539 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-01-08 13:53:40,539 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 140 ms
+2023-01-08 13:53:40,563 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-08 13:53:40,565 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-7 - Starting...
+2023-01-08 13:53:40,579 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-7 - Start completed.
+2023-01-08 13:53:40,579 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2023-01-08 13:53:40,760 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-08 13:53:40,761 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 13:53:41,181 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5994a227, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3e231b3c, org.springframework.security.web.context.SecurityContextPersistenceFilter@488f3a62, org.springframework.security.web.header.HeaderWriterFilter@5030bec4, org.springframework.security.web.authentication.logout.LogoutFilter@4ed6dc58, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@7282aa5b, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@581a021e, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@15b354d0, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2a7b48c3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7f6815d6, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@568e79f2, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@36a1f414, org.springframework.security.web.session.SessionManagementFilter@1732ec20, org.springframework.security.web.access.ExceptionTranslationFilter@22b815cd, org.springframework.security.web.access.intercept.AuthorizationFilter@27a6c400]
+2023-01-08 13:53:41,187 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-01-08 13:53:41,296 WARN org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [restartedMain] Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-01-08 13:53:41,300 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-01-08 13:53:41,307 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:53:41,307 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2023-01-08 13:53:41,309 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started SpringWebMvcApplication in 0.923 seconds (JVM running for 5514.836)
+2023-01-08 13:53:41,310 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2023-01-08 13:59:04,357 INFO org.springframework.boot.devtools.autoconfigure.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener [File Watcher] Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2023-01-08 13:59:04,373 INFO org.apache.juli.logging.DirectJDKLog [Thread-27] Pausing ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:59:04,374 INFO org.apache.juli.logging.DirectJDKLog [Thread-27] Stopping service [Tomcat]
+2023-01-08 13:59:04,382 INFO org.apache.juli.logging.DirectJDKLog [Thread-27] Stopping ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:59:04,383 INFO org.apache.juli.logging.DirectJDKLog [Thread-27] Destroying ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:59:04,392 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [Thread-27] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 13:59:04,394 INFO com.zaxxer.hikari.HikariDataSource [Thread-27] HikariPool-7 - Shutdown initiated...
+2023-01-08 13:59:04,399 INFO com.zaxxer.hikari.HikariDataSource [Thread-27] HikariPool-7 - Shutdown completed.
+2023-01-08 13:59:04,674 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting SpringWebMvcApplication using Java 19 on MacBook-Air-cua-tran.local with PID 4924 (/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes started by trantruong193 in /Users/trantruong193/laptrinh/springmvc/springWebMvc)
+2023-01-08 13:59:04,674 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2023-01-08 13:59:04,674 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-01-08 13:59:04,769 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-01-08 13:59:04,788 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 18 ms. Found 19 JPA repository interfaces.
+2023-01-08 13:59:04,852 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-01-08 13:59:04,852 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:59:04,852 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2023-01-08 13:59:04,852 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.68]
+2023-01-08 13:59:04,859 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-01-08 13:59:04,859 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 184 ms
+2023-01-08 13:59:04,886 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-08 13:59:04,888 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-8 - Starting...
+2023-01-08 13:59:04,902 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-8 - Start completed.
+2023-01-08 13:59:04,902 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2023-01-08 13:59:05,097 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-08 13:59:05,097 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 13:59:05,514 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@5f35f2b3, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2d0c8404, org.springframework.security.web.context.SecurityContextPersistenceFilter@16aebc8c, org.springframework.security.web.header.HeaderWriterFilter@14d77cd9, org.springframework.security.web.authentication.logout.LogoutFilter@24c713eb, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@123c1ef7, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@49f4bbc0, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@6f987066, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6cea5157, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4374c9a7, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@7382a7e5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@41ca10de, org.springframework.security.web.session.SessionManagementFilter@45482acd, org.springframework.security.web.access.ExceptionTranslationFilter@5ff4a95f, org.springframework.security.web.access.intercept.AuthorizationFilter@8064942]
+2023-01-08 13:59:05,520 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-01-08 13:59:05,627 WARN org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [restartedMain] Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-01-08 13:59:05,631 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-01-08 13:59:05,638 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2023-01-08 13:59:05,639 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2023-01-08 13:59:05,641 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started SpringWebMvcApplication in 1.167 seconds (JVM running for 5839.234)
+2023-01-08 13:59:05,642 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2023-01-08 14:11:51,287 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 14:11:51,291 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-8 - Shutdown initiated...
+2023-01-08 14:11:51,300 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-8 - Shutdown completed.
+2023-01-08 14:11:54,472 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.2.5.Final
+2023-01-08 14:11:54,473 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting SpringWebMvcApplication using Java 19 on MacBook-Air-cua-tran.local with PID 5574 (/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes started by trantruong193 in /Users/trantruong193/laptrinh/springmvc/springWebMvc)
+2023-01-08 14:11:54,473 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2023-01-08 14:11:54,473 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-01-08 14:11:54,560 INFO org.springframework.boot.logging.DeferredLog [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-01-08 14:11:54,560 INFO org.springframework.boot.logging.DeferredLog [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-01-08 14:11:54,853 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-01-08 14:11:54,893 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 37 ms. Found 19 JPA repository interfaces.
+2023-01-08 14:11:55,217 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-01-08 14:11:55,222 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-01-08 14:11:55,222 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2023-01-08 14:11:55,222 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.68]
+2023-01-08 14:11:55,256 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-01-08 14:11:55,256 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 696 ms
+2023-01-08 14:11:55,355 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-08 14:11:55,379 INFO org.hibernate.Version [restartedMain] HHH000412: Hibernate ORM core version 5.6.12.Final
+2023-01-08 14:11:55,457 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [restartedMain] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-01-08 14:11:55,507 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2023-01-08 14:11:55,681 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2023-01-08 14:11:55,690 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2023-01-08 14:11:56,257 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-08 14:11:56,261 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 14:11:56,952 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@47d3c5e4, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2c5b06e2, org.springframework.security.web.context.SecurityContextPersistenceFilter@2a7db1bd, org.springframework.security.web.header.HeaderWriterFilter@33d216b6, org.springframework.security.web.authentication.logout.LogoutFilter@2bcd085f, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@66d7cd0f, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@389a7b6d, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@1be0ac5, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1709a369, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@45490638, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@203327d5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@676d4744, org.springframework.security.web.session.SessionManagementFilter@7bdf7b4f, org.springframework.security.web.access.ExceptionTranslationFilter@6b25bf24, org.springframework.security.web.access.intercept.AuthorizationFilter@e69ae43]
+2023-01-08 14:11:56,978 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-01-08 14:11:57,387 WARN org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [restartedMain] Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-01-08 14:11:57,407 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-01-08 14:11:57,422 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2023-01-08 14:11:57,429 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2023-01-08 14:11:57,437 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started SpringWebMvcApplication in 3.173 seconds (JVM running for 3.553)
+2023-01-08 14:14:26,567 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-01-08 14:14:26,567 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
+2023-01-08 14:14:26,569 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 2 ms
+2023-01-08 14:32:03,480 INFO org.springframework.boot.devtools.autoconfigure.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener [File Watcher] Restarting due to 2 class path changes (0 additions, 2 deletions, 0 modifications)
+2023-01-08 14:32:03,500 INFO org.apache.juli.logging.DirectJDKLog [Thread-5] Pausing ProtocolHandler ["http-nio-8080"]
+2023-01-08 14:32:03,500 INFO org.apache.juli.logging.DirectJDKLog [Thread-5] Stopping service [Tomcat]
+2023-01-08 14:32:03,502 INFO org.apache.juli.logging.DirectJDKLog [Thread-5] Destroying Spring FrameworkServlet 'dispatcherServlet'
+2023-01-08 14:32:03,510 INFO org.apache.juli.logging.DirectJDKLog [Thread-5] Stopping ProtocolHandler ["http-nio-8080"]
+2023-01-08 14:32:03,512 INFO org.apache.juli.logging.DirectJDKLog [Thread-5] Destroying ProtocolHandler ["http-nio-8080"]
+2023-01-08 14:32:03,517 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [Thread-5] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 14:32:03,520 INFO com.zaxxer.hikari.HikariDataSource [Thread-5] HikariPool-1 - Shutdown initiated...
+2023-01-08 14:32:03,524 INFO com.zaxxer.hikari.HikariDataSource [Thread-5] HikariPool-1 - Shutdown completed.
+2023-01-08 14:32:03,603 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting SpringWebMvcApplication using Java 19 on MacBook-Air-cua-tran.local with PID 5574 (/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes started by trantruong193 in /Users/trantruong193/laptrinh/springmvc/springWebMvc)
+2023-01-08 14:32:03,603 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2023-01-08 14:32:03,603 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-01-08 14:32:03,710 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-01-08 14:32:03,734 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 23 ms. Found 20 JPA repository interfaces.
+2023-01-08 14:32:03,818 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-01-08 14:32:03,818 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-01-08 14:32:03,819 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2023-01-08 14:32:03,819 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.68]
+2023-01-08 14:32:03,826 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-01-08 14:32:03,826 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 220 ms
+2023-01-08 14:32:03,860 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-08 14:32:03,863 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-2 - Starting...
+2023-01-08 14:32:03,882 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-2 - Start completed.
+2023-01-08 14:32:03,883 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2023-01-08 14:32:04,141 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-08 14:32:04,142 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 14:32:04,495 WARN org.springframework.context.support.AbstractApplicationContext [restartedMain] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'wishListServiceImpl' defined in file [/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes/com/example/springWebMvc/service/impl/WishListServiceImpl.class]: Initialization of bean failed; nested exception is org.springframework.aop.framework.AopConfigException: Could not generate CGLIB subclass of class com.example.springWebMvc.service.impl.WishListServiceImpl: Common causes of this problem include using a final class or a non-visible class; nested exception is java.lang.IllegalArgumentException: No visible constructors in class com.example.springWebMvc.service.impl.WishListServiceImpl
+2023-01-08 14:32:04,496 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 14:32:04,496 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-2 - Shutdown initiated...
+2023-01-08 14:32:04,498 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-2 - Shutdown completed.
+2023-01-08 14:32:04,499 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Stopping service [Tomcat]
+2023-01-08 14:32:04,502 INFO org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener [restartedMain] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-01-08 14:32:04,511 ERROR org.springframework.boot.SpringApplication [restartedMain] Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'wishListServiceImpl' defined in file [/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes/com/example/springWebMvc/service/impl/WishListServiceImpl.class]: Initialization of bean failed; nested exception is org.springframework.aop.framework.AopConfigException: Could not generate CGLIB subclass of class com.example.springWebMvc.service.impl.WishListServiceImpl: Common causes of this problem include using a final class or a non-visible class; nested exception is java.lang.IllegalArgumentException: No visible constructors in class com.example.springWebMvc.service.impl.WishListServiceImpl
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:628)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:955)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:918)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:734)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
+	at com.example.springWebMvc.SpringWebMvcApplication.main(SpringWebMvcApplication.java:10)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:578)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: org.springframework.aop.framework.AopConfigException: Could not generate CGLIB subclass of class com.example.springWebMvc.service.impl.WishListServiceImpl: Common causes of this problem include using a final class or a non-visible class; nested exception is java.lang.IllegalArgumentException: No visible constructors in class com.example.springWebMvc.service.impl.WishListServiceImpl
+	at org.springframework.aop.framework.CglibAopProxy.buildProxy(CglibAopProxy.java:216)
+	at org.springframework.aop.framework.CglibAopProxy.getProxy(CglibAopProxy.java:158)
+	at org.springframework.aop.framework.ProxyFactory.getProxy(ProxyFactory.java:110)
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.buildProxy(AbstractAutoProxyCreator.java:517)
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.createProxy(AbstractAutoProxyCreator.java:464)
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.wrapIfNecessary(AbstractAutoProxyCreator.java:369)
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.postProcessAfterInitialization(AbstractAutoProxyCreator.java:318)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsAfterInitialization(AbstractAutowireCapableBeanFactory.java:455)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1808)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620)
+	... 18 common frames omitted
+Caused by: java.lang.IllegalArgumentException: No visible constructors in class com.example.springWebMvc.service.impl.WishListServiceImpl
+	at org.springframework.cglib.proxy.Enhancer.filterConstructors(Enhancer.java:763)
+	at org.springframework.cglib.proxy.Enhancer.generateClass(Enhancer.java:662)
+	at org.springframework.cglib.core.DefaultGeneratorStrategy.generate(DefaultGeneratorStrategy.java:25)
+	at org.springframework.cglib.core.ClassLoaderAwareGeneratorStrategy.generate(ClassLoaderAwareGeneratorStrategy.java:57)
+	at org.springframework.cglib.core.AbstractClassGenerator.generate(AbstractClassGenerator.java:358)
+	at org.springframework.cglib.proxy.Enhancer.generate(Enhancer.java:585)
+	at org.springframework.cglib.core.AbstractClassGenerator$ClassLoaderData.get(AbstractClassGenerator.java:131)
+	at org.springframework.cglib.core.AbstractClassGenerator.create(AbstractClassGenerator.java:319)
+	at org.springframework.cglib.proxy.Enhancer.createHelper(Enhancer.java:572)
+	at org.springframework.cglib.proxy.Enhancer.createClass(Enhancer.java:419)
+	at org.springframework.aop.framework.ObjenesisCglibAopProxy.createProxyClassAndInstance(ObjenesisCglibAopProxy.java:62)
+	at org.springframework.aop.framework.CglibAopProxy.buildProxy(CglibAopProxy.java:213)
+	... 27 common frames omitted
+2023-01-08 14:32:06,001 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting SpringWebMvcApplication using Java 19 on MacBook-Air-cua-tran.local with PID 5574 (/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes started by trantruong193 in /Users/trantruong193/laptrinh/springmvc/springWebMvc)
+2023-01-08 14:32:06,002 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2023-01-08 14:32:06,002 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-01-08 14:32:06,081 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-01-08 14:32:06,099 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 17 ms. Found 20 JPA repository interfaces.
+2023-01-08 14:32:06,163 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-01-08 14:32:06,164 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-01-08 14:32:06,164 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2023-01-08 14:32:06,164 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.68]
+2023-01-08 14:32:06,170 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-01-08 14:32:06,170 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 167 ms
+2023-01-08 14:32:06,195 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-08 14:32:06,198 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-3 - Starting...
+2023-01-08 14:32:06,218 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-3 - Start completed.
+2023-01-08 14:32:06,218 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2023-01-08 14:32:06,422 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-08 14:32:06,422 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 14:32:06,769 WARN org.springframework.context.support.AbstractApplicationContext [restartedMain] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'wishListServiceImpl' defined in file [/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes/com/example/springWebMvc/service/impl/WishListServiceImpl.class]: Initialization of bean failed; nested exception is org.springframework.aop.framework.AopConfigException: Could not generate CGLIB subclass of class com.example.springWebMvc.service.impl.WishListServiceImpl: Common causes of this problem include using a final class or a non-visible class; nested exception is java.lang.IllegalArgumentException: No visible constructors in class com.example.springWebMvc.service.impl.WishListServiceImpl
+2023-01-08 14:32:06,770 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 14:32:06,770 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-3 - Shutdown initiated...
+2023-01-08 14:32:06,772 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-3 - Shutdown completed.
+2023-01-08 14:32:06,772 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Stopping service [Tomcat]
+2023-01-08 14:32:06,775 INFO org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener [restartedMain] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-01-08 14:32:06,776 ERROR org.springframework.boot.SpringApplication [restartedMain] Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'wishListServiceImpl' defined in file [/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes/com/example/springWebMvc/service/impl/WishListServiceImpl.class]: Initialization of bean failed; nested exception is org.springframework.aop.framework.AopConfigException: Could not generate CGLIB subclass of class com.example.springWebMvc.service.impl.WishListServiceImpl: Common causes of this problem include using a final class or a non-visible class; nested exception is java.lang.IllegalArgumentException: No visible constructors in class com.example.springWebMvc.service.impl.WishListServiceImpl
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:628)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:955)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:918)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:734)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
+	at com.example.springWebMvc.SpringWebMvcApplication.main(SpringWebMvcApplication.java:10)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:578)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: org.springframework.aop.framework.AopConfigException: Could not generate CGLIB subclass of class com.example.springWebMvc.service.impl.WishListServiceImpl: Common causes of this problem include using a final class or a non-visible class; nested exception is java.lang.IllegalArgumentException: No visible constructors in class com.example.springWebMvc.service.impl.WishListServiceImpl
+	at org.springframework.aop.framework.CglibAopProxy.buildProxy(CglibAopProxy.java:216)
+	at org.springframework.aop.framework.CglibAopProxy.getProxy(CglibAopProxy.java:158)
+	at org.springframework.aop.framework.ProxyFactory.getProxy(ProxyFactory.java:110)
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.buildProxy(AbstractAutoProxyCreator.java:517)
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.createProxy(AbstractAutoProxyCreator.java:464)
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.wrapIfNecessary(AbstractAutoProxyCreator.java:369)
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.postProcessAfterInitialization(AbstractAutoProxyCreator.java:318)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsAfterInitialization(AbstractAutowireCapableBeanFactory.java:455)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1808)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620)
+	... 18 common frames omitted
+Caused by: java.lang.IllegalArgumentException: No visible constructors in class com.example.springWebMvc.service.impl.WishListServiceImpl
+	at org.springframework.cglib.proxy.Enhancer.filterConstructors(Enhancer.java:763)
+	at org.springframework.cglib.proxy.Enhancer.generateClass(Enhancer.java:662)
+	at org.springframework.cglib.core.DefaultGeneratorStrategy.generate(DefaultGeneratorStrategy.java:25)
+	at org.springframework.cglib.core.ClassLoaderAwareGeneratorStrategy.generate(ClassLoaderAwareGeneratorStrategy.java:57)
+	at org.springframework.cglib.core.AbstractClassGenerator.generate(AbstractClassGenerator.java:358)
+	at org.springframework.cglib.proxy.Enhancer.generate(Enhancer.java:585)
+	at org.springframework.cglib.core.AbstractClassGenerator$ClassLoaderData.get(AbstractClassGenerator.java:131)
+	at org.springframework.cglib.core.AbstractClassGenerator.create(AbstractClassGenerator.java:319)
+	at org.springframework.cglib.proxy.Enhancer.createHelper(Enhancer.java:572)
+	at org.springframework.cglib.proxy.Enhancer.createClass(Enhancer.java:419)
+	at org.springframework.aop.framework.ObjenesisCglibAopProxy.createProxyClassAndInstance(ObjenesisCglibAopProxy.java:62)
+	at org.springframework.aop.framework.CglibAopProxy.buildProxy(CglibAopProxy.java:213)
+	... 27 common frames omitted
+2023-01-08 14:43:07,644 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.2.5.Final
+2023-01-08 14:43:07,644 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting SpringWebMvcApplication using Java 19 on MacBook-Air-cua-tran.local with PID 5687 (/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes started by trantruong193 in /Users/trantruong193/laptrinh/springmvc/springWebMvc)
+2023-01-08 14:43:07,645 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2023-01-08 14:43:07,645 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-01-08 14:43:07,727 INFO org.springframework.boot.logging.DeferredLog [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-01-08 14:43:07,727 INFO org.springframework.boot.logging.DeferredLog [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-01-08 14:43:08,012 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-01-08 14:43:08,054 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 38 ms. Found 20 JPA repository interfaces.
+2023-01-08 14:43:08,369 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-01-08 14:43:08,374 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-01-08 14:43:08,374 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2023-01-08 14:43:08,374 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.68]
+2023-01-08 14:43:08,409 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-01-08 14:43:08,409 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 682 ms
+2023-01-08 14:43:08,521 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-08 14:43:08,543 INFO org.hibernate.Version [restartedMain] HHH000412: Hibernate ORM core version 5.6.12.Final
+2023-01-08 14:43:08,622 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [restartedMain] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-01-08 14:43:08,667 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2023-01-08 14:43:08,811 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2023-01-08 14:43:08,818 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2023-01-08 14:43:09,364 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-08 14:43:09,368 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 14:43:09,904 WARN org.springframework.context.support.AbstractApplicationContext [restartedMain] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'webController' defined in file [/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes/com/example/springWebMvc/controller/site/WebController.class]: Unsatisfied dependency expressed through constructor parameter 20; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'wishListServiceImpl' defined in file [/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes/com/example/springWebMvc/service/impl/WishListServiceImpl.class]: Initialization of bean failed; nested exception is org.springframework.aop.framework.AopConfigException: Could not generate CGLIB subclass of class com.example.springWebMvc.service.impl.WishListServiceImpl: Common causes of this problem include using a final class or a non-visible class; nested exception is java.lang.IllegalArgumentException: No visible constructors in class com.example.springWebMvc.service.impl.WishListServiceImpl
+2023-01-08 14:43:09,906 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 14:43:09,907 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Shutdown initiated...
+2023-01-08 14:43:09,911 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Shutdown completed.
+2023-01-08 14:43:09,913 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Stopping service [Tomcat]
+2023-01-08 14:43:09,919 INFO org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener [restartedMain] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-01-08 14:43:09,927 ERROR org.springframework.boot.SpringApplication [restartedMain] Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'webController' defined in file [/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes/com/example/springWebMvc/controller/site/WebController.class]: Unsatisfied dependency expressed through constructor parameter 20; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'wishListServiceImpl' defined in file [/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes/com/example/springWebMvc/service/impl/WishListServiceImpl.class]: Initialization of bean failed; nested exception is org.springframework.aop.framework.AopConfigException: Could not generate CGLIB subclass of class com.example.springWebMvc.service.impl.WishListServiceImpl: Common causes of this problem include using a final class or a non-visible class; nested exception is java.lang.IllegalArgumentException: No visible constructors in class com.example.springWebMvc.service.impl.WishListServiceImpl
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:800)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:229)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1222)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:955)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:918)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:734)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
+	at com.example.springWebMvc.SpringWebMvcApplication.main(SpringWebMvcApplication.java:10)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:578)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'wishListServiceImpl' defined in file [/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes/com/example/springWebMvc/service/impl/WishListServiceImpl.class]: Initialization of bean failed; nested exception is org.springframework.aop.framework.AopConfigException: Could not generate CGLIB subclass of class com.example.springWebMvc.service.impl.WishListServiceImpl: Common causes of this problem include using a final class or a non-visible class; nested exception is java.lang.IllegalArgumentException: No visible constructors in class com.example.springWebMvc.service.impl.WishListServiceImpl
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:628)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:887)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	... 22 common frames omitted
+Caused by: org.springframework.aop.framework.AopConfigException: Could not generate CGLIB subclass of class com.example.springWebMvc.service.impl.WishListServiceImpl: Common causes of this problem include using a final class or a non-visible class; nested exception is java.lang.IllegalArgumentException: No visible constructors in class com.example.springWebMvc.service.impl.WishListServiceImpl
+	at org.springframework.aop.framework.CglibAopProxy.buildProxy(CglibAopProxy.java:216)
+	at org.springframework.aop.framework.CglibAopProxy.getProxy(CglibAopProxy.java:158)
+	at org.springframework.aop.framework.ProxyFactory.getProxy(ProxyFactory.java:110)
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.buildProxy(AbstractAutoProxyCreator.java:517)
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.createProxy(AbstractAutoProxyCreator.java:464)
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.wrapIfNecessary(AbstractAutoProxyCreator.java:369)
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.postProcessAfterInitialization(AbstractAutoProxyCreator.java:318)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsAfterInitialization(AbstractAutowireCapableBeanFactory.java:455)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1808)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620)
+	... 32 common frames omitted
+Caused by: java.lang.IllegalArgumentException: No visible constructors in class com.example.springWebMvc.service.impl.WishListServiceImpl
+	at org.springframework.cglib.proxy.Enhancer.filterConstructors(Enhancer.java:763)
+	at org.springframework.cglib.proxy.Enhancer.generateClass(Enhancer.java:662)
+	at org.springframework.cglib.core.DefaultGeneratorStrategy.generate(DefaultGeneratorStrategy.java:25)
+	at org.springframework.cglib.core.ClassLoaderAwareGeneratorStrategy.generate(ClassLoaderAwareGeneratorStrategy.java:57)
+	at org.springframework.cglib.core.AbstractClassGenerator.generate(AbstractClassGenerator.java:358)
+	at org.springframework.cglib.proxy.Enhancer.generate(Enhancer.java:585)
+	at org.springframework.cglib.core.AbstractClassGenerator$ClassLoaderData.get(AbstractClassGenerator.java:131)
+	at org.springframework.cglib.core.AbstractClassGenerator.create(AbstractClassGenerator.java:319)
+	at org.springframework.cglib.proxy.Enhancer.createHelper(Enhancer.java:572)
+	at org.springframework.cglib.proxy.Enhancer.createClass(Enhancer.java:419)
+	at org.springframework.aop.framework.ObjenesisCglibAopProxy.createProxyClassAndInstance(ObjenesisCglibAopProxy.java:62)
+	at org.springframework.aop.framework.CglibAopProxy.buildProxy(CglibAopProxy.java:213)
+	... 41 common frames omitted
+2023-01-08 14:46:54,935 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.2.5.Final
+2023-01-08 14:46:54,936 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting SpringWebMvcApplication using Java 19 on MacBook-Air-cua-tran.local with PID 5699 (/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes started by trantruong193 in /Users/trantruong193/laptrinh/springmvc/springWebMvc)
+2023-01-08 14:46:54,936 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2023-01-08 14:46:54,936 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-01-08 14:46:55,018 INFO org.springframework.boot.logging.DeferredLog [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-01-08 14:46:55,018 INFO org.springframework.boot.logging.DeferredLog [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-01-08 14:46:55,308 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-01-08 14:46:55,348 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 37 ms. Found 20 JPA repository interfaces.
+2023-01-08 14:46:55,659 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-01-08 14:46:55,662 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-01-08 14:46:55,663 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2023-01-08 14:46:55,663 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.68]
+2023-01-08 14:46:55,695 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-01-08 14:46:55,695 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 677 ms
+2023-01-08 14:46:55,794 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-08 14:46:55,813 INFO org.hibernate.Version [restartedMain] HHH000412: Hibernate ORM core version 5.6.12.Final
+2023-01-08 14:46:55,873 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [restartedMain] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-01-08 14:46:55,913 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2023-01-08 14:46:56,053 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2023-01-08 14:46:56,060 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2023-01-08 14:46:56,587 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-08 14:46:56,590 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 14:46:57,175 WARN org.springframework.context.support.AbstractApplicationContext [restartedMain] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'webController' defined in file [/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes/com/example/springWebMvc/controller/site/WebController.class]: Unsatisfied dependency expressed through constructor parameter 20; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'wishListServiceImpl' defined in file [/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes/com/example/springWebMvc/service/impl/WishListServiceImpl.class]: Initialization of bean failed; nested exception is org.springframework.aop.framework.AopConfigException: Could not generate CGLIB subclass of class com.example.springWebMvc.service.impl.WishListServiceImpl: Common causes of this problem include using a final class or a non-visible class; nested exception is java.lang.IllegalArgumentException: No visible constructors in class com.example.springWebMvc.service.impl.WishListServiceImpl
+2023-01-08 14:46:57,178 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 14:46:57,179 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Shutdown initiated...
+2023-01-08 14:46:57,182 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Shutdown completed.
+2023-01-08 14:46:57,184 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Stopping service [Tomcat]
+2023-01-08 14:46:57,190 INFO org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener [restartedMain] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-01-08 14:46:57,199 ERROR org.springframework.boot.SpringApplication [restartedMain] Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'webController' defined in file [/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes/com/example/springWebMvc/controller/site/WebController.class]: Unsatisfied dependency expressed through constructor parameter 20; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'wishListServiceImpl' defined in file [/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes/com/example/springWebMvc/service/impl/WishListServiceImpl.class]: Initialization of bean failed; nested exception is org.springframework.aop.framework.AopConfigException: Could not generate CGLIB subclass of class com.example.springWebMvc.service.impl.WishListServiceImpl: Common causes of this problem include using a final class or a non-visible class; nested exception is java.lang.IllegalArgumentException: No visible constructors in class com.example.springWebMvc.service.impl.WishListServiceImpl
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:800)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:229)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1372)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1222)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:582)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:955)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:918)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:734)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
+	at com.example.springWebMvc.SpringWebMvcApplication.main(SpringWebMvcApplication.java:10)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:578)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'wishListServiceImpl' defined in file [/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes/com/example/springWebMvc/service/impl/WishListServiceImpl.class]: Initialization of bean failed; nested exception is org.springframework.aop.framework.AopConfigException: Could not generate CGLIB subclass of class com.example.springWebMvc.service.impl.WishListServiceImpl: Common causes of this problem include using a final class or a non-visible class; nested exception is java.lang.IllegalArgumentException: No visible constructors in class com.example.springWebMvc.service.impl.WishListServiceImpl
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:628)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1391)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1311)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:887)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	... 22 common frames omitted
+Caused by: org.springframework.aop.framework.AopConfigException: Could not generate CGLIB subclass of class com.example.springWebMvc.service.impl.WishListServiceImpl: Common causes of this problem include using a final class or a non-visible class; nested exception is java.lang.IllegalArgumentException: No visible constructors in class com.example.springWebMvc.service.impl.WishListServiceImpl
+	at org.springframework.aop.framework.CglibAopProxy.buildProxy(CglibAopProxy.java:216)
+	at org.springframework.aop.framework.CglibAopProxy.getProxy(CglibAopProxy.java:158)
+	at org.springframework.aop.framework.ProxyFactory.getProxy(ProxyFactory.java:110)
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.buildProxy(AbstractAutoProxyCreator.java:517)
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.createProxy(AbstractAutoProxyCreator.java:464)
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.wrapIfNecessary(AbstractAutoProxyCreator.java:369)
+	at org.springframework.aop.framework.autoproxy.AbstractAutoProxyCreator.postProcessAfterInitialization(AbstractAutoProxyCreator.java:318)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsAfterInitialization(AbstractAutowireCapableBeanFactory.java:455)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1808)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620)
+	... 32 common frames omitted
+Caused by: java.lang.IllegalArgumentException: No visible constructors in class com.example.springWebMvc.service.impl.WishListServiceImpl
+	at org.springframework.cglib.proxy.Enhancer.filterConstructors(Enhancer.java:763)
+	at org.springframework.cglib.proxy.Enhancer.generateClass(Enhancer.java:662)
+	at org.springframework.cglib.core.DefaultGeneratorStrategy.generate(DefaultGeneratorStrategy.java:25)
+	at org.springframework.cglib.core.ClassLoaderAwareGeneratorStrategy.generate(ClassLoaderAwareGeneratorStrategy.java:57)
+	at org.springframework.cglib.core.AbstractClassGenerator.generate(AbstractClassGenerator.java:358)
+	at org.springframework.cglib.proxy.Enhancer.generate(Enhancer.java:585)
+	at org.springframework.cglib.core.AbstractClassGenerator$ClassLoaderData.get(AbstractClassGenerator.java:131)
+	at org.springframework.cglib.core.AbstractClassGenerator.create(AbstractClassGenerator.java:319)
+	at org.springframework.cglib.proxy.Enhancer.createHelper(Enhancer.java:572)
+	at org.springframework.cglib.proxy.Enhancer.createClass(Enhancer.java:419)
+	at org.springframework.aop.framework.ObjenesisCglibAopProxy.createProxyClassAndInstance(ObjenesisCglibAopProxy.java:62)
+	at org.springframework.aop.framework.CglibAopProxy.buildProxy(CglibAopProxy.java:213)
+	... 41 common frames omitted
+2023-01-08 14:48:07,867 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.2.5.Final
+2023-01-08 14:48:07,868 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting SpringWebMvcApplication using Java 19 on MacBook-Air-cua-tran.local with PID 5724 (/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes started by trantruong193 in /Users/trantruong193/laptrinh/springmvc/springWebMvc)
+2023-01-08 14:48:07,868 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2023-01-08 14:48:07,869 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-01-08 14:48:07,949 INFO org.springframework.boot.logging.DeferredLog [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-01-08 14:48:07,949 INFO org.springframework.boot.logging.DeferredLog [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-01-08 14:48:08,247 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-01-08 14:48:08,291 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 41 ms. Found 20 JPA repository interfaces.
+2023-01-08 14:48:08,606 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-01-08 14:48:08,610 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-01-08 14:48:08,610 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2023-01-08 14:48:08,610 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.68]
+2023-01-08 14:48:08,642 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-01-08 14:48:08,642 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 693 ms
+2023-01-08 14:48:08,740 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-08 14:48:08,759 INFO org.hibernate.Version [restartedMain] HHH000412: Hibernate ORM core version 5.6.12.Final
+2023-01-08 14:48:08,819 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [restartedMain] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-01-08 14:48:08,862 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2023-01-08 14:48:09,029 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2023-01-08 14:48:09,041 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2023-01-08 14:48:09,715 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-08 14:48:09,719 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 14:48:10,526 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@67522e5f, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@26aeb31, org.springframework.security.web.context.SecurityContextPersistenceFilter@3122646b, org.springframework.security.web.header.HeaderWriterFilter@61a66529, org.springframework.security.web.authentication.logout.LogoutFilter@294f7375, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@6719e4c7, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@216a7336, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@2c5b06e2, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@24aa81d8, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5860b11a, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@15531c00, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2603cf, org.springframework.security.web.session.SessionManagementFilter@1e39c6f9, org.springframework.security.web.access.ExceptionTranslationFilter@246d7889, org.springframework.security.web.access.intercept.AuthorizationFilter@67a19844]
+2023-01-08 14:48:10,553 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-01-08 14:48:10,960 WARN org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [restartedMain] Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-01-08 14:48:10,979 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-01-08 14:48:10,993 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2023-01-08 14:48:11,001 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2023-01-08 14:48:11,007 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started SpringWebMvcApplication in 3.32 seconds (JVM running for 3.645)
+2023-01-08 14:48:41,197 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-01-08 14:48:41,197 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
+2023-01-08 14:48:41,201 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 3 ms
+2023-01-08 14:50:49,345 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 14:50:49,349 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
+2023-01-08 14:50:49,354 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
+2023-01-08 14:50:51,738 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.2.5.Final
+2023-01-08 14:50:51,739 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting SpringWebMvcApplication using Java 19 on MacBook-Air-cua-tran.local with PID 5740 (/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes started by trantruong193 in /Users/trantruong193/laptrinh/springmvc/springWebMvc)
+2023-01-08 14:50:51,739 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2023-01-08 14:50:51,739 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-01-08 14:50:51,820 INFO org.springframework.boot.logging.DeferredLog [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-01-08 14:50:51,820 INFO org.springframework.boot.logging.DeferredLog [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-01-08 14:50:52,106 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-01-08 14:50:52,147 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 38 ms. Found 20 JPA repository interfaces.
+2023-01-08 14:50:52,452 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-01-08 14:50:52,457 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-01-08 14:50:52,457 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2023-01-08 14:50:52,457 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.68]
+2023-01-08 14:50:52,488 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-01-08 14:50:52,488 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 668 ms
+2023-01-08 14:50:52,585 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-08 14:50:52,605 INFO org.hibernate.Version [restartedMain] HHH000412: Hibernate ORM core version 5.6.12.Final
+2023-01-08 14:50:52,670 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [restartedMain] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-01-08 14:50:52,711 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2023-01-08 14:50:52,848 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2023-01-08 14:50:52,855 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2023-01-08 14:50:53,413 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-08 14:50:53,418 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 14:50:54,191 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@79b6f610, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@fa45f0c, org.springframework.security.web.context.SecurityContextPersistenceFilter@4ce6acd1, org.springframework.security.web.header.HeaderWriterFilter@61489cda, org.springframework.security.web.authentication.logout.LogoutFilter@2e3cefde, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@42cb77df, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@779ff65b, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@4ec0761d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@76347589, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@133e877b, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@7193eb57, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@416bc5de, org.springframework.security.web.session.SessionManagementFilter@524129e9, org.springframework.security.web.access.ExceptionTranslationFilter@65ca56de, org.springframework.security.web.access.intercept.AuthorizationFilter@386e5639]
+2023-01-08 14:50:54,213 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-01-08 14:50:54,632 WARN org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [restartedMain] Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-01-08 14:50:54,651 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-01-08 14:50:54,665 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2023-01-08 14:50:54,683 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2023-01-08 14:50:54,690 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started SpringWebMvcApplication in 3.11 seconds (JVM running for 3.573)
+2023-01-08 14:51:07,366 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-01-08 14:51:07,367 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
+2023-01-08 14:51:07,368 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 1 ms
+2023-01-08 15:03:47,455 INFO org.springframework.boot.devtools.autoconfigure.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener [File Watcher] Restarting due to 2 class path changes (0 additions, 2 deletions, 0 modifications)
+2023-01-08 15:03:47,472 INFO org.apache.juli.logging.DirectJDKLog [Thread-5] Pausing ProtocolHandler ["http-nio-8080"]
+2023-01-08 15:03:47,472 INFO org.apache.juli.logging.DirectJDKLog [Thread-5] Stopping service [Tomcat]
+2023-01-08 15:03:47,473 INFO org.apache.juli.logging.DirectJDKLog [Thread-5] Destroying Spring FrameworkServlet 'dispatcherServlet'
+2023-01-08 15:03:47,492 INFO org.apache.juli.logging.DirectJDKLog [Thread-5] Stopping ProtocolHandler ["http-nio-8080"]
+2023-01-08 15:03:47,494 INFO org.apache.juli.logging.DirectJDKLog [Thread-5] Destroying ProtocolHandler ["http-nio-8080"]
+2023-01-08 15:03:47,500 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [Thread-5] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 15:03:47,503 INFO com.zaxxer.hikari.HikariDataSource [Thread-5] HikariPool-1 - Shutdown initiated...
+2023-01-08 15:03:47,507 INFO com.zaxxer.hikari.HikariDataSource [Thread-5] HikariPool-1 - Shutdown completed.
+2023-01-08 15:03:47,762 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting SpringWebMvcApplication using Java 19 on MacBook-Air-cua-tran.local with PID 5740 (/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes started by trantruong193 in /Users/trantruong193/laptrinh/springmvc/springWebMvc)
+2023-01-08 15:03:47,762 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2023-01-08 15:03:47,762 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-01-08 15:03:47,877 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-01-08 15:03:47,902 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 25 ms. Found 20 JPA repository interfaces.
+2023-01-08 15:03:47,996 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-01-08 15:03:47,996 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-01-08 15:03:47,996 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2023-01-08 15:03:47,996 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.68]
+2023-01-08 15:03:48,005 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-01-08 15:03:48,005 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 239 ms
+2023-01-08 15:03:48,040 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-08 15:03:48,044 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-2 - Starting...
+2023-01-08 15:03:48,058 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-2 - Start completed.
+2023-01-08 15:03:48,059 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2023-01-08 15:03:48,323 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-08 15:03:48,323 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 15:03:48,855 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@f15fa56, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6b948ad8, org.springframework.security.web.context.SecurityContextPersistenceFilter@7273f46c, org.springframework.security.web.header.HeaderWriterFilter@12bb619e, org.springframework.security.web.authentication.logout.LogoutFilter@14d5ea88, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@72c2c4e8, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@1ccb8a95, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@7dc69ac3, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@8f90bea, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@41072cfa, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@464c70de, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2b4b2a1d, org.springframework.security.web.session.SessionManagementFilter@33017ac5, org.springframework.security.web.access.ExceptionTranslationFilter@8be49c9, org.springframework.security.web.access.intercept.AuthorizationFilter@2afe1476]
+2023-01-08 15:03:48,864 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-01-08 15:03:49,005 WARN org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [restartedMain] Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-01-08 15:03:49,010 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-01-08 15:03:49,018 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2023-01-08 15:03:49,019 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2023-01-08 15:03:49,022 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started SpringWebMvcApplication in 1.418 seconds (JVM running for 777.921)
+2023-01-08 15:03:49,023 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2023-01-08 15:03:50,445 INFO org.springframework.boot.devtools.autoconfigure.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener [File Watcher] Restarting due to 2 class path changes (2 additions, 0 deletions, 0 modifications)
+2023-01-08 15:03:50,450 INFO org.apache.juli.logging.DirectJDKLog [Thread-7] Pausing ProtocolHandler ["http-nio-8080"]
+2023-01-08 15:03:50,450 INFO org.apache.juli.logging.DirectJDKLog [Thread-7] Stopping service [Tomcat]
+2023-01-08 15:03:50,452 INFO org.apache.juli.logging.DirectJDKLog [Thread-7] Stopping ProtocolHandler ["http-nio-8080"]
+2023-01-08 15:03:50,453 INFO org.apache.juli.logging.DirectJDKLog [Thread-7] Destroying ProtocolHandler ["http-nio-8080"]
+2023-01-08 15:03:50,461 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [Thread-7] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 15:03:50,461 INFO com.zaxxer.hikari.HikariDataSource [Thread-7] HikariPool-2 - Shutdown initiated...
+2023-01-08 15:03:50,463 INFO com.zaxxer.hikari.HikariDataSource [Thread-7] HikariPool-2 - Shutdown completed.
+2023-01-08 15:03:50,525 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting SpringWebMvcApplication using Java 19 on MacBook-Air-cua-tran.local with PID 5740 (/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes started by trantruong193 in /Users/trantruong193/laptrinh/springmvc/springWebMvc)
+2023-01-08 15:03:50,525 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2023-01-08 15:03:50,525 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-01-08 15:03:50,589 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-01-08 15:03:50,607 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 17 ms. Found 20 JPA repository interfaces.
+2023-01-08 15:03:50,674 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-01-08 15:03:50,674 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-01-08 15:03:50,674 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2023-01-08 15:03:50,674 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.68]
+2023-01-08 15:03:50,682 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-01-08 15:03:50,682 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 156 ms
+2023-01-08 15:03:50,711 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-08 15:03:50,714 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-3 - Starting...
+2023-01-08 15:03:50,729 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-3 - Start completed.
+2023-01-08 15:03:50,729 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2023-01-08 15:03:50,946 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-08 15:03:50,946 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 15:03:51,389 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@151f9463, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@273c097b, org.springframework.security.web.context.SecurityContextPersistenceFilter@3a956708, org.springframework.security.web.header.HeaderWriterFilter@7760b40a, org.springframework.security.web.authentication.logout.LogoutFilter@10237a4, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@17a4a6b5, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@4ced0e0e, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@78b0ef7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@58315e15, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2a8371fd, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@4abcd775, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@385feec, org.springframework.security.web.session.SessionManagementFilter@1b24346d, org.springframework.security.web.access.ExceptionTranslationFilter@58c75027, org.springframework.security.web.access.intercept.AuthorizationFilter@622c8f61]
+2023-01-08 15:03:51,395 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-01-08 15:03:51,505 WARN org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [restartedMain] Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-01-08 15:03:51,509 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-01-08 15:03:51,516 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2023-01-08 15:03:51,517 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2023-01-08 15:03:51,519 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started SpringWebMvcApplication in 1.007 seconds (JVM running for 780.418)
+2023-01-08 15:03:51,520 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2023-01-08 15:11:18,714 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 15:11:18,717 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-3 - Shutdown initiated...
+2023-01-08 15:11:18,723 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-3 - Shutdown completed.
+2023-01-08 15:11:21,195 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.2.5.Final
+2023-01-08 15:11:21,194 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting SpringWebMvcApplication using Java 19 on MacBook-Air-cua-tran.local with PID 5918 (/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes started by trantruong193 in /Users/trantruong193/laptrinh/springmvc/springWebMvc)
+2023-01-08 15:11:21,195 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2023-01-08 15:11:21,195 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-01-08 15:11:21,282 INFO org.springframework.boot.logging.DeferredLog [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-01-08 15:11:21,282 INFO org.springframework.boot.logging.DeferredLog [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-01-08 15:11:21,588 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-01-08 15:11:21,629 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 37 ms. Found 20 JPA repository interfaces.
+2023-01-08 15:11:21,944 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-01-08 15:11:21,948 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-01-08 15:11:21,949 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2023-01-08 15:11:21,949 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.68]
+2023-01-08 15:11:21,984 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-01-08 15:11:21,984 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 702 ms
+2023-01-08 15:11:22,089 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-08 15:11:22,112 INFO org.hibernate.Version [restartedMain] HHH000412: Hibernate ORM core version 5.6.12.Final
+2023-01-08 15:11:22,181 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [restartedMain] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-01-08 15:11:22,226 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2023-01-08 15:11:22,378 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2023-01-08 15:11:22,385 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2023-01-08 15:11:22,931 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-08 15:11:22,935 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 15:11:23,700 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@78dbbe0e, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@bc6b46f, org.springframework.security.web.context.SecurityContextPersistenceFilter@152b0083, org.springframework.security.web.header.HeaderWriterFilter@7719a7d8, org.springframework.security.web.authentication.logout.LogoutFilter@2c23a70c, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@3b2b4e3c, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@54907ba, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@4dd06a2c, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@b4422e3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4e0c8499, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@35e20bdf, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@dd067a0, org.springframework.security.web.session.SessionManagementFilter@386e5639, org.springframework.security.web.access.ExceptionTranslationFilter@226a299d, org.springframework.security.web.access.intercept.AuthorizationFilter@7beb1d6f]
+2023-01-08 15:11:23,722 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-01-08 15:11:24,132 WARN org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [restartedMain] Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-01-08 15:11:24,149 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-01-08 15:11:24,162 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2023-01-08 15:11:24,169 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2023-01-08 15:11:24,176 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started SpringWebMvcApplication in 3.158 seconds (JVM running for 3.623)
+2023-01-08 15:14:52,365 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-01-08 15:14:52,365 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
+2023-01-08 15:14:52,371 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 5 ms
+2023-01-08 15:15:08,309 TRACE com.example.springWebMvc.service.impl.UserDetailServiceImpl [http-nio-8080-exec-3] Enter loadUserByUsername() method.
+2023-01-08 15:15:08,310 DEBUG com.example.springWebMvc.service.impl.UserDetailServiceImpl [http-nio-8080-exec-3] Authenticating User : customer11
+2023-01-08 15:15:08,336 INFO com.example.springWebMvc.service.impl.UserDetailServiceImpl [http-nio-8080-exec-3] User authenticated successfully.
+2023-01-08 15:40:36,143 WARN org.springframework.web.servlet.DispatcherServlet [http-nio-8080-exec-8] No mapping for GET /site/productDetail/2
+2023-01-08 15:41:05,992 WARN org.springframework.web.servlet.DispatcherServlet [http-nio-8080-exec-9] No mapping for GET /site/productDetail/2
+2023-01-08 15:41:09,001 WARN org.springframework.web.servlet.DispatcherServlet [http-nio-8080-exec-4] No mapping for GET /site/productDetail/2
+2023-01-08 16:01:02,437 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 16:01:02,444 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown initiated...
+2023-01-08 16:01:02,448 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-1 - Shutdown completed.
+2023-01-08 16:01:04,783 INFO org.hibernate.validator.internal.util.Version [background-preinit] HV000001: Hibernate Validator 6.2.5.Final
+2023-01-08 16:01:04,783 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting SpringWebMvcApplication using Java 19 on MacBook-Air-cua-tran.local with PID 6190 (/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes started by trantruong193 in /Users/trantruong193/laptrinh/springmvc/springWebMvc)
+2023-01-08 16:01:04,783 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2023-01-08 16:01:04,784 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-01-08 16:01:04,873 INFO org.springframework.boot.logging.DeferredLog [restartedMain] Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-01-08 16:01:04,873 INFO org.springframework.boot.logging.DeferredLog [restartedMain] For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-01-08 16:01:05,178 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-01-08 16:01:05,223 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 42 ms. Found 20 JPA repository interfaces.
+2023-01-08 16:01:05,547 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-01-08 16:01:05,551 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-01-08 16:01:05,552 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2023-01-08 16:01:05,552 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.68]
+2023-01-08 16:01:05,586 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-01-08 16:01:05,586 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 713 ms
+2023-01-08 16:01:05,702 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-08 16:01:05,723 INFO org.hibernate.Version [restartedMain] HHH000412: Hibernate ORM core version 5.6.12.Final
+2023-01-08 16:01:05,792 INFO org.hibernate.annotations.common.reflection.java.JavaReflectionManager [restartedMain] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-01-08 16:01:05,834 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Starting...
+2023-01-08 16:01:05,993 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-1 - Start completed.
+2023-01-08 16:01:06,001 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2023-01-08 16:01:06,558 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-08 16:01:06,563 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 16:01:07,320 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@7fd98c1a, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1645eb92, org.springframework.security.web.context.SecurityContextPersistenceFilter@3077c893, org.springframework.security.web.header.HeaderWriterFilter@5067e65d, org.springframework.security.web.authentication.logout.LogoutFilter@1fd2711d, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@512d5818, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@54c88c7, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@2f3118b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4ce6acd1, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3c0f7dd9, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@1e3225ab, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7ed1f1ad, org.springframework.security.web.session.SessionManagementFilter@61489cda, org.springframework.security.web.access.ExceptionTranslationFilter@14a51d77, org.springframework.security.web.access.intercept.AuthorizationFilter@7719a7d8]
+2023-01-08 16:01:07,347 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-01-08 16:01:07,763 WARN org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [restartedMain] Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-01-08 16:01:07,781 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-01-08 16:01:07,793 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2023-01-08 16:01:07,801 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2023-01-08 16:01:07,807 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started SpringWebMvcApplication in 3.22 seconds (JVM running for 3.566)
+2023-01-08 16:01:20,469 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-01-08 16:01:20,470 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
+2023-01-08 16:01:20,473 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 3 ms
+2023-01-08 16:01:22,754 ERROR org.thymeleaf.TemplateEngine [http-nio-8080-exec-3] [THYMELEAF][http-nio-8080-exec-3] Exception processing template "/redirect:/site/wish-list": An error happened during template parsing (template: "ServletContext resource [/WEB-INF/templates//redirect:/site/wish-list.html]")
+org.thymeleaf.exceptions.TemplateInputException: An error happened during template parsing (template: "ServletContext resource [/WEB-INF/templates//redirect:/site/wish-list.html]")
+	at org.thymeleaf.templateparser.markup.AbstractMarkupTemplateParser.parse(AbstractMarkupTemplateParser.java:235)
+	at org.thymeleaf.templateparser.markup.AbstractMarkupTemplateParser.parseStandalone(AbstractMarkupTemplateParser.java:100)
+	at org.thymeleaf.engine.TemplateManager.parseAndProcess(TemplateManager.java:666)
+	at org.thymeleaf.TemplateEngine.process(TemplateEngine.java:1098)
+	at org.thymeleaf.TemplateEngine.process(TemplateEngine.java:1072)
+	at org.thymeleaf.spring5.view.ThymeleafView.renderFragment(ThymeleafView.java:366)
+	at org.thymeleaf.spring5.view.ThymeleafView.render(ThymeleafView.java:190)
+	at org.springframework.web.servlet.DispatcherServlet.render(DispatcherServlet.java:1405)
+	at org.springframework.web.servlet.DispatcherServlet.processDispatchResult(DispatcherServlet.java:1149)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1088)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:964)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:670)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:337)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilterInternal(AuthorizationFilter.java:73)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:122)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:109)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:106)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:223)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:217)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:223)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:217)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter.doFilterInternal(OAuth2AuthorizationRequestRedirectFilter.java:178)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:112)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:82)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:221)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1789)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:1589)
+Caused by: java.io.FileNotFoundException: Could not open ServletContext resource [/WEB-INF/templates//redirect:/site/wish-list.html]
+	at org.springframework.web.context.support.ServletContextResource.getInputStream(ServletContextResource.java:159)
+	at org.thymeleaf.spring5.templateresource.SpringResourceTemplateResource.reader(SpringResourceTemplateResource.java:103)
+	at org.thymeleaf.templateparser.markup.AbstractMarkupTemplateParser.parse(AbstractMarkupTemplateParser.java:223)
+	... 90 common frames omitted
+2023-01-08 16:01:22,755 ERROR org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-3] Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.thymeleaf.exceptions.TemplateInputException: An error happened during template parsing (template: "ServletContext resource [/WEB-INF/templates//redirect:/site/wish-list.html]")] with root cause
+java.io.FileNotFoundException: Could not open ServletContext resource [/WEB-INF/templates//redirect:/site/wish-list.html]
+	at org.springframework.web.context.support.ServletContextResource.getInputStream(ServletContextResource.java:159)
+	at org.thymeleaf.spring5.templateresource.SpringResourceTemplateResource.reader(SpringResourceTemplateResource.java:103)
+	at org.thymeleaf.templateparser.markup.AbstractMarkupTemplateParser.parse(AbstractMarkupTemplateParser.java:223)
+	at org.thymeleaf.templateparser.markup.AbstractMarkupTemplateParser.parseStandalone(AbstractMarkupTemplateParser.java:100)
+	at org.thymeleaf.engine.TemplateManager.parseAndProcess(TemplateManager.java:666)
+	at org.thymeleaf.TemplateEngine.process(TemplateEngine.java:1098)
+	at org.thymeleaf.TemplateEngine.process(TemplateEngine.java:1072)
+	at org.thymeleaf.spring5.view.ThymeleafView.renderFragment(ThymeleafView.java:366)
+	at org.thymeleaf.spring5.view.ThymeleafView.render(ThymeleafView.java:190)
+	at org.springframework.web.servlet.DispatcherServlet.render(DispatcherServlet.java:1405)
+	at org.springframework.web.servlet.DispatcherServlet.processDispatchResult(DispatcherServlet.java:1149)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1088)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:964)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:670)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:337)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilterInternal(AuthorizationFilter.java:73)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:122)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:116)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126)
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:109)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:106)
+	at org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter.doFilter(RememberMeAuthenticationFilter.java:97)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:223)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:217)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:223)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:217)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter.doFilterInternal(OAuth2AuthorizationRequestRedirectFilter.java:178)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:112)
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:82)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:221)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:197)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:893)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1789)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.base/java.lang.Thread.run(Thread.java:1589)
+2023-01-08 16:01:57,082 INFO org.springframework.boot.devtools.autoconfigure.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener [File Watcher] Restarting due to 1 class path change (0 additions, 1 deletion, 0 modifications)
+2023-01-08 16:01:57,093 INFO org.apache.juli.logging.DirectJDKLog [Thread-5] Pausing ProtocolHandler ["http-nio-8080"]
+2023-01-08 16:01:57,093 INFO org.apache.juli.logging.DirectJDKLog [Thread-5] Stopping service [Tomcat]
+2023-01-08 16:01:57,095 INFO org.apache.juli.logging.DirectJDKLog [Thread-5] Destroying Spring FrameworkServlet 'dispatcherServlet'
+2023-01-08 16:01:57,100 INFO org.apache.juli.logging.DirectJDKLog [Thread-5] Stopping ProtocolHandler ["http-nio-8080"]
+2023-01-08 16:01:57,103 INFO org.apache.juli.logging.DirectJDKLog [Thread-5] Destroying ProtocolHandler ["http-nio-8080"]
+2023-01-08 16:01:57,115 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [Thread-5] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 16:01:57,122 INFO com.zaxxer.hikari.HikariDataSource [Thread-5] HikariPool-1 - Shutdown initiated...
+2023-01-08 16:01:57,131 INFO com.zaxxer.hikari.HikariDataSource [Thread-5] HikariPool-1 - Shutdown completed.
+2023-01-08 16:01:57,275 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting SpringWebMvcApplication using Java 19 on MacBook-Air-cua-tran.local with PID 6190 (/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes started by trantruong193 in /Users/trantruong193/laptrinh/springmvc/springWebMvc)
+2023-01-08 16:01:57,275 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2023-01-08 16:01:57,276 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-01-08 16:01:57,395 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-01-08 16:01:57,417 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 22 ms. Found 20 JPA repository interfaces.
+2023-01-08 16:01:57,499 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-01-08 16:01:57,499 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-01-08 16:01:57,499 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2023-01-08 16:01:57,499 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.68]
+2023-01-08 16:01:57,507 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-01-08 16:01:57,508 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 231 ms
+2023-01-08 16:01:57,542 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-08 16:01:57,546 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-2 - Starting...
+2023-01-08 16:01:57,560 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-2 - Start completed.
+2023-01-08 16:01:57,560 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2023-01-08 16:01:57,804 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-08 16:01:57,804 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 16:01:58,244 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3c4531fb, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@43fbad94, org.springframework.security.web.context.SecurityContextPersistenceFilter@3e1cc0df, org.springframework.security.web.header.HeaderWriterFilter@154ca331, org.springframework.security.web.authentication.logout.LogoutFilter@4817922d, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@5a54b2bd, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@726df680, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@2e26cbae, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@41002e78, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@31a54842, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@2426f56a, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5e3f8a9d, org.springframework.security.web.session.SessionManagementFilter@4e7df59b, org.springframework.security.web.access.ExceptionTranslationFilter@5c346afe, org.springframework.security.web.access.intercept.AuthorizationFilter@1358a8b7]
+2023-01-08 16:01:58,252 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-01-08 16:01:58,369 WARN org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [restartedMain] Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-01-08 16:01:58,374 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-01-08 16:01:58,383 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2023-01-08 16:01:58,384 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2023-01-08 16:01:58,390 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started SpringWebMvcApplication in 1.143 seconds (JVM running for 54.15)
+2023-01-08 16:01:58,391 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2023-01-08 16:01:59,820 INFO org.springframework.boot.devtools.autoconfigure.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener [File Watcher] Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
+2023-01-08 16:01:59,826 INFO org.apache.juli.logging.DirectJDKLog [Thread-7] Pausing ProtocolHandler ["http-nio-8080"]
+2023-01-08 16:01:59,826 INFO org.apache.juli.logging.DirectJDKLog [Thread-7] Stopping service [Tomcat]
+2023-01-08 16:01:59,830 INFO org.apache.juli.logging.DirectJDKLog [Thread-7] Stopping ProtocolHandler ["http-nio-8080"]
+2023-01-08 16:01:59,831 INFO org.apache.juli.logging.DirectJDKLog [Thread-7] Destroying ProtocolHandler ["http-nio-8080"]
+2023-01-08 16:01:59,838 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [Thread-7] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 16:01:59,839 INFO com.zaxxer.hikari.HikariDataSource [Thread-7] HikariPool-2 - Shutdown initiated...
+2023-01-08 16:01:59,842 INFO com.zaxxer.hikari.HikariDataSource [Thread-7] HikariPool-2 - Shutdown completed.
+2023-01-08 16:01:59,889 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Starting SpringWebMvcApplication using Java 19 on MacBook-Air-cua-tran.local with PID 6190 (/Users/trantruong193/laptrinh/springmvc/springWebMvc/target/classes started by trantruong193 in /Users/trantruong193/laptrinh/springmvc/springWebMvc)
+2023-01-08 16:01:59,889 DEBUG org.springframework.boot.StartupInfoLogger [restartedMain] Running with Spring Boot v2.7.5, Spring v5.3.23
+2023-01-08 16:01:59,889 INFO org.springframework.boot.SpringApplication [restartedMain] No active profile set, falling back to 1 default profile: "default"
+2023-01-08 16:01:59,960 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-01-08 16:01:59,980 INFO org.springframework.data.repository.config.RepositoryConfigurationDelegate [restartedMain] Finished Spring Data repository scanning in 20 ms. Found 20 JPA repository interfaces.
+2023-01-08 16:02:00,049 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat initialized with port(s): 8080 (http)
+2023-01-08 16:02:00,050 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing ProtocolHandler ["http-nio-8080"]
+2023-01-08 16:02:00,050 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting service [Tomcat]
+2023-01-08 16:02:00,050 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting Servlet engine: [Apache Tomcat/9.0.68]
+2023-01-08 16:02:00,057 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Initializing Spring embedded WebApplicationContext
+2023-01-08 16:02:00,057 INFO org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [restartedMain] Root WebApplicationContext: initialization completed in 167 ms
+2023-01-08 16:02:00,087 INFO org.hibernate.jpa.internal.util.LogHelper [restartedMain] HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-01-08 16:02:00,090 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-3 - Starting...
+2023-01-08 16:02:00,105 INFO com.zaxxer.hikari.HikariDataSource [restartedMain] HikariPool-3 - Start completed.
+2023-01-08 16:02:00,105 INFO org.hibernate.dialect.Dialect [restartedMain] HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2023-01-08 16:02:00,330 INFO org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [restartedMain] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-01-08 16:02:00,330 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [restartedMain] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 16:02:00,801 INFO org.springframework.security.web.DefaultSecurityFilterChain [restartedMain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@73772b65, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2bcc9826, org.springframework.security.web.context.SecurityContextPersistenceFilter@197d6bbf, org.springframework.security.web.header.HeaderWriterFilter@7e879b39, org.springframework.security.web.authentication.logout.LogoutFilter@3bcb83f7, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@7ed4d6e3, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@42751ef4, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@19673a03, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2f086455, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6d147cde, org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter@53e0a438, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@4124a115, org.springframework.security.web.session.SessionManagementFilter@16e659e5, org.springframework.security.web.access.ExceptionTranslationFilter@4a3f8f9a, org.springframework.security.web.access.intercept.AuthorizationFilter@19b106a4]
+2023-01-08 16:02:00,810 WARN org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [restartedMain] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-01-08 16:02:00,931 WARN org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration [restartedMain] Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-01-08 16:02:00,935 INFO org.springframework.boot.devtools.autoconfigure.OptionalLiveReloadServer [restartedMain] LiveReload server is running on port 35729
+2023-01-08 16:02:00,943 INFO org.apache.juli.logging.DirectJDKLog [restartedMain] Starting ProtocolHandler ["http-nio-8080"]
+2023-01-08 16:02:00,944 INFO org.springframework.boot.web.embedded.tomcat.TomcatWebServer [restartedMain] Tomcat started on port(s): 8080 (http) with context path ''
+2023-01-08 16:02:00,947 INFO org.springframework.boot.StartupInfoLogger [restartedMain] Started SpringWebMvcApplication in 1.07 seconds (JVM running for 56.707)
+2023-01-08 16:02:00,947 INFO org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener [restartedMain] Condition evaluation unchanged
+2023-01-08 16:02:12,669 INFO org.apache.juli.logging.DirectJDKLog [http-nio-8080-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-01-08 16:02:12,671 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Initializing Servlet 'dispatcherServlet'
+2023-01-08 16:02:12,676 INFO org.springframework.web.servlet.FrameworkServlet [http-nio-8080-exec-1] Completed initialization in 5 ms
+2023-01-08 16:02:21,048 INFO org.springframework.orm.jpa.AbstractEntityManagerFactoryBean [SpringApplicationShutdownHook] Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-01-08 16:02:21,049 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-3 - Shutdown initiated...
+2023-01-08 16:02:21,051 INFO com.zaxxer.hikari.HikariDataSource [SpringApplicationShutdownHook] HikariPool-3 - Shutdown completed.

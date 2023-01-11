@@ -31,6 +31,10 @@ import java.util.List;
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
+    @ModelAttribute("link")
+    public String getLink(){
+        return "category";
+    }
     @RequestMapping("")
     public String loadAll (Model model,@RequestParam(name = "sort",required = false) String sortType,
             @PageableDefault(size = 5,sort = "catId",direction = Sort.Direction.ASC) Pageable pageable){

@@ -1,0 +1,22 @@
+.chart{
+    height: 320px;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+.item{
+    width: 60px;
+    text-align: center;
+    height: var(--percent);
+    animation: growth ease-in 4s;
+}
+@keyframes growth {
+    from{
+        opacity: 0;
+        height: calc(var(--percent) - 100%);
+    }
+    to{
+        opacity: 1;
+        height: calc(var(--percent))
+    }
+}

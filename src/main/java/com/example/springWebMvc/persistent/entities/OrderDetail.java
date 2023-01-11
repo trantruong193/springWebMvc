@@ -18,6 +18,7 @@ public class OrderDetail {
     private int quantity;
     @ManyToOne
     @JoinColumn(name = "productDetailId")
+    @ToString.Exclude
     private ProductDetail productDetail;
     @ManyToOne
     @JoinColumn(name = "orderId")

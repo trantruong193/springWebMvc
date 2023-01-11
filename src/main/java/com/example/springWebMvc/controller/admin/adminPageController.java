@@ -3,31 +3,19 @@ package com.example.springWebMvc.controller.admin;
 import com.example.springWebMvc.persistent.OrderStatus;
 import com.example.springWebMvc.persistent.ShippingFee;
 import com.example.springWebMvc.persistent.Tax;
-import com.example.springWebMvc.persistent.dto.CustomerDTO;
-import com.example.springWebMvc.persistent.dto.OrderDTO;
-import com.example.springWebMvc.persistent.dto.UserDTO;
+import com.example.springWebMvc.persistent.dto.*;
 import com.example.springWebMvc.persistent.entities.*;
-import com.example.springWebMvc.repository.CustomerRepository;
-import com.example.springWebMvc.repository.OrderRepository;
-import com.example.springWebMvc.repository.ReviewRepository;
 import com.example.springWebMvc.repository.RoleRepository;
 import com.example.springWebMvc.service.*;
-import com.example.springWebMvc.test.ProRepo;
 import com.example.springWebMvc.utility.OrderExcelExporter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.support.QuerydslJpaRepository;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.thymeleaf.expression.Lists;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
@@ -36,7 +24,10 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("admin")
@@ -50,20 +41,20 @@ public class adminPageController {
     ReviewService reviewService;
     ProductDetailService productDetailService;
     UserService userService;
-    private final OrderRepository orderRepository;
     private final RoleRepository roleRepository;
     MailSenderService mailSenderService;
+    OrderTrackingService trackingService;
 
     @Autowired
     public adminPageController(BannerService bannerService,
                                OrderService orderService,
                                FileUploadService fileUploadService,
                                OrderDetailService orderDetailService,
+                               OrderTrackingService trackingService,
                                MessageService messageService,
                                ProductDetailService productDetailService,
                                UserService userService,
                                ReviewService reviewService,
-                               OrderRepository orderRepository,
                                RoleRepository roleRepository,
                                MailSenderService mailSenderService){
         this.bannerService = bannerService;
@@ -73,8 +64,8 @@ public class adminPageController {
         this.messageService = messageService;
         this.reviewService = reviewService;
         this.userService  = userService;
+        this.trackingService = trackingService;
         this.productDetailService = productDetailService;
-        this.orderRepository = orderRepository;
         this.roleRepository = roleRepository;
         this.mailSenderService = mailSenderService;
     }
@@ -83,13 +74,26 @@ public class adminPageController {
         model.addAttribute("banners",bannerService.getAllBanner());
         model.addAttribute("messages",messageService.getByStatus(false));
         model.addAttribute("reviews",reviewService.getByStatus(false));
-        List<OrderDTO> orderDTOS = new ArrayList<>();
-        List<Order> orders = orderService.findByStatus(OrderStatus.Ordering);
-        orders.forEach(order -> {
-            orderDTOS.add(new OrderDTO(order));
+        model.addAttribute("link","home");
+        // get ordering list
+        List<OrderDTO> orderDTO = new ArrayList<>();
+        List<Order> orderList = orderService.findByStatus(OrderStatus.Ordering);
+        orderList.forEach(order -> {
+            orderDTO.add(new OrderDTO(order));
         });
-        orderDTOS.sort(((o1, o2) -> o2.getCreateTime().compareTo(o1.getCreateTime())));
-        model.addAttribute("orders",orderDTOS);
+        // get recently update list
+        List<OrderDTO> updateDTO = new ArrayList<>();
+        List<Order> updateList = orderService.findByStatus(OrderStatus.Update);
+        updateList.forEach(order -> updateDTO.add(new OrderDTO(order)));
+        updateDTO.sort(((o1, o2) -> o2.getCreateTime().compareTo(o1.getCreateTime())));
+        // get order report in 30 day
+        Date today = new Date();
+        Date end = new Date(today.getTime()- 30L *86400000);
+        List<Order> list30Days = orderService.findByDate(end,today);
+        OrderReport report = new OrderReport(list30Days);
+        model.addAttribute("orders",orderDTO);
+        model.addAttribute("updates",updateDTO);
+        model.addAttribute("report",report);
         return "admin/fragment/adminHome";
     }
     @GetMapping("/banner/edit/{bannerId}")
@@ -134,7 +138,7 @@ public class adminPageController {
         if (orderId != null)
             orders = orderService.getAllByOrderId(orderId);
         else{
-            if (phone == "")
+            if (Objects.equals(phone, ""))
                 phone = null;
             if (date!=null) {
                 // format date
@@ -149,9 +153,9 @@ public class adminPageController {
 
                 if (phone!= null && status != null){
                     orders = orderService.findByPhoneStatusDate(phone,status,start,end);
-                } else if (phone!= null && status == null) {
+                } else if (phone != null) {
                     orders = orderService.findByPhoneDate(phone,start,end);
-                }else if (phone == null && status != null) {
+                }else if (status != null) {
                     orders = orderService.findByStatusDate(status,start,end);
                 }
                 else {
@@ -160,9 +164,9 @@ public class adminPageController {
             }else {
                 if (phone!= null && status != null){
                     orders = orderService.findByPhoneStatus(phone,status);
-                } else if (phone!= null && status == null) {
+                } else if (phone != null) {
                     orders = orderService.getAllByPhone(phone);
-                }else if (phone == null && status != null){
+                }else if (status != null){
                     orders = orderService.findByStatus(status);
                 }else {
                     Date today = new Date();
@@ -180,6 +184,8 @@ public class adminPageController {
         model.addAttribute("mstatus",status);
         model.addAttribute("date",date);
         model.addAttribute("list",lists);
+        model.addAttribute("link","order");
+
         return "admin/fragment/order/list";
     }
     @GetMapping("exportExcelAll")
@@ -232,15 +238,24 @@ public class adminPageController {
                               @RequestParam("cusName") String cusName,
                               @RequestParam("phone") String phone,
                               @RequestParam("status") OrderStatus status,
-                              @RequestParam("address") String address,Model model){
+                              @RequestParam("address") String address,
+                              @AuthenticationPrincipal CustomizeUserDetails userDetails){
         if (orderId != null){
             Order order = orderService.getByOrderId(orderId);
             if (order != null){
                 order.setCusName(cusName);
                 order.setPhone(phone);
                 order.setAddress(address);
-                order.setStatus(status);
+                if (!order.getStatus().equals(status)){
+                    order.setStatus(status);
+                }else {
+                    order.setStatus(OrderStatus.Update);
+                }
                 orderService.save(order);
+
+                // save new order tracking
+                trackingService.trackOrder(status,orderId,"Admin " + userDetails.getUsername() + " updates order");
+
                 if (status.equals(OrderStatus.Complete)){
                     order.getOrderDetails().forEach(orderDetail -> {
                         ProductDetail productDetail = orderDetail.getProductDetail();
@@ -249,25 +264,29 @@ public class adminPageController {
                         );
                         productDetailService.save(productDetail);
                     });
+                    trackingService.deleteTrackingOrder(orderId);
                 }
             }
         }
         return "redirect:/admin/order";
     }
     @GetMapping("cancelOrder/{orderId}")
-    public String cancelOrder(@PathVariable("orderId") Long orderId){
+    public String cancelOrder(@PathVariable("orderId") Long orderId,@AuthenticationPrincipal CustomizeUserDetails admin){
         if (orderId!=null){
             Order order = orderService.getByOrderId(orderId);
             if (order != null){
                 order.setStatus(OrderStatus.Cancel);
                 orderService.save(order);
+                // save new order tracking
+                trackingService.trackOrder(OrderStatus.Cancel,orderId,"Admin " + admin.getUsername() + " cancels order");
             }
         }
         return "redirect:/admin/order";
     }
     @GetMapping("updateOrderDetail/{detailId}")
     public String updateOrderDetail(@PathVariable("detailId") Long detailId,Model model,
-                                    @RequestParam("quantity") int quantity){
+                                    @RequestParam("quantity") int quantity,
+                                    @AuthenticationPrincipal CustomizeUserDetails admin){
         if (quantity<0){
             model.addAttribute("error","Invalid data !!!");
             return "redirect:/admin/order";
@@ -280,11 +299,24 @@ public class adminPageController {
                     // set new quantity for order detail
                     detail.setQuantity(quantity);
                     orderDetailService.save(detail);
+
+                    // save new order tracking
+                    String message = "Admin " + admin.getUsername() + " updates product quantity: "
+                            + detail.getProductDetail().getProduct().getProName() + " to " + quantity;
+                    trackingService.trackOrder(OrderStatus.Update,orderId,message);
+
                 }else{
                     orderDetailService.delete(detailId);
+
+                    // save new order tracking
+                    trackingService.trackOrder(OrderStatus.Update,orderId,"Admin " + admin.getUsername() + " delete product: " +
+                            detail.getProductDetail().getProduct().getProName() + " from order.");
                 }
                 // re-calculate total price
                 Order order = orderService.getByOrderId(orderId);
+                // set new status for order
+                order.setStatus(OrderStatus.Update);
+
                 if (!order.getOrderDetails().isEmpty()){
                     double price = order.getOrderDetails().stream().mapToDouble(item->(item.getQuantity()*item.getPrice())).sum();
                     if (price>50){
@@ -294,12 +326,14 @@ public class adminPageController {
                     }
                     orderService.save(order);
                 }
+                // save new order tracking
             }
         }
         return "redirect:/admin/order";
     }
     @GetMapping("cancelOrderDetail/{orderDetailId}")
-    public String cancelOrderDetail(@PathVariable("orderDetailId") Long orderDetailId){
+    public String cancelOrderDetail(@PathVariable("orderDetailId") Long orderDetailId,
+                                    @AuthenticationPrincipal CustomizeUserDetails admin){
         if (orderDetailId!=null){
             OrderDetail detail = orderDetailService.getById(orderDetailId);
             if (detail != null){
@@ -314,8 +348,12 @@ public class adminPageController {
                     }else {
                         order.setTotalPrice(price * Tax.tax10 + ShippingFee.Ship10);
                     }
+                    order.setStatus(OrderStatus.Update);
                     orderService.save(order);
                 }
+                // save new order tracking
+                trackingService.trackOrder(OrderStatus.Update,orderId,"Admin " + admin.getUsername() + " delete product: " +
+                        detail.getProductDetail().getProduct().getProName() + " from order.");
             }
         }
         return "forward:/admin/order";
@@ -348,9 +386,9 @@ public class adminPageController {
                     model.addAttribute("customer",new CustomerDTO(customer));
                 }
             }
-        }else {
-            model.addAttribute("customer",new CustomerDTO());
         }
+        model.addAttribute("link","account");
+
         return "admin/fragment/webmanager/customer-infor";
     }
     @GetMapping("/account/update/{userId}")

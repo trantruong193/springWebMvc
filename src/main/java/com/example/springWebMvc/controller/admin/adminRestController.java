@@ -92,7 +92,9 @@ public class adminRestController {
     @GetMapping("/addToCart")
     public int addToCart (@RequestParam(name = "productDetailId",required = false) Long cId,
                                             @RequestParam(name = "quantity",required = false) int quantity){
-        cartService.add(cId,quantity);
+        if (cId!=null){
+            cartService.add(cId,quantity);
+        }
         return cartService.getCount();
     }
     @GetMapping("/checkUsername")

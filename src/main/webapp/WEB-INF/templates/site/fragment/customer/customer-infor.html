@@ -13,6 +13,11 @@
                 reader.readAsDataURL(fileInput.files[0]);
             }
         }
+        function hideTable(index){
+            $(".form"+index).toggle();
+            $("#btnHide"+index).toggle();
+            $("#btnShow"+index).toggle();
+        }
     </script>
 </head>
 <body>
@@ -100,12 +105,14 @@
                 </div>
                 <div class="col-lg-4">
                     <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Order Total</span></h5>
-                    <div class="bg-light p-30 mb-3">
+                    <div class="bg-light p-30 mb-3 overflow-auto" style="height: 433px;">
                         <div class="border-bottom">
                             <h6 class="mb-3">Products</h6>
                             <div class="d-flex justify-content-between" th:each="item:${cartItems}">
-                                <p th:text="${item.productDetailName}"></p>
-                                <p th:text="${item.quantity}+' sản phẩm'"></p>
+                                <p th:if="${item.productDetailName.length()>=20}" th:text="${#strings.substring(item.productDetailName,0,20)}+'...'"></p>
+                                <p th:unless="${item.productDetailName.length()>=20}" th:text="${item.productDetailName}"></p>
+                                <p th:if="${item.quantity<2}" th:text="${item.quantity}+' product'"></p>
+                                <p th:unless="${item.quantity<2}" th:text="${item.quantity}+' products'"></p>
                                 <p th:text="${#numbers.formatDecimal(item.price*item.quantity,1,1)}+'$'"></p>
                             </div>
                         </div>
@@ -144,10 +151,11 @@
                 <div class="col">
                     <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Order Status</span></h5>
                     <h4  th:if="${list.isEmpty()}" class="text-center">You haven't bought anythings <span><i class="fas fa-sad-tear"></i></span></h4>
-                    <div class="bg-light p-30 mb-3"  th:if="${!list.isEmpty()}">
-                        <table class=" table-responsive table">
-                            <thead class="table-success text-center">
+                    <div class="bg-light p-30 mb-3 overflow-auto" style="height: 500px" th:if="${!list.isEmpty()}">
+                        <table class=" table-responsive table text-center">
+                            <thead class="table-success">
                             <tr>
+                                <td></td>
                                 <td>Order Code</td>
                                 <td>Name</td>
                                 <td>Phone</td>
@@ -160,10 +168,22 @@
                                 <td></td>
                             </tr>
                             </thead>
-                            <tbody th:each="item:${list}">
+                            <tbody th:each="item,index:${list}">
                             <form method="post" th:action="@{'/site/customer/updateOrder/'+${item.orderId}}">
                                 <tr class="table-info">
-                                    <td class="text-truncate" th:text="${item.orderCode}"></td>
+                                    <td>
+                                        <button th:id="'btnShow'+${index.index}" type="button" class="btn btn-outline-success border-0 rounded"
+                                                 th:value="${index.index}" onclick="hideTable(this.value)">
+                                            <i class="far fa-info-circle"></i>
+                                        </button>
+                                        <button th:id="'btnHide'+${index.index}" type="button" style="display: none" class="btn btn-outline-danger border-0 rounded"
+                                                 th:value="${index.index}" onclick="hideTable(this.value)">
+                                            <i class="fas fa-eye-slash"></i>
+                                        </button>
+                                    </td>
+                                    <td class="text-truncate">
+                                        <a class="text-success" th:href="@{'/site/findOrder?orderCode='+${item.orderCode}}"  th:text="${item.orderCode}"></a>
+                                    </td>
                                     <td>
                                         <input type="text" class="rounded text-center border-0" name="cusName" th:value="${item.cusName}" required>
                                     </td>
@@ -190,9 +210,14 @@
                                             <i class="fas fa-trash"></i>
                                         </a>
                                     </td>
+                                    <th:block  th:unless="${#strings.equals(item.status,'Ordering')}">
+                                        <td></td>
+                                        <td></td>
+                                    </th:block>
                                 </tr>
                                 <th:block th:each="p:${item.orderDetailDTOList}">
-                                    <tr class="text-center">
+                                    <tr th:class="'form'+${index.index}" style="display: none">
+                                        <td></td>
                                         <td></td>
                                         <td th:text="${p.productDetailDTO.productName}"></td>
                                         <td th:unless="${#strings.equals(p.productDetailDTO.typeName,'----')}" th:text="${p.productDetailDTO.typeName}"></td>

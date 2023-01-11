@@ -33,6 +33,7 @@ public class ProductDTO implements Serializable {
     private String proName;
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
+    @NotNull
     private Long producerId;
     @Min(0)
     @NotNull
@@ -47,7 +48,9 @@ public class ProductDTO implements Serializable {
     private String imgUrl1;
     private String imgUrl2;
     private String imgUrl3;
+    @NotNull
     private Long catId;
+    @NotNull
     private Long catalogId;
     @NotEmpty
     @Length(max = 1000,min = 10)

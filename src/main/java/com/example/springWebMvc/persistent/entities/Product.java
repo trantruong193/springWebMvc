@@ -11,6 +11,7 @@ import java.util.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "products")
 public class Product implements Serializable {
@@ -79,4 +80,9 @@ public class Product implements Serializable {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<Review> reviews;
+
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private List<WishList> wishLists;
 }

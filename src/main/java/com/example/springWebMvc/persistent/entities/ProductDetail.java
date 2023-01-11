@@ -28,6 +28,7 @@ public class ProductDetail implements Serializable {
     @ManyToOne
     @JoinColumn(name = "typeId",referencedColumnName = "typeId")
     private Type type;
+
     @OneToMany(mappedBy = "productDetail")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude

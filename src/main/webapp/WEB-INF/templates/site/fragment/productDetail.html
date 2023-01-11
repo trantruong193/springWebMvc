@@ -20,11 +20,13 @@
             ;
         }
         function addToCart(){
+
             const currentDetailId = $("#currentId").val();
             const cQuantity = Math.floor($("#cQuantity").val());
             const urlString = "api/v1/addToCart?productDetailId=" + currentDetailId + "&quantity=" + cQuantity;
 
-            if (currentDetailId == null){
+            console.log(typeof currentDetailId);
+            if (currentDetailId === ''){
                 alert("Product is out of order");
                 return;
             }
@@ -151,7 +153,7 @@
                                     <input type="radio" class="ml-2 mt-2" name="typeId" th:id="'typeId'+${index.index}"
                                            th:value="${t.typeId}" onchange="this.form.submit()"
                                             th:checked="${#strings.equals(t.typeId,typeId)}">
-                                    <label th:for="'prId'+${index.index}" class="d-inline ml-2 mt-2" th:text="${t.typeName}"></label>
+                                    <label th:for="'typeId'+${index.index}" class="d-inline ml-2 mt-2" th:text="${t.typeName}"></label>
                                 </div>
                             </div>
                         </form>
@@ -163,10 +165,19 @@
                                                th:value="${pd.productDetailId}"
                                                th:checked="${#strings.equals(pd.color.colorId,colorId)}"
                                                onchange="getQuantity(this.value)">
-                                        <label th:for="'prId'+${index.index}" class="d-inline ml-2 mt-2" th:style="'color:'+${pd.color.colorCode}" th:text="${pd.color.colorName}"></label><br>
-                                        <span class="ml-1 text-danger" th:if="${pd.discount>=0}" th:text="'-'+${#numbers.formatDecimal(pd.discount,1,0)}+'%'"></span>
-                                        <span class="ml-1 text-danger" th:unless="${pd.discount>=0}" th:text="'+'+${#numbers.formatDecimal(pd.discount*-1,1,0)}+'%'"></span>
-                                        <p class="d-inline ml-1 text-success" th:text="${#numbers.formatDecimal((product.basePrice - product.basePrice * pd.discount/100),1,0)}+'$'"></p>
+                                        <label th:for="'prId'+${index.index}" class="d-inline ml-2 mt-2"
+                                               th:style="'color:'+${pd.color.colorCode}" th:text="${pd.color.colorName}">
+                                        </label><br>
+                                        <span class="ml-1 text-danger" th:if="${pd.discount>=0}"
+                                              th:text="'-'+${#numbers.formatDecimal(pd.discount,1,0)}+'%'">
+
+                                        </span>
+                                        <span class="ml-1 text-danger" th:unless="${pd.discount>=0}"
+                                              th:text="'+'+${#numbers.formatDecimal(pd.discount*-1,1,0)}+'%'">
+                                        </span>
+                                        <p class="d-inline ml-1 text-success"
+                                           th:text="${#numbers.formatDecimal((product.basePrice - product.basePrice * pd.discount/100),1,0)}+'$'">
+                                        </p>
                                     </div>
                                 </th:block>
                         </div>
@@ -180,7 +191,10 @@
                             <span th:if="${quantity >= 2}"> products</span>
                             <span th:unless="${quantity >= 2}"> product</span>
                         </div>
-                        <h5 th:if="${#strings.equals(product.status,'OutOfOrder')}" class="text-danger mt-4 ml-4">Product is temporary out of order</h5>
+                        <h5 th:if="${#strings.equals(product.status,'OutOfOrder')}"
+                            class="text-danger mt-4 ml-4">
+                            Product is temporary out of order
+                        </h5>
                         <div class="d-flex align-items-center mb-4 pt-3" th:unless="${#strings.equals(product.status,'OutOfOrder')}">
                             <div class="input-group quantity mr-3" style="width: 130px;">
                                 <div class="input-group-btn">
@@ -195,7 +209,8 @@
                                     </button>
                                 </div>
                             </div>
-                            <button class="btn btn-primary px-3" onclick="addToCart()" th:unless="${#strings.equals(product.status,'OutOfOrder')}">
+                            <button class="btn btn-primary px-3" onclick="addToCart()"
+                                    th:unless="${#strings.equals(product.status,'OutOfOrder')}">
                                 <i class="fa fa-shopping-cart mr-1"></i> Add To Cart
                             </button>
                         </div>
@@ -208,7 +223,9 @@
                         <div class="nav nav-tabs mb-4">
                             <a class="nav-item nav-link text-dark active" data-toggle="tab" href="#tab-pane-1">Warranty</a>
                             <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-2">Information</a>
-                            <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-3">Reviews (<span th:text="${reviews.size()}"></span>)</a>
+                            <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-3">
+                                Reviews (<span th:text="${reviews.size()}"></span>)
+                            </a>
                         </div>
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="tab-pane-1">
@@ -222,11 +239,16 @@
                             <div class="tab-pane fade" id="tab-pane-3">
                                 <div class="row overflow-auto"  style="max-height: 600px">
                                     <div class="col-md-6">
-                                        <h4 th:if="${reviews.size()<2}" class="mb-4"><span th:text="${reviews.size()}"></span> review for <span th:text="${product.proName}"></span></h4>
-                                        <h4 th:unless="${reviews.size()<2}" class="mb-4"><span th:text="${reviews.size()}"></span> reviews for <span th:text="${product.proName}"></span></h4>
+                                        <h4 th:if="${reviews.size()<2}" class="mb-4"><span th:text="${reviews.size()}">
+                                            </span> review for <span th:text="${product.proName}"></span>
+                                        </h4>
+                                        <h4 th:unless="${reviews.size()<2}" class="mb-4"><span th:text="${reviews.size()}">
+                                            </span> reviews for <span th:text="${product.proName}"></span>
+                                        </h4>
                                         <div class="media mb-4" th:each="r:${reviews}">
                                             <div class="media-body">
-                                                <h6 class="d-inline" th:text="${r.cusName}"></h6><span> - </span> <i th:text="${#dates.format(r.createDate,'dd MMM yyyy')}"></i>
+                                                <h6 class="d-inline" th:text="${r.cusName}"></h6><span> - </span>
+                                                <i th:text="${#dates.format(r.createDate,'dd MMM yyyy')}"></i>
                                                 <div class="text-primary ml-3">
                                                     <i th:if="${r.rate >= 1}" class="fas fa-star"></i>
                                                     <i th:if="${r.rate >= 2}" class="fas fa-star"></i>
@@ -311,14 +333,14 @@
                             <div class="product-img position-relative overflow-hidden">
                                 <img class="img-fluid w-100" th:src="@{'/img/'+${p.imgUrl}}" alt="">
                                 <div class="product-action">
-                                    <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                    <a class="btn btn-outline-dark btn-square rounded" th:href="@{'/site/customer/add-wish-list?proId='+${p.proId}}"><i class="far fa-heart"></i></a>
                                     <a class="btn btn-outline-dark btn-square" th:href="@{'/site/detail/'+${p.proId}}"><i class="fa fa-search"></i></a>
                                 </div>
                             </div>
                             <div class="text-center py-4">
                                 <a class="h6 text-decoration-none text-truncate" th:href="@{'/site/detail/'+${p.proId}}" th:text="${p.proName}"></a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5 th:text="${p.basePrice - p.basePrice * p.discount/100}+'$'"></h5>
+                                    <h5 th:text="${p.basePrice - p.basePrice * p.highestDiscount()/100}+'$'"></h5>
                                     <h6 class="text-muted ml-2"><del th:text="${p.basePrice}+'$'"></del></h6>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center mb-1">

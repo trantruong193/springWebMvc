@@ -50,6 +50,10 @@ public class RepositController {
     public List<Type> getTypes(){
         return typeService.getAll();
     }
+    @ModelAttribute("link")
+    public String getLink(){
+        return "repository";
+    }
     @RequestMapping("")
     public String repository(Model model,
                              @RequestParam(name = "proId",required = false) Long proId){

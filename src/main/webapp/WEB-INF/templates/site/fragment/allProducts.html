@@ -71,7 +71,7 @@
                                 <div class="product-img position-relative overflow-hidden">
                                     <img class="img-fluid w-100 p-1" th:src="@{'/img/'+${p.imgUrl}}" alt="">
                                     <div class="product-action">
-                                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                        <a class="btn btn-outline-dark btn-square rounded" th:href="@{'/site/customer/add-wish-list?proId='+${p.proId}}"><i class="far fa-heart"></i></a>
                                         <a class="btn btn-outline-dark btn-square" th:href="@{'/site/detail/'+${p.proId}}"><i class="fa fa-search"></i></a>
                                     </div>
                                 </div>

@@ -36,21 +36,21 @@
                                 <div class="col-md-6 form-group">
                                     <label>Account</label>
                                     <input class="form-control rounded border-success" th:value="${user.username}" type="text" readonly>
-                                    <input type="number" hidden th:value="${customer.cusId}">
                                 </div>
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-6 form-group"  th:if="${customer!=null}">
                                     <div class="row d-flex justify-content-center">
                                         <img th:src="@{'/img/avatar/'+${customer.avatarUrl}}" class="border border-success"
                                              style="border-radius: 50%" width="100px" height="100px"
                                              id="avatar">
                                     </div>
                                 </div>
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-6 form-group"  th:if="${customer!=null}">
                                     <label>Email</label>
                                     <input class="form-control rounded border-success" type="email" readonly
-                                           th:value="${user.email}">
+                                           th:value="*{customer.email}"
+                                    >
                                 </div>
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-6 form-group"  th:if="${customer!=null}">
                                     <label>Full Name</label>
                                     <input class="form-control rounded border-success" type="text" readonly
                                            th:value="${customer.cusName}">
@@ -63,17 +63,17 @@
                                         <option value="1">Admin</option>
                                     </select>
                                 </div>
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-6 form-group" th:if="${customer!=null}">
                                     <label>Birthday</label>
                                     <input class="form-control rounded border-success" type="date" readonly
                                            th:value="${#dates.format(customer.birthday,'yyyy-MM-dd')}">
                                 </div>
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-6 form-group" th:if="${customer!=null}">
                                     <label>Phone</label>
                                     <input class="form-control rounded border-success" type="text" readonly
                                            th:value="${customer.phone}">
                                 </div>
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-6 form-group" th:if="${customer!=null}">
                                     <label>Shipping Address</label>
                                     <input class="form-control rounded border-success" type="text" readonly
                                            th:value="${customer.address}">

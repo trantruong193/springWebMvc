@@ -20,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Arrays;
@@ -54,7 +55,10 @@ public class ProductController {
     public List<Producer> getProducers(){
         return producerService.getAll();
     }
-
+    @ModelAttribute("link")
+    public String getLink(){
+        return "product";
+    }
     @RequestMapping("")
     public String list(Model model,
                        @RequestParam(name = "sort",required = false) String sortType,
@@ -88,55 +92,81 @@ public class ProductController {
     }
     @PostMapping("save")
     public String save(ModelMap model, @RequestParam("imgFile") MultipartFile[] multipartFile,
-                             @Valid @ModelAttribute("product") ProductDTO productDTO,
-                             BindingResult bindingResult) throws IOException {
+                       @Valid @ModelAttribute("product") ProductDTO productDTO,
+                       BindingResult bindingResult, HttpServletRequest request) throws IOException {
         // Check form input and return if form has error
         if (bindingResult.hasErrors()) {
+            String url = request.getHeader("referer");
+            if (url.contains("update")){
+                model.addAttribute("editMode","true");
+            }
             return "admin/fragment/products/add";
         }
-        if (productDTO.getProId() == null){
-          if(productService.checkProduct(productDTO.getProName())){
-              model.addAttribute("message","Tên sản phẩm đã trùng");
-              return "admin/fragment/products/add";
-          }
+        // Product doesn't exist, check product name
+        if(productDTO.getProId() == null && productService.checkProduct(productDTO.getProName())){
+            model.addAttribute("message","Product name has existed");
+            return "admin/fragment/products/add";
         }
-        // Copy properties
+        // new product
         Product product = new Product();
-        BeanUtils.copyProperties(productDTO, product);
+        BeanUtils.copyProperties(productDTO,product);
+        // Case update
+        if (productDTO.getProId() != null){
+            // get founded product
+            Product found =  productService.findById(productDTO.getProId());
+            if (found != null){
+                // Save image file
+                for(int i = 0; i < multipartFile.length; i++) {
+                    if (i==0)
+                        if (!multipartFile[i].isEmpty()){
+                            fileUploadService.delete(product.getImgUrl());
+                            product.setImgUrl(fileUploadService.save(multipartFile[i]));
+                        }
+                    if (i==1)
+                        if (!multipartFile[i].isEmpty()){
+                            fileUploadService.delete(product.getImgUrl1());
+                            product.setImgUrl1(fileUploadService.save(multipartFile[i]));
+                        }
+                    if (i==2)
+                        if (!multipartFile[i].isEmpty()){
+                            fileUploadService.delete(product.getImgUrl2());
+                            product.setImgUrl2(fileUploadService.save(multipartFile[i]));
+                        }
+                    if (i==3)
+                        if (!multipartFile[i].isEmpty()){
+                            fileUploadService.delete(product.getImgUrl3());
+                            product.setImgUrl3(fileUploadService.save(multipartFile[i]));
+                        }
+                }
+                // Set new properties for product
+                product.setCategory(categoryService.findById(productDTO.getCatId()));
+                product.setProducer(producerService.findById(productDTO.getProducerId()));
+                product.setCatalog(catalogService.getCatalogById(productDTO.getCatalogId()));
+            }
+        }else {
+            // Save image file
+            for(int i = 0; i < multipartFile.length; i++) {
+                if (i==0)
+                    if (!multipartFile[i].isEmpty())
+                        product.setImgUrl(fileUploadService.save(multipartFile[i]));
+                if (i==1)
+                    if (!multipartFile[i].isEmpty())
+                        product.setImgUrl1(fileUploadService.save(multipartFile[i]));
+                if (i==2)
+                    if (!multipartFile[i].isEmpty())
+                        product.setImgUrl2(fileUploadService.save(multipartFile[i]));
+                if (i==3)
+                    if (!multipartFile[i].isEmpty())
+                        product.setImgUrl3(fileUploadService.save(multipartFile[i]));
+            }
+        }
 
-        // Delete old image
-        if(productDTO.getProId() != null){
-            Product p = productService.findById(productDTO.getProId());
-            if (p.getImgUrl()!= null)
-                fileUploadService.delete(p.getImgUrl());
-            if (p.getImgUrl1()!= null)
-                fileUploadService.delete(p.getImgUrl1());
-            if (p.getImgUrl2()!= null)
-                fileUploadService.delete(p.getImgUrl2());
-            if (p.getImgUrl3()!= null)
-                fileUploadService.delete(p.getImgUrl3());
-        }
-        // Save image file
-        for(int i = 0; i < multipartFile.length; i++) {
-            if (i==0)
-                if (!multipartFile[i].isEmpty())
-                    product.setImgUrl(fileUploadService.save(multipartFile[i]));
-            if (i==1)
-                if (!multipartFile[i].isEmpty())
-                    product.setImgUrl1(fileUploadService.save(multipartFile[i]));
-            if (i==2)
-                if (!multipartFile[i].isEmpty())
-                    product.setImgUrl2(fileUploadService.save(multipartFile[i]));
-            if (i==3)
-                if (!multipartFile[i].isEmpty())
-                    product.setImgUrl3(fileUploadService.save(multipartFile[i]));
-        }
         // Set new properties for product
         product.setCategory(categoryService.findById(productDTO.getCatId()));
         product.setProducer(producerService.findById(productDTO.getProducerId()));
         product.setCatalog(catalogService.getCatalogById(productDTO.getCatalogId()));
         productService.update(product);
-        model.addAttribute("message", "Cập nhật thành công");
+        model.addAttribute("message", "Update successfully");
         return "forward:/admin/products";
     }
     @GetMapping("update/{proId}")
@@ -146,8 +176,9 @@ public class ProductController {
         if (product != null){
             BeanUtils.copyProperties(product,productDTO);
             model.addAttribute("product",productDTO);
+            model.addAttribute("editMode","true");
         }else {
-            model.addAttribute("message","Không tìm thấy sản phẩm");
+            model.addAttribute("message","Product has not existed");
             model.addAttribute("product",productDTO);
         }
         return "admin/fragment/products/add";
@@ -158,7 +189,7 @@ public class ProductController {
         if (product != null){
             model.addAttribute("product",product);
         }else {
-            model.addAttribute("message","Không tìm thấy sản phẩm");
+            model.addAttribute("message","Product has not existed");
         }
         return "admin/fragment/products/detail";
     }

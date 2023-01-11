@@ -57,9 +57,10 @@
                                  sec:authorize="isAnonymous()">
                                 <a th:href="@{/login}" class="btn w-50 mt-3 rounded btn-success">Login</a>
                             </div>
-                            <div class="row form-group d-flex justify-content-center"
-                            th:if="${update != null}">
-                                <a th:href="@{/site/customer}" class="btn w-50 mt-3 rounded btn-success">Add shipping address for next time</a>
+                            <div class="row form-group d-flex justify-content-center" th:if="${update != null}">
+                                <a th:href="@{/site/customer}" class="btn w-50 mt-3 rounded btn-success">
+                                    Add shipping address for next time
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -70,7 +71,7 @@
                                 <h6 class="mb-3">Products</h6>
                                 <div class="d-flex justify-content-between" th:each="item:${cartItems}">
                                     <p th:text="${item.productDetailName}"></p>
-                                    <p th:text="${item.quantity}+' sản phẩm'"></p>
+                                    <p th:text="${item.quantity}+' products'"></p>
                                     <p th:text="${#numbers.formatDecimal(item.price*item.quantity,1,1)}+'$'"></p>
                                 </div>
                             </div>
